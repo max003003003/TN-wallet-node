@@ -4,6 +4,10 @@ const app = express()
 const model = require('./Model')
 const controller = require('./Controller/walletController')
 
+app.get("/",(req,res)=>{
+    res.send("server start")
+})
+
 app.get('/create', (req, res) => {
     model.createTable()
     res.send('Hello ')
