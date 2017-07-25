@@ -14,9 +14,9 @@ app.get("/insert",(req,res)=>{
     res.send("asd")
 })
 
-app.get("/query/:id",(req,res)=>{
+app.get("/accounts/:id",(req,res)=>{
     controller.getAccountInfo(req.query.id).then((accounts)=>{
-            res.send(accounts[0])  
+    res.send(accounts[0])  
     })
 })
  
