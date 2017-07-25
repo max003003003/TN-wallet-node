@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "express": "^4.15.3",
     "jest": "^20.0.4",
     "sequelize": "^4.4.2"
@@ -11,8 +12,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:test":"jest --watch",
-    "coverage:test":"jest --coverage"
+    "watch:test": "jest --watch",
+    "coverage:test": "jest --coverage"
   },
   "repository": {
     "type": "git",
