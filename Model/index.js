@@ -15,7 +15,8 @@ var db ={
  sequelize : sequelize,
  Sequelize : Sequelize,
  createTable: ()=>{
-      account_model.sync({ force: true})
+      account_model.drop({force:true})
+      account_model.sync({force: true})
  }
  
  
