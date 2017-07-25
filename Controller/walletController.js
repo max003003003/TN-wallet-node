@@ -5,5 +5,6 @@ module.exports = {
     getBalance: (acount_id)=>{
         return model.account.findAll({})
     }
+    hello: hello
     }
 }
