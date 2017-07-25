@@ -1,0 +1,27 @@
+{
+  "name": "tn-wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.15.3",
+    "jest": "^20.0.4",
+    "sequelize": "^4.4.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:test":"jest --watch",
+    "coverage:test":"jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/max003003003/TN-wallet-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/max003003003/TN-wallet-node/issues"
+  },
+  "homepage": "https://github.com/max003003003/TN-wallet-node#readme"
+}
