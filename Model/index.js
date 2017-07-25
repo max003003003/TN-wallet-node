@@ -11,7 +11,7 @@ const sequelize = new Sequelize(process.env.DB_NAME,process.env.DB_USER,process.
 
 var account_model = sequelize.import('./accountModel')
 var db ={
-  
+ account : account_model,
  sequelize : sequelize,
  Sequelize : Sequelize,
  createTable: ()=>{
@@ -21,7 +21,7 @@ var db ={
  
  
 }
-db[account_model.name] = account_model
+
 
 
 module.exports= db
