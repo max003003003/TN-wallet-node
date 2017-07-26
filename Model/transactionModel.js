@@ -5,7 +5,7 @@ module.exports = function (sequelize, DataTypes) {
             require: true
         },
         src_account_id: {
-            type: DataTypes.INTEGER(10),
+            type: DataTypes.STRING(10),
             require: true
         },
         src_initial_balance: {
@@ -13,7 +13,7 @@ module.exports = function (sequelize, DataTypes) {
             require: true
         },
         des_account_id: {
-            type: DataTypes.INTEGER(10),
+            type: DataTypes.STRING(10),
             require: true
         },
         des_initial_balance: {
