@@ -33,10 +33,13 @@ app.get("/insert", (req, res) => {
        
 })
 
-app.get("/accounts/:id", (req, res) => {
-    controller.getAccountInfo(req.params.id,['account_id','name','surname']).then((accounts) => {
-        res.send(accounts)
-    })
+app.get("/accounts/:id", async (req, res) => {
+    // controller.getAccountInfo(req.params.id,['account_id','name','surname']).then((accounts) => {
+    //     res.send(accounts)
+    // })
+    // res.send("asdsasdsadds")
+    res.sendStatus(controller.checkEnoughMoney(req.params.id,0))
+
 })
 app.get("/balances/:id", (req, res) => {
     controller.getAccountInfo(req.params.id,['account_id','balance']).then((accounts) => {

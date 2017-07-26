@@ -19,7 +19,10 @@ module.exports = {
                 id: 1
             }
         })
+    },
+
+    checkEnoughMoney: async (account_id,amount) => {
+        
+        
     }
-
-
 }
