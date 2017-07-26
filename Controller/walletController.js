@@ -11,7 +11,7 @@ function getAccountInfo(account_id, attributes) {
 }
 
 function insertAccount(account) {
-    return model.account.create(account)
+    return model.account.bulkCreate(account)
 }
 
 function getTransactionInfo(transaction_id) {
@@ -24,20 +24,34 @@ function getTransactionInfo(transaction_id) {
 
 
  function checkAccountExist(account_id) {
-    
+
     return model.account.findAll({
         where: {
             account_id: account_id
         }
         }).then((account)=>{
-            if( !(account.length === 0) ){
-                return true
-            }else{
+            if( (account.length === 0) ){
                 return false
+            }else{
+                return true
             }
         })
     
 }
+
+function checkEnoughBalance(account_id,amount){
+
+    return model.account.findAll({
+        where:{
+            account_id: account_id
+        },
+        attributes: ['balance']
+    }).then((balance)=>{
+        if (balance[0].dataValues.balance >= amount) return true
+        else return false
+    })
+}
+
 function  insertTransaction (transactionobj)  {
         return model.sequelize.transaction((t) => {
             return model.transaction.create(transactionobj, { transaction: t })
@@ -63,5 +77,6 @@ module.exports = {
     insertAccount,
     getTransactionInfo,
     checkAccountExist,
-    insertTransaction
+    insertTransaction,
+    checkEnoughBalance
 }
