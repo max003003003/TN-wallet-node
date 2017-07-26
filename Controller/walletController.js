@@ -1,21 +1,36 @@
 const model = require('../Model')
 const account = require('./account')
-module.exports = {
-    getAccountInfo: (account_id, attributes) => {
-        return model.account.findAll({
-            where: {
-                account_id: account_id
-            },
-            attributes: attributes
-        })
-    },
-
-    insertAccount: (account) => {
-        return model.account.create(account)
-    },
   
+function getAccountInfo(account_id, attributes) {
+    return model.account.findAll({
+        where: {
+            account_id: account_id
+        },
+        attributes: attributes
+    })
+}
 
-    insertTransaction: (transactionobj) => {
+function insertAccount(account) {
+    return model.account.create(account)
+}
+
+function getTransactionInfo(transaction_id) {
+    return model.transaction.findAll({
+        where: {
+            id: 1
+        }
+    })
+}
+
+async function checkAccountExist(account_id) {
+    var account = await model.account.findAll({
+        where: {
+            account_id: account_id
+        }
+    })
+    return account.length === 0 ? false : true
+}
+function  insertTransaction (transactionobj)  {
         return model.sequelize.transaction((t) => {
             return model.transaction.create(transactionobj, { transaction: t })
                 .then((result) => {
@@ -33,4 +48,12 @@ module.exports = {
             console.log(error.toString())
         })
     }
+
+
+module.exports = {
+    getAccountInfo,
+    insertAccount,
+    getTransactionInfo,
+    checkAccountExist,
+    insertTransaction
 }

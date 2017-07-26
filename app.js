@@ -17,18 +17,46 @@ app.get('/create', (req, res) => {
 
 app.get("/insert", (req, res) => {        
      
-     const account ={
-        account_id: 1234567890,
-        name: "thanaporn",
-        surname: "Sumpaotong",
-        citizen_id: "1100501204188",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 0.0,
-        register_timestamp:  '2017-07-25 09:29:00'
-    }
+     const account =[
+        {
+            account_id: 1234567890,
+            name: "Thanaporn",
+            surname: "Sumpaotong",
+            citizen_id: "1100501204188",
+            email: "thanaporn@gmail.com",
+            tel: "0860755482",
+            username: "Oh.tnp",
+            password: "12345A",
+            balance: 0.0,
+            register_timestamp:  '2017-07-25 09:29:00'
+        },
+        {
+            account_id: 6302335478,
+            name: "Thanaporn",
+            surname: "Suwathanawongchai",
+            citizen_id: "1111111111111",
+            email: "kunthanaporn@gmail.com",
+            tel: "0984593556",
+            username: "Not.Oh",
+            password: "12345A",
+            balance: 4700.0,
+            register_timestamp:  '2017-07-25 09:29:00'
+        },
+        {
+            account_id: 7582983660,
+            name: "Phansawuth",
+            surname: "Jenthaworn",
+            citizen_id: "1234567890987",
+            email: "phanasawuth@gmail.com",
+            tel: "0860755483",
+            username: "Phan.tnp",
+            password: "12345A",
+            balance: 0.0,
+            register_timestamp:  '2017-07-25 09:29:00'
+        }
+     ]
+     
+
      controller.insertAccount(account).then((account)=>{
          res.send(account)
      })
@@ -46,6 +74,7 @@ app.get("/balances/:id", (req, res) => {
         res.send(accounts)
     })
 })
+<<<<<<< HEAD
 app.get("/transfer",(req,res)=>{
     // const trans = {
     //     type: req.body.type,
@@ -74,6 +103,8 @@ app.get("/transfer",(req,res)=>{
     }
    controller.insertTransaction(trans)
 })
+=======
+>>>>>>> a29b270bc3bd7ee97a29c800329734b6b5b50552
 
 app.listen(3000, () => {
     console.log("app listen port 3000")
