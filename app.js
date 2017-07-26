@@ -74,7 +74,6 @@ app.get("/balances/:id", (req, res) => {
         res.send(accounts)
     })
 })
-<<<<<<< HEAD
 app.get("/transfer",(req,res)=>{
     // const trans = {
     //     type: req.body.type,
@@ -103,8 +102,6 @@ app.get("/transfer",(req,res)=>{
     }
    controller.insertTransaction(trans)
 })
-=======
->>>>>>> a29b270bc3bd7ee97a29c800329734b6b5b50552
 
 app.listen(3000, () => {
     console.log("app listen port 3000")

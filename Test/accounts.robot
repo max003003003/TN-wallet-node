@@ -1,6 +1,8 @@
 *** Settings ***
 Library    RequestsLibrary
 Library    Collections
+*** Varieables ***
+
 *** Test cases ***
 Get account success
     Create Session    TN-wallet-node    http://127.0.0.1:3000

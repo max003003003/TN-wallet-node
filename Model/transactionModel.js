@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> a29b270bc3bd7ee97a29c800329734b6b5b50552
 module.exports = function (sequelize, DataTypes) {
     const transaction = sequelize.define('tb_transaction', {
         type: {
@@ -48,7 +44,3 @@ module.exports = function (sequelize, DataTypes) {
     })
     return transaction
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> a29b270bc3bd7ee97a29c800329734b6b5b50552
