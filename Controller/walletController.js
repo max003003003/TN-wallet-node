@@ -11,7 +11,7 @@ function getAccountInfo(account_id, attributes) {
 }
 
 function insertAccount(account) {
-    return model.account.create(account)
+    return model.account.bulkCreate(account)
 }
 
 function getTransactionInfo(transaction_id) {
