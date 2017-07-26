@@ -1,34 +1,39 @@
 const model = require('../Model')
+
+function getAccountInfo(account_id, attributes) {
+    return model.account.findAll({
+        where: {
+            account_id: account_id
+        },
+        attributes: attributes
+    })
+}
+
+function insertAccount(account) {
+    return model.account.create(account)
+}
+
+function getTransactionInfo(transaction_id) {
+    return model.transaction.findAll({
+        where: {
+            id: 1
+        }
+    })
+}
+
+async function checkAccountExist(account_id) {
+    var ac = await model.account.findAll({
+        where: {
+            account_id: account_id
+        }
+    })
+    return ac.length === 0 ? false : true
+}
+
+
 module.exports = {
-    getAccountInfo: (account_id,attributes) =>{
-        return model.account.findAll({
-            where : {
-                account_id: account_id
-            },
-            attributes : attributes
-        })
-    },
-
-    insertAccount: (account) => {
-        return model.account.create(account)
-    },
-
-    getTransactionInfo: (transaction_id) => {
-        return model.transaction.findAll({
-            where : {
-                id: 1
-            }
-        })
-    },
-
-    checkAccountExist: async (account_id) =>{
-        var ac = await model.account.findAll({
-            where : {
-                account_id: account_id
-            }
-        })
-        return ac.length === 0 ? false : true
-    },
-
-
+    getAccountInfo,
+    insertAccount,
+    getTransactionInfo,
+    checkAccountExist
 }
