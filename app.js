@@ -13,43 +13,68 @@ app.get('/create', (req, res) => {
     res.send('Hello ')
 })
 
+
+
 app.get("/insert", (req, res) => {        
      
-     const account ={
-        account_id: 1234567890,
-        name: "thanaporn",
-        surname: "Sumpaotong",
-        citizen_id: "1100501204188",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 0.0,
-        register_timestamp:  '2017-07-25 09:29:00'
-    }
+     const account =[
+        {
+            account_id: 1234567890,
+            name: "Thanaporn",
+            surname: "Sumpaotong",
+            citizen_id: "1100501204188",
+            email: "thanaporn@gmail.com",
+            tel: "0860755482",
+            username: "Oh.tnp",
+            password: "12345A",
+            balance: 0.0,
+            register_timestamp:  '2017-07-25 09:29:00'
+        },
+        {
+            account_id: 6302335478,
+            name: "Thanaporn",
+            surname: "Suwathanawongchai",
+            citizen_id: "1111111111111",
+            email: "kunthanaporn@gmail.com",
+            tel: "0984593556",
+            username: "Not.Oh",
+            password: "12345A",
+            balance: 4700.0,
+            register_timestamp:  '2017-07-25 09:29:00'
+        },
+        {
+            account_id: 7582983660,
+            name: "Phansawuth",
+            surname: "Jenthaworn",
+            citizen_id: "1234567890987",
+            email: "phanasawuth@gmail.com",
+            tel: "0860755483",
+            username: "Phan.tnp",
+            password: "12345A",
+            balance: 0.0,
+            register_timestamp:  '2017-07-25 09:29:00'
+        }
+     ]
+     
+
      controller.insertAccount(account).then((account)=>{
          res.send(account)
      })
        
 })
 
-app.get("/accounts/:id", async (req, res) => {
-    // controller.getAccountInfo(req.params.id,['account_id','name','surname']).then((accounts) => {
-    //     res.send(accounts)
-    // })
-    // res.send("asdsasdsadds")
-    res.sendStatus(controller.checkEnoughMoney(req.params.id,0))
 
+app.get("/accounts/:id", (req, res) => {
+    controller.getAccountInfo(req.params.id,['account_id','name','surname']).then((accounts) => {
+        res.send(accounts)
+    })
+    // controller.checkAccountExist(req.params.account_id).then((a)=>{
+    //     res.send(a)
+    // })
 })
 app.get("/balances/:id", (req, res) => {
     controller.getAccountInfo(req.params.id,['account_id','balance']).then((accounts) => {
         res.send(accounts)
-    })
-})
-
-app.get("/transactions/:id",(req,res)=>{
-    controller.getTransactionInfo(req.params.id).then((transaction)=>{
-        res.send(transaction)
     })
 })
 

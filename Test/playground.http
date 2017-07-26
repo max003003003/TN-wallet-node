@@ -1,0 +1,54 @@
+GET http://localhost:3000/
+
+###
+
+POST http://localhost:3000/echo?q=10
+content-type: application/json
+
+{
+    "body": "hello"
+}
+
+###
+
+GET http://localhost:3000/movies
+
+###
+
+POST http://localhost:3000/movies
+content-type: application/json
+
+{
+    "title": "Coco : Infinity War "
+}
+
+###
+PUT http://localhost:3000/movies/dBuvscwGmDl9664S
+content-type: application/json
+
+{
+    "rating": 3
+}
+
+###
+GET http://localhost:3000/movies/dBuvscwGmDl9664S
+
+###
+DELETE http://localhost:3000/movies/dBuvscwGmDl9664S
+
+###
+POST http://localhost:3000/transfer
+content-type: application/json
+
+{
+        type: "transfer",
+        src_acc_id: "",
+        src_initial_balance: "",
+        des_acc_id:"",
+        des_initial_balance: "",
+        amount: "",
+        fee: "",
+        src_remain_balance: "",
+        des_remain_balance: ""
+}
+
