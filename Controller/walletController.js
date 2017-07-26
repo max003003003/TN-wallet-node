@@ -21,13 +21,21 @@ function getTransactionInfo(transaction_id) {
     })
 }
 
-async function checkAccountExist(account_id) {
-    var account = await model.account.findAll({
+
+ function checkAccountExist(account_id) {
+    
+    return model.account.findAll({
         where: {
             account_id: account_id
         }
-    })
-    return account.length === 0 ? false : true
+        }).then((account)=>{
+            if( !(account.length === 0) ){
+                return true
+            }else{
+                return false
+            }
+        })
+    
 }
 
 
