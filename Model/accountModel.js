@@ -1,7 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
     const account = sequelize.define('tb_user', {
-        account_id: { type: DataTypes.INTEGER(10),
-          autoIncrement: true,
+        account_id: { type: DataTypes.STRING(10),
           primaryKey: true
         },
         name: {

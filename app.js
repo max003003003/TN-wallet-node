@@ -46,7 +46,7 @@ app.get("/insert", (req, res) => {
             account_id: 7582983660,
             name: "Phansawuth",
             surname: "Jenthaworn",
-            citizen_id: "1234567890987",
+            citizen_id: "1111122222345",
             email: "phanasawuth@gmail.com",
             tel: "0860755483",
             username: "Phan.tnp",
