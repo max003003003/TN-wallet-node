@@ -7,7 +7,7 @@ module.exports = {
     getNameSurnameID: (account_id) =>{
         return model.account.findOne({
             where: {account_id: account_id},
-            attributes: ['id', ['name', 'title']]
+            attributes: ['name']
         })
     },
 
