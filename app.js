@@ -31,7 +31,7 @@ app.get("/insert", (req, res) => {
             register_timestamp: '2017-07-25 09:29:00'
         },
         {
-            account_id: 6302335478,
+            account_id: 0000010001,
             name: "Thanaporn",
             surname: "Suwathanawongchai",
             citizen_id: "1111111111111",
@@ -46,7 +46,7 @@ app.get("/insert", (req, res) => {
             account_id: 7582983660,
             name: "Phansawuth",
             surname: "Jenthaworn",
-            citizen_id: "1234567890987",
+            citizen_id: "1111122222345",
             email: "phanasawuth@gmail.com",
             tel: "0860755483",
             username: "Phan.tnp",
@@ -55,6 +55,7 @@ app.get("/insert", (req, res) => {
             register_timestamp: '2017-07-25 09:29:00'
         }
     ]
+<<<<<<< HEAD
 
 
     controller.insertAccount(account[0]).then((account) => {
@@ -64,6 +65,14 @@ app.get("/insert", (req, res) => {
     })
 
   
+=======
+   
+     
+        controller.insertAccount(account[1]).then((account) => {
+            res.send(account)
+        })
+
+>>>>>>> 69514263fb73569825cab695d0ca40c4f678c855
 
 })
 
@@ -79,6 +88,42 @@ app.get("/balances/:id", (req, res) => {
         res.send(accounts)
     })
 })
+<<<<<<< HEAD
+=======
+app.get("/transfer", (req, res) => {
+    // const trans = {
+    //     type: req.body.type,
+    //     src_acc_id: req.body.src_acc_id,
+    //     src_initial_balance: req.body.src_initial_balance,
+    //     des_acc_id:req.body.des_acc_id,
+    //     des_initial_balance: req.body.des_initial_balance,
+    //     amount: req.body.amount,
+    //     fee: req.body.fee,
+    //     src_remain_balance: req.body.src_remain_balance,
+    //     des_remain_balance: req.body.des_remain_balance
+    // }
+
+    const trans = {
+
+        type: "transfer",
+        src_account_id: 4097,
+        src_acc_id: 6302335476,
+        src_initial_balance: 4700,
+        des_account_id: 1234567890,
+        des_acc_id: 7582983660,
+        des_initial_balance: 4200,
+        amount: 500,
+        fee: 0,
+        src_remain_balance: 4500,
+        des_remain_balance: 4300
+
+    }
+    controller.insertTransaction(trans).then((response) => {
+        res.send(response)
+    })
+
+})
+>>>>>>> 69514263fb73569825cab695d0ca40c4f678c855
 
 app.listen(3000, () => {
     console.log("app listen port 3000")
