@@ -44,7 +44,3 @@ module.exports = function (sequelize, DataTypes) {
     })
     return transaction
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 69514263fb73569825cab695d0ca40c4f678c855

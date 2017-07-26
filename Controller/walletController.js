@@ -38,7 +38,6 @@ function checkAccountExist(account_id) {
         })
     
 }
-<<<<<<< HEAD
 
 
 function checkLimitBalance(account_id) {
@@ -84,8 +83,6 @@ function insertTransaction(transactionobj) {
         console.log(error.toString())
     })
 }
-=======
->>>>>>> 69514263fb73569825cab695d0ca40c4f678c855
 
 function insertTransaction(transactionObj) {
     let resultTran
