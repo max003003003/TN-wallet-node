@@ -44,12 +44,6 @@ app.get("/balances/:id", (req, res) => {
     })
 })
 
-app.get("/transactions/:id",(req,res)=>{
-    controller.getTransactionInfo(req.params.id).then((transaction)=>{
-        res.send(transaction)
-    })
-})
-
 app.listen(3000, () => {
     console.log("app listen port 3000")
 })
