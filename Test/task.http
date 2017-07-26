@@ -1,0 +1,64 @@
+<API: View all movies>
+
+# [
+#   {
+#     "title": "Die Hard",
+#     "_id": "91rGJj7o1EbHnhsv",
+#     "rating": 4
+#   },
+#   {
+#     "title": "Star Wars: Episode IV - A New Hope",
+#     "rating": 0,
+#     "_id": "hjXeCBOjYfktF1gl"
+#   },
+#   ...
+# ]
+
+###
+
+<API: Create a new movie>
+content-type: application/json
+
+{
+    "title": "Spider Man: Homecoming"
+}
+
+# {
+#   "title": "Spider Man: Homecoming",
+#   "_id": "0JlFGTSKTKYSreh8"
+# }
+
+###
+
+<API: Rate a movie>
+content-type: application/json
+
+{
+    "rating": 3
+}
+
+# {
+#     "success": {
+#         "message": "1 records updated"
+#     }
+# }
+
+###
+
+<API: View movie details>
+
+# {
+#   "title": "Die Hard",
+#   "_id": "91rGJj7o1EbHnhsv",
+#   "rating": 4
+# }
+
+###
+
+<API: Delete a movie>
+
+# {
+#     "success": {
+#         "message": "1 records updated"
+#     }
+# }

@@ -25,7 +25,6 @@ var db = {
         transaction_model.sync({ force: true })
     }
 
-
 }
 
 

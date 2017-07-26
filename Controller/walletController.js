@@ -1,27 +1,72 @@
 const model = require('../Model')
+const account = require('./account')
+
+function getAccountInfo(account_id, attributes) {
+    return model.account.findAll({
+        where: {
+            account_id: account_id
+        },
+        attributes: attributes
+    })
+}
+
+function insertAccount(account) {
+    return model.account.create(account)
+}
+
+
+async function checkLimitBalance(account_id) {
+    const limit = 5000
+    var acc = await model.transaction.findAll({
+        where: {
+            destinationAccountID: account_id
+        }
+
+    })
+    var sum = acc.destinationInitialBalance + acc.amount
+    return (limit - sum) < 0 ? false : true
+}
+function getTransactionInfo(transaction_id) {
+    return model.transaction.findAll({
+        where: {
+            id: 1
+        }
+    })
+}
+
+async function checkAccountExist(account_id) {
+    var account = await model.account.findAll({
+        where: {
+            account_id: account_id
+        }
+    })
+    return account.length === 0 ? false : true
+}
+function insertTransaction(transactionobj) {
+    return model.sequelize.transaction((t) => {
+        return model.transaction.create(transactionobj, { transaction: t })
+            .then((result) => {
+                p1 = account.updateAccountBalance2("1233")
+                p2 = account.updateAccountBalance2("1222")
+                Promise.all([p1, p2]).then(values => {
+                    return values
+                }).catch(error => {
+                    throw new error.toString()
+                })
+            })
+    }).then((result) => {
+        return result
+    }).catch((error) => {
+        console.log(error.toString())
+    })
+}
+
+
 module.exports = {
-    getAccountInfo: (account_id,attributes) =>{
-        return model.account.findAll({
-            where : {
-                account_id: account_id
-            },
-            attributes : attributes
-        })
-    },
-
-    insertAccount: (account) => {
-        return model.account.create(account)
-    },
-
-    checkLimitBalance: async (account_id) =>{
-        const limit = 5000
-        var acc = await model.account.findOne({
-            where:{
-                destinationAccountID: account_id
-            }
-            
-        })
-        var sum = acc.destinationInitialBalance + acc.amount
-        return (limit - sum) < 0 ? false : true
-    }
+    getAccountInfo,
+    insertAccount,
+    getTransactionInfo,
+    checkAccountExist,
+    insertTransaction,
+    checkLimitBalance
 }
