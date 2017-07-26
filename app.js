@@ -29,30 +29,6 @@ app.get("/insert", (req, res) => {
             password: "12345A",
             balance: 0.0,
             register_timestamp:  '2017-07-25 09:29:00'
-        },
-        {
-            account_id: 6302335478,
-            name: "Thanaporn",
-            surname: "Suwathanawongchai",
-            citizen_id: "1111111111111",
-            email: "kunthanaporn@gmail.com",
-            tel: "0984593556",
-            username: "Not.Oh",
-            password: "12345A",
-            balance: 4700.0,
-            register_timestamp:  '2017-07-25 09:29:00'
-        },
-        {
-            account_id: 7582983660,
-            name: "Phansawuth",
-            surname: "Jenthaworn",
-            citizen_id: "1234567890987",
-            email: "phanasawuth@gmail.com",
-            tel: "0860755483",
-            username: "Phan.tnp",
-            password: "12345A",
-            balance: 0.0,
-            register_timestamp:  '2017-07-25 09:29:00'
         }
      ]
      
