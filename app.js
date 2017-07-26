@@ -55,12 +55,24 @@ app.get("/insert", (req, res) => {
             register_timestamp: '2017-07-25 09:29:00'
         }
     ]
+<<<<<<< HEAD
+
+
+    controller.insertAccount(account[0]).then((account) => {
+        res.send(account[0])
+        //  res.send(account[1])
+        //  res.send(account[2])
+    })
+
+  
+=======
    
      
         controller.insertAccount(account).then((account) => {
             res.send(account)
         })
 
+>>>>>>> 69514263fb73569825cab695d0ca40c4f678c855
 
 })
 
@@ -69,12 +81,15 @@ app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname']).then((accounts) => {
         res.send(accounts)
     })
+
 })
 app.get("/balances/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'balance']).then((accounts) => {
         res.send(accounts)
     })
 })
+<<<<<<< HEAD
+=======
 app.get("/transfer", (req, res) => {
     // const trans = {
     //     type: req.body.type,
@@ -116,6 +131,7 @@ app.get("/transfer", (req, res) => {
     })
 
 })
+>>>>>>> 69514263fb73569825cab695d0ca40c4f678c855
 
 app.listen(3000, () => {
     console.log("app listen port 3000")
