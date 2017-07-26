@@ -62,7 +62,7 @@ function insertTransaction(transactionObj) {
                     .then((result) => {
                         console.log("--------------------------")
                         console.log(resultTran)
-                        return result
+                        return resultTran
                     })
                     .catch((error) => {
                         throw error
