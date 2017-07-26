@@ -22,12 +22,12 @@ function getTransactionInfo(transaction_id) {
 }
 
 async function checkAccountExist(account_id) {
-    var ac = await model.account.findAll({
+    var account = await model.account.findAll({
         where: {
             account_id: account_id
         }
     })
-    return ac.length === 0 ? false : true
+    return account.length === 0 ? false : true
 }
 
 
