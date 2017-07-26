@@ -12,17 +12,23 @@ const sequelize = new Sequelize(process.env.DB_NAME,process.env.DB_USER,process.
 var account_model = sequelize.import('./accountModel')
 var transaction_model = sequelize.import('./transactionModel')
 
-var db ={
- account : account_model,
- sequelize : sequelize,
- Sequelize : Sequelize,
- createTable: ()=>{
-      account_model.drop({force:true})
-      account_model.sync({force: true})
- }
  
- 
+var db = {
+    account: account_model,
+    transaction: transaction_model,
+    sequelize: sequelize,
+    Sequelize: Sequelize,
+    createTable: () => {
+        account_model.drop({ force: true })
+        account_model.sync({ force: true })
+        transaction_model.drop({ force: true })
+        transaction_model.sync({ force: true })
+    }
+
+
 }
 
 
-module.exports= db
+
+module.exports = db
+ 
