@@ -91,8 +91,10 @@ app.get("/transfer", (req, res) => {
     const trans = {
 
         type: "transfer",
+        src_account_id: 4097,
         src_acc_id: 6302335476,
         src_initial_balance: 4700,
+        des_account_id: 1234567890,
         des_acc_id: 7582983660,
         des_initial_balance: 4200,
         amount: 500,

@@ -32,26 +32,28 @@ async function checkAccountExist(account_id) {
 }
 
 function insertTransaction(transactionObj) {
+    let resultTran
     return model.sequelize.transaction((t) => {
         return model.transaction.create(transactionObj, { transaction: t })
             .then(result => {
-                const resultTran = result.dataValues
-                return model.account.update({
-                    balance: 99989999
+                resultTran = result.dataValues
+                return model.account.update({  //source accout
+                    balance: resultTran.src_remain_balance
                 },
                     {
-                        where: { account_id: 4097 }
+                        where: { account_id: resultTran.src_account_id }
                     }, { transaction: t })
                     .then(result => {
-                        return model.account.update({
-                            balance: 11111111
+                        return model.account.update({ //dest account
+                            balance: resultTran.des_remain_balance
                         },
                             {
-                                where: { account_id: 1234567890 }
+                                where: { account_id: resultTran.des_account_id }
                             })
                     }, { transaction: t })
                     .then((result) => {
-                        console.log(result)
+                        console.log("--------------------------")
+                        console.log(resultTran)
                         return result
                     })
                     .catch((error) => {
