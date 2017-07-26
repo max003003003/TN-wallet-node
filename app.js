@@ -33,16 +33,12 @@ app.get("/insert", (req, res) => {
 })
 
 app.get("/accounts/:id", (req, res) => {
-    controller.getAccountInfo(req.query.id).then((accounts) => {
-        accounts.map((account)=>{
-            delete account["balance"]
-            return account
-        })
+    controller.getAccountInfo(req.params.id,['account_id','name','surname']).then((accounts) => {
         res.send(accounts)
     })
 })
 app.get("/balances/:id", (req, res) => {
-    controller.getAccountInfo(req.query.id).then((accounts) => {
+    controller.getAccountInfo(req.params.id,['account_id','balance']).then((accounts) => {
         res.send(accounts)
     })
 })
