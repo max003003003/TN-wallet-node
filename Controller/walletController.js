@@ -11,6 +11,14 @@ module.exports = {
 
     insertAccount: (account) => {
         return model.account.create(account)
+    },
+
+    getTransactionInfo: (transaction_id) => {
+        return model.transaction.findAll({
+            where : {
+                id: 1
+            }
+        })
     }
 
 
