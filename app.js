@@ -69,6 +69,7 @@ app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname']).then((accounts) => {
         res.send(accounts)
     })
+
 })
 app.get("/balances/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'balance']).then((accounts) => {
@@ -87,6 +88,14 @@ app.get("/transfer", (req, res) => {
     //     src_remain_balance: req.body.src_remain_balance,
     //     des_remain_balance: req.body.des_remain_balance
     // }
+
+    // checkaccount exist
+
+    // check Limit Reciever Balance exceed
+    
+    // check Sender enough Balance
+
+    // check 
 
     const trans = {
 
