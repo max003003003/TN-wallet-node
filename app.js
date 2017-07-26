@@ -37,6 +37,9 @@ app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id,['account_id','name','surname']).then((accounts) => {
         res.send(accounts)
     })
+    // controller.checkLimitBalance(req.params.id,['account_id','name','surname']).then((accounts) => {
+    //     res.send(accounts)
+    // })
 })
 app.get("/balances/:id", (req, res) => {
     controller.getAccountInfo(req.params.id,['account_id','balance']).then((accounts) => {
