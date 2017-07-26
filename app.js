@@ -13,6 +13,8 @@ app.get('/create', (req, res) => {
     res.send('Hello ')
 })
 
+
+
 app.get("/insert", (req, res) => {        
      
      const account ={
@@ -33,6 +35,7 @@ app.get("/insert", (req, res) => {
        
 })
 
+
 app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id,['account_id','name','surname']).then((accounts) => {
         res.send(accounts)
@@ -43,6 +46,35 @@ app.get("/balances/:id", (req, res) => {
         res.send(accounts)
     })
 })
+app.get("/transfer",(req,res)=>{
+    // const trans = {
+    //     type: req.body.type,
+    //     src_acc_id: req.body.src_acc_id,
+    //     src_initial_balance: req.body.src_initial_balance,
+    //     des_acc_id:req.body.des_acc_id,
+    //     des_initial_balance: req.body.des_initial_balance,
+    //     amount: req.body.amount,
+    //     fee: req.body.fee,
+    //     src_remain_balance: req.body.src_remain_balance,
+    //     des_remain_balance: req.body.des_remain_balance
+    // }
+
+    const trans = {
+        
+        type: "transfer",
+        src_acc_id: 6302335476,
+        src_initial_balance: 4700,
+        des_acc_id: 7582983660,
+        des_initial_balance: 4200,
+        amount: 500 ,
+        fee: 0 ,
+        src_remain_balance: 4500,
+        des_remain_balance: 4300
+
+    }
+   controller.insertTransaction(trans)
+})
+
 app.listen(3000, () => {
     console.log("app listen port 3000")
 })
