@@ -10,7 +10,7 @@ module.exports = {
     },
 
     insertAccount: (account) => {
-        return model.account.create(account)
+        return model.account.bulkCreate(account)
     },
 
     getTransactionInfo: (transaction_id) => {
