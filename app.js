@@ -88,6 +88,14 @@ app.get("/transfer", (req, res) => {
     //     des_remain_balance: req.body.des_remain_balance
     // }
 
+    // checkaccount exist
+
+    // check Limit Reciever Balance exceed
+    
+    // check Sender enough Balance
+
+    // check 
+
     const trans = {
 
         type: "transfer",

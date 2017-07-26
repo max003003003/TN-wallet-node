@@ -60,9 +60,7 @@ function insertTransaction(transactionObj) {
                             })
                     }, { transaction: t })
                     .then((result) => {
-                        console.log("--------------------------")
-                        console.log(resultTran)
-                        return result
+                        return resultTran
                     })
                     .catch((error) => {
                         throw error
