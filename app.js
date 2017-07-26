@@ -68,7 +68,7 @@ app.get("/insert", (req, res) => {
 =======
    
      
-        controller.insertAccount(account[1]).then((account) => {
+        controller.insertAccount(account).then((account) => {
             res.send(account)
         })
 
