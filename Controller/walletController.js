@@ -1,5 +1,6 @@
 const model = require('../Model')
 
+<<<<<<< HEAD
 function getAccountInfo(account_id, attributes) {
     return model.account.findAll({
         where: {
@@ -12,6 +13,11 @@ function getAccountInfo(account_id, attributes) {
 function insertAccount(account) {
     return model.account.create(account)
 }
+=======
+    insertAccount: (account) => {
+        return model.account.bulkCreate(account)
+    },
+>>>>>>> a54e81df1325a5ef53f8631a59063124d2d8aa5d
 
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
