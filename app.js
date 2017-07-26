@@ -29,12 +29,25 @@ app.get("/insert", (req, res) => {
             password: "12345A",
             balance: 0.0,
             register_timestamp:  '2017-07-25 09:29:00'
+        },
+        {
+            account_id: 098765432,
+            name: "Phansawuth",
+            surname: "Jenthaworn",
+            citizen_id: "1111122222345",
+            email: "phanasawuth@gmail.com",
+            tel: "0860755483",
+            username: "Phan.tnp",
+            password: "12345A",
+            balance: 0.0,
+            register_timestamp:  '2017-07-25 09:29:00'
         }
+        
      ]
      
 
-     controller.insertAccount(account).then((account)=>{
-         res.send(account)
+     controller.insertAccount(account).then((data)=>{
+         res.send(data)
      })
        
 })
