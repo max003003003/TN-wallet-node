@@ -14,18 +14,6 @@ function insertAccount(account) {
     return model.account.create(account)
 }
 
-
-async function checkLimitBalance(account_id) {
-    const limit = 5000
-    var acc = await model.transaction.findAll({
-        where: {
-            destinationAccountID: account_id
-        }
-
-    })
-    var sum = acc.destinationInitialBalance + acc.amount
-    return (limit - sum) < 0 ? false : true
-}
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
         where: {
@@ -35,7 +23,7 @@ function getTransactionInfo(transaction_id) {
 }
 
 
- function checkAccountExist(account_id) {
+function checkAccountExist(account_id) {
     
     return model.account.findAll({
         where: {
@@ -50,6 +38,33 @@ function getTransactionInfo(transaction_id) {
         })
     
 }
+
+
+function checkLimitBalance(account_id) {
+    const limit = 5000
+    // var acc = model.transaction.findAll({
+    //     where: {
+    //         destinationAccountID: account_id
+    //     }
+
+    // })
+    // var sum = acc.destinationInitialBalance + acc.amount
+    // return (limit - sum) < 0 ? false : true
+
+    return model.transaction.findAll({
+        where: {
+            destinationAccountID: account_id
+        }
+        }).then((transaction)=>{
+           let sum = destinationInitialBalance + amount
+           if (limit - sum < 0){
+               return false
+           }else{
+               return true
+           }
+        })
+}
+
 function insertTransaction(transactionobj) {
     return model.sequelize.transaction((t) => {
         return model.transaction.create(transactionobj, { transaction: t })
