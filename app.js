@@ -33,12 +33,16 @@ app.get("/insert", (req, res) => {
        
 })
 
-app.get("/query/:id", (req, res) => {
-    controller.getAccountInfo(req.query.id).then((accounts) => {
-        res.send(accounts[0])
+app.get("/accounts/:id", (req, res) => {
+    controller.getAccountInfo(req.params.id,['account_id','name','surname']).then((accounts) => {
+        res.send(accounts)
     })
 })
-
+app.get("/balances/:id", (req, res) => {
+    controller.getAccountInfo(req.params.id,['account_id','balance']).then((accounts) => {
+        res.send(accounts)
+    })
+})
 app.listen(3000, () => {
     console.log("app listen port 3000")
 })

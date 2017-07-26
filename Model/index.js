@@ -12,6 +12,7 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 
 var account_model = sequelize.import('./accountModel')
 var transaction_model = sequelize.import('./transactionModel')
+ 
 var db = {
     account: account_model,
     transaction: transaction_model,
@@ -30,3 +31,4 @@ var db = {
 
 
 module.exports = db
+ 
