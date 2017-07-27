@@ -61,13 +61,26 @@ app.get("/insert", (req, res) => {
             register_timestamp: '2017-07-25 09:29:00'
         }
     ]
-   
-     
+
+    const transaction = [
+        {
+            type: "transfer",
+            src_account_id: "1234567890",
+            src_initial_balance: "200",
+            des_account_id: "9876543210",
+            des_initial_balance: "4700",
+            amount: "200",
+            fee: "0",
+            src_remain_balance: "0",
+            des_remain_balance: "4900",
+            transaction_status: 'success'
+        }
+    ]
+    controller.insertTransactionDefault(transaction).then((transaction) => {
         controller.insertAccount(account).then((account) => {
             res.send(account)
         })
-
-
+    })
 })
 
 
