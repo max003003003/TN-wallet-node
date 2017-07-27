@@ -155,6 +155,11 @@ app.get("/transfer", (req, res) => {
     // })
 
 })
+app.get("/transaction/:id", (req, res) => {
+    controller.getTransactionInfo(req.params.id).then((transaction_id) => {
+            res.send(transaction_id)
+        })
+})
 
 app.listen(3000, () => {
     console.log("app listen port 3000")
