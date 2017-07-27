@@ -1,5 +1,5 @@
 const model = require('../Model')
-const account = require('./account')
+const transactionService = require('./transactionService')
 
 function getAccountInfo(account_id, attributes) {
     return model.account.findAll({
@@ -76,21 +76,43 @@ function checkLimitBalance(account_id, amount) {
     })
 }
 
-function insertTransaction(transactionObj){
-    account.insertTransactionInstance(transactionObj)
-    .then((success)=>{
-        console.log("------------------")
-        console.log(success)
-    })
-    .catch((error)=>{
-             console.log("------------------")
-        console.log(error)
-    })
+function insertTransaction(transactionObj,res) {
+   transactionService.insertTransactionInstance(transactionObj)
+        .then((success) => {
+            const transaction = success.dataValues
+            Promise.all([
+                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance)
+            ])
+            .then((result) => {
+                console.log("-------SUCCESS-----------")
+                console.log(result)
+                transactionService.updateTransactionsInstance(transaction.id,"SUCCESS")
+                .then((result)=>{
+                res.send(transaction)
+                return transaction
+                })
+            })
+            .catch((error)=>{
+                console.log("-------ERROR-----------")
+                console.log(error)
+                transactionService.updateTransactionsInstance(transaction.id,"ERROR")
+                .then((result)=>{
+                    res.send("error")
+                    return "error"                       
+                })
+            })
+        })
+        .catch((error) => {
+            console.log("-------ERROR TRANS-----------")
+            console.log(error)
+            res.send("error")
+            return "insert transaction faild"
+        })
 
 }
 
- 
-  
+
+
 
 
 
