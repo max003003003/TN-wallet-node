@@ -15,6 +15,10 @@ function insertAccount(account) {
     return model.account.bulkCreate(account)
 }
 
+function insertTransactionDefault(transaction) {
+    return model.transaction.bulkCreate(transaction)
+}
+
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
         where: {
@@ -140,6 +144,7 @@ function insertTransaction(transactionObj,res) {
 module.exports = {
     getAccountInfo,
     insertAccount,
+    insertTransactionDefault,
     getTransactionInfo,
     checkAccountExist,
     insertTransaction,
