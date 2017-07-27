@@ -4,8 +4,8 @@ const transactionService = require('./transactionService')
 function getAccountInfo(account_id, attributes) {
     var query = {
     }
-    if(account_id !=null){
-        query.where = { account_id : account_id}
+    if (account_id != null) {
+        query.where = { account_id: account_id }
     }
     query.attributes = attributes
     return model.account.findAll(query)
@@ -55,14 +55,14 @@ function checkEnoughBalance(account_id, amount) {
 function checkLimitBalance(account_id, amount) {
     const limit = 5000
     return model.account.findAll({
-        where:{
+        where: {
             account_id: account_id
         },
         attributes: ['balance']
-    }).then((balance)=>{
-        console.log(balance[0].dataValues.balance,amount,limit)
+    }).then((balance) => {
+        console.log(balance[0].dataValues.balance, amount, limit)
         return balance[0].dataValues.balance + amount <= limit
-        
+
     })
 }
 
