@@ -32,6 +32,17 @@ app.get("/insert", (req, res) => {
 
     const account = [
         {
+            account_id: 1234567899,
+            name: "Thanaporn",
+            surname: "Sumpaotong",
+            citizen_id: "1100501204188",
+            email: "thanaporn@gmail.com",
+            tel: "0860755482",
+            username: "Oh.tnp",
+            password: "12345A",
+            balance: 1000.0,
+            register_timestamp: '2017-07-25 09:29:00'
+        },{
             account_id: 1234567890,
             name: "Thanaporn",
             surname: "Sumpaotong",
