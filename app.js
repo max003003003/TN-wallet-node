@@ -109,6 +109,7 @@ app.get("/balances/:id", (req, res) => {
     })
 })
 app.post("/transactions", (req, res) => {
+    console.log("/transactions")
      var type = req.body.type
      var src_acc_id = req.body.src_acc_id
      var src_initial_balance = Number(req.body.src_initial_balance)
