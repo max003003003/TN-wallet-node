@@ -9,11 +9,11 @@ ${URL}    http://127.0.0.1:3000
 Get transactions success
     Create Session    TN-wallet-node    ${URL}
     ${resp}=    Get Request    TN-wallet-node    /transactions/1
-    Transactions Should Contain    ${resp}    1    transfer    1234567890    200    9876543210    4700    200    0    0    4900
+    Transactions Should Contain    ${resp}    1    transfer    1234567890    200    9876543210    4700    200    0    0    4900    success
 
 *** Keywords ***
 Transactions Should Contain
-    [Arguments]    ${resp}     ${id}    ${type}    ${src_account_id}    ${src_initial_balance}     ${des_account_id}    ${des_initial_balance}    ${amount}    ${fee}    ${src_remain_balance}    ${des_remain_balance}
+    [Arguments]    ${resp}     ${id}    ${type}    ${src_account_id}    ${src_initial_balance}     ${des_account_id}    ${des_initial_balance}    ${amount}    ${fee}    ${src_remain_balance}    ${des_remain_balance}    ${transaction_status}
     Should Be Equal As Strings    ${resp.status_code}    200
     Dictionary Should Contain Item    ${resp.json()[0]}    id    ${id}
     Dictionary Should Contain Item    ${resp.json()[0]}    type    ${type}
@@ -25,4 +25,5 @@ Transactions Should Contain
     Dictionary Should Contain Item    ${resp.json()[0]}    fee    ${fee}
     Dictionary Should Contain Item    ${resp.json()[0]}    src_remain_balance    ${src_remain_balance}
     Dictionary Should Contain Item    ${resp.json()[0]}    des_remain_balance    ${des_remain_balance}
+    Dictionary Should Contain Item    ${resp.json()[0]}    transaction_status    ${transaction_status}
 

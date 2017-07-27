@@ -15,6 +15,10 @@ function insertAccount(account) {
     return model.account.bulkCreate(account)
 }
 
+function insertTransactionDefault(transaction) {
+    return model.transaction.bulkCreate(transaction)
+}
+
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
         where: {
@@ -66,31 +70,31 @@ function checkLimitBalance(account_id, amount) {
     })
 }
 
-function insertTransaction(transactionObj,res) {
-   transactionService.insertTransactionInstance(transactionObj)
+function insertTransaction(transactionObj, res) {
+    transactionService.insertTransactionInstance(transactionObj)
         .then((success) => {
             const transaction = success.dataValues
             Promise.all([
                 transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance)
             ])
-            .then((result) => {
-                console.log("-------SUCCESS-----------")
-                console.log(result)
-                transactionService.updateTransactionsInstance(transaction.id,"SUCCESS")
-                .then((result)=>{
-                res.send(transaction)
-                return transaction
+                .then((result) => {
+                    console.log("-------SUCCESS-----------")
+                    console.log(result)
+                    transactionService.updateTransactionsInstance(transaction.id, "SUCCESS")
+                        .then((result) => {
+                            res.send(transaction)
+                            return transaction
+                        })
                 })
-            })
-            .catch((error)=>{
-                console.log("-------ERROR-----------")
-                console.log(error)
-                transactionService.updateTransactionsInstance(transaction.id,"ERROR")
-                .then((result)=>{
-                    res.send("error")
-                    return "error"                       
+                .catch((error) => {
+                    console.log("-------ERROR-----------")
+                    console.log(error)
+                    transactionService.updateTransactionsInstance(transaction.id, "ERROR")
+                        .then((result) => {
+                            res.send("error")
+                            return "error"
+                        })
                 })
-            })
         })
         .catch((error) => {
             console.log("-------ERROR TRANS-----------")
@@ -99,50 +103,12 @@ function insertTransaction(transactionObj,res) {
             return "insert transaction faild"
         })
 }
-
-
-
-
-
-
-
-
-// function insertTransaction(transactionObj) {
-//     let resultTran
-//     return model.sequelize.transaction ( t => {
-//         return model.transaction.create(transactionObj, { transaction: t })
-//             .then( result => {
-//                 resultTran = result.dataValues
-//                 return model.account.update({ //source accout
-//                     balance: resultTran.src_remain_balance
-//                 },
-//                     {
-//                         where: { account_id: resultTran.src_account_id }
-//                     }, { transaction: t })
-//                     .then(result => {
-//                         return model.account.update({ //dest account
-//                             balance: resultTran.des_remain_balance
-//                         },
-//                             {
-//                                 where: { i: resultTran.des_account_id }
-//                             })
-//                     }, { transaction: t })
-//                     .then((result) => {  //transaction 
-//                         return resultTran
-//                     })
-//                     .catch((error) => {
-
-//                     })`
-
-//             })
-//     })
-// }
 module.exports = {
     getAccountInfo,
     insertAccount,
+    insertTransactionDefault,
     getTransactionInfo,
     checkAccountExist,
     insertTransaction,
-    checkEnoughBalance,
     checkLimitBalance
 }
