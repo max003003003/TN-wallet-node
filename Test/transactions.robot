@@ -1,9 +1,11 @@
 *** Settings ***
 Library    RequestsLibrary
 Library    Collections
+*** Variables ***
+${URL}    http://127.0.0.1:3000
 *** Test cases ***
 Get transactions success
-    Create Session    TN-wallet-node    http://127.0.0.1:3000
+    Create Session    TN-wallet-node    ${URL}
     ${resp}=    Get Request    TN-wallet-node    /transactions/1
     Should Be Equal As Strings    ${resp.status_code}    200
     Dictionary Should Contain Key    ${resp.json()[0]}    id
