@@ -128,10 +128,8 @@ app.get("/transfer", (req, res) => {
         //     }
         // })
      
-        controller.insertTransaction(trans).then((response) => {
-                                    res.send(response)
-                                })
-    
+        controller.insertTransaction(trans,res) 
+           
     
     
 
