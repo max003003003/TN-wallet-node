@@ -13,8 +13,7 @@ Get transactions success
 
 *** Keywords ***
 Transactions Should Contain
-    [Arguments]    ${resp}     ${id}    ${type}    ...
-    ${src_account_id}    ${src_initial_balance}     ${des_account_id}    ${des_initial_balance}    ${amount}    ${fee}    ${src_remain_balance}    ${des_remain_balance}
+    [Arguments]    ${resp}     ${id}    ${type}    ${src_account_id}    ${src_initial_balance}     ${des_account_id}    ${des_initial_balance}    ${amount}    ${fee}    ${src_remain_balance}    ${des_remain_balance}
     Should Be Equal As Strings    ${resp.status_code}    200
     Dictionary Should Contain Item    ${resp.json()[0]}    id    ${id}
     Dictionary Should Contain Item    ${resp.json()[0]}    type    ${type}
