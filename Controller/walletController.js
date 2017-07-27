@@ -99,34 +99,6 @@ function insertTransaction(transactionObj, res) {
             return "insert transaction faild"
         })
 }
-// function insertTransaction(transactionObj) {
-//     let resultTran
-//     return model.sequelize.transaction ( t => {
-//         return model.transaction.create(transactionObj, { transaction: t })
-//             .then( result => {
-//                 resultTran = result.dataValues
-//                 return model.account.update({ //source accout
-//                     balance: resultTran.src_remain_balance
-//                 },
-//                     {
-//                         where: { account_id: resultTran.src_account_id }
-//                     }, { transaction: t })
-//                     .then(result => {
-//                         return model.account.update({ //dest account
-//                             balance: resultTran.des_remain_balance
-//                         },
-//                             {
-//                                 where: { i: resultTran.des_account_id }
-//                             })
-//                     }, { transaction: t })
-//                     .then((result) => {  //transaction 
-//                         return resultTran
-//                     })
-//                     .catch((error) => {
-//                     })
-//             })
-//     })
-// }
 module.exports = {
     getAccountInfo,
     insertAccount,
