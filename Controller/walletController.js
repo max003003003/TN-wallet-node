@@ -15,6 +15,10 @@ function insertAccount(account) {
     return model.account.bulkCreate(account)
 }
 
+function insertTransactionDefault(transaction) {
+    return model.transaction.bulkCreate(transaction)
+}
+
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
         where: {
@@ -59,8 +63,13 @@ function checkLimitBalance(account_id, amount) {
             account_id: account_id
         },
         attributes: ['balance']
+<<<<<<< HEAD
     }).then((balance) => {
         console.log(balance[0].dataValues.balance, amount, limit)
+=======
+    }).then((balance)=>{
+        // console.log(balance[0].dataValues.balance,amount,limit)
+>>>>>>> 309283bed6a500e5a05a4c86a5c08f75c4f29b28
         return balance[0].dataValues.balance + amount <= limit
 
     })
@@ -71,7 +80,8 @@ function insertTransaction(transactionObj, res) {
         .then((success) => {
             const transaction = success.dataValues
             Promise.all([
-                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance)
+                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance),
+                transactionService.updateAccount(transaction.des_account_id, transaction.des_remain_balance)
             ])
                 .then((result) => {
                     console.log("-------SUCCESS-----------")
@@ -102,9 +112,10 @@ function insertTransaction(transactionObj, res) {
 module.exports = {
     getAccountInfo,
     insertAccount,
+    insertTransactionDefault,
     getTransactionInfo,
     checkAccountExist,
     insertTransaction,
-    checkEnoughBalance,
-    checkLimitBalance
+    checkLimitBalance,
+    checkEnoughBalance
 }
