@@ -2,12 +2,13 @@ const model = require('../Model')
 const transactionService = require('./transactionService')
 
 function getAccountInfo(account_id, attributes) {
-    return model.account.findAll({
-        where: {
-            account_id: account_id
-        },
-        attributes: attributes
-    })
+    var query = {
+    }
+    if(account_id !=null){
+        query.where = { account_id : account_id}
+    }
+    query.attributes = attributes
+    return model.account.findAll(query)
 }
 
 function insertAccount(account) {

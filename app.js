@@ -75,8 +75,14 @@ app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname','balance']).then((accounts) => {
         res.send(accounts)
     })
-
 })
+
+app.get("/accounts", (req, res) => {
+    controller.getAccountInfo(null, ['account_id', 'name', 'surname','balance']).then((accounts) => {
+        res.send(accounts)
+    })
+})
+
 app.get("/balances/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'balance']).then((accounts) => {
         res.send(accounts)
