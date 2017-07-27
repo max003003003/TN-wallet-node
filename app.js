@@ -72,7 +72,7 @@ app.get("/insert", (req, res) => {
 
 
 app.get("/accounts/:id", (req, res) => {
-    controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname']).then((accounts) => {
+    controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname','balance']).then((accounts) => {
         res.send(accounts)
     })
 
@@ -89,7 +89,7 @@ app.post("/transactions", (req, res) => {
      var des_acc_id = req.body.des_acc_id
      var des_initial_balance = Number(req.body.des_initial_balance)
      var amount = Number(req.body.amount)
-     var fee = Number(req.body.fee)
+     var fee = 0
      var src_remain_balance = Number(req.body.src_remain_balance)
      var des_remain_balance = Number(req.body.des_remain_balance)
 
@@ -131,9 +131,7 @@ app.post("/transactions", (req, res) => {
                                                 src_remain_balance: src_remain_balance,
                                                 des_remain_balance: des_remain_balance
                                             }
-                                            controller.insertTransaction(trans).then((response) => {
-                                                return res.send(response)
-                                            })
+                                            controller.insertTransaction(trans,res)
                                         }else{
                                             return res.status(400).send({
                                                 error: {
@@ -176,35 +174,12 @@ app.post("/transactions", (req, res) => {
                 }
             }) 
     }
-    
+})
 
-   
-    
-    
-    
-
-    
-
-    // check 
-
-    // const trans = {
-
-    //     type: "transfer",
-    //     src_account_id: 4097,
-    //     src_initial_balance: 4700,
-    //     des_account_id: 1234567890,
-    //     des_acc_id: 7582983660,
-    //     des_initial_balance: 4200,
-    //     amount: 500,
-    //     fee: 0,
-    //     src_remain_balance: 4500,
-    //     des_remain_balance: 4300
-
-    // }
-    // controller.insertTransaction(trans).then((response) => {
-    //     res.send(response)
-    // })
-
+app.get("/transactions/:id", (req, res) => {
+    controller.getTransactionInfo(req.params.id).then((transaction_id) => {
+            res.send(transaction_id)
+        })
 })
 
 app.post("/test",(req,res)=>{
