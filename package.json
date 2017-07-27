@@ -26,5 +26,6 @@
   "bugs": {
     "url": "https://github.com/max003003003/TN-wallet-node/issues"
   },
-  "homepage": "https://github.com/max003003003/TN-wallet-node#readme"
+  "homepage": "https://github.com/max003003003/TN-wallet-node#readme",
+  "testEnvironment" : "node"
 }
