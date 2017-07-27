@@ -218,13 +218,13 @@ app.get("/transactions/:type/:src_acc_id/:src_initial_balance/:des_acc_id/:des_i
 
     if(type == "transfer"){
          // calculate transfer
-        if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
-            return res.status(400).send({
-                error: {
-                    message : "invalid remaining balance"
-                }
-            })
-        }
+        // if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
+        //     return res.status(400).send({
+        //         error: {
+        //             message : "invalid remaining balance"
+        //         }
+        //     })
+        // }
         
         Promise.all([
             controller.checkAccountExist(src_acc_id),
@@ -254,8 +254,8 @@ app.get("/transactions/:type/:src_acc_id/:src_initial_balance/:des_acc_id/:des_i
                     des_initial_balance: des_initial_balance,
                     amount: amount,
                     fee: fee,
-                    src_remain_balance: src_remain_balance,
-                    des_remain_balance: des_remain_balance
+                    src_remain_balance: local_src_remain_balance,
+                    des_remain_balance: local_des_remain_balance
                 }
             controller.insertTransaction(trans,res)
 
