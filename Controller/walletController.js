@@ -1,13 +1,14 @@
 const model = require('../Model')
-const account = require('./account')
+const transactionService = require('./transactionService')
 
 function getAccountInfo(account_id, attributes) {
-    return model.account.findAll({
-        where: {
-            account_id: account_id
-        },
-        attributes: attributes
-    })
+    var query = {
+    }
+    if(account_id !=null){
+        query.where = { account_id : account_id}
+    }
+    query.attributes = attributes
+    return model.account.findAll(query)
 }
 
 function insertAccount(account) {
@@ -17,81 +18,87 @@ function insertAccount(account) {
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
         where: {
-            id: 1
+            id: transaction_id
         }
     })
 }
 
 
 function checkAccountExist(account_id) {
-    
+
     return model.account.findAll({
         where: {
             account_id: account_id
         }
-        }).then((account)=>{
-            if( !(account.length === 0) ){
-                return true
-            }else{
-                return false
-            }
-        })
-    
-}
-function checkLimitBalance(account_id) {
-    const limit = 5000
-    return model.transaction.findAll({
-        where: {
-            destinationAccountID: account_id
+    }).then((account) => {
+        if ((account.length === 0)) {
+            return false
+        } else {
+            return true
         }
-        }).then((transaction)=>{
-           let sum = destinationInitialBalance + amount
-           if (limit - sum < 0){
-               return false
-           }else{
-               return true
-           }
-        })
-}
-function insertTransaction(transactionObj) {
-    let resultTran
-    return model.sequelize.transaction((t) => {
-        return model.transaction.create(transactionObj, { transaction: t })
-            .then(result => {
-                resultTran = result.dataValues
-                return model.account.update({  //source accout
-                    balance: resultTran.src_remain_balance
-                },
-                    {
-                        where: { account_id: resultTran.src_account_id }
-                    }, { transaction: t })
-                    .then(result => {
-                        return model.account.update({ //dest account
-                            balance: resultTran.des_remain_balance
-                        },
-                            {
-                                where: { account_id: resultTran.des_account_id }
-                            })
-                    }, { transaction: t })
-                    .then((result) => {
-                        console.log("--------------------------")
-                        console.log(resultTran)
-                        return result
-                    })
-                    .catch((error) => {
-                        throw error
-                    })
+    })
 
-            })
+}
+function checkEnoughBalance(account_id, amount) {
+
+    return model.account.findAll({
+        where: {
+            account_id: account_id
+        },
+        attributes: ['balance']
+    }).then((balance) => {
+        if (balance[0].dataValues.balance >= amount) return true
+        else return false
     })
 }
-// p1 = account.updateAccountBalance("1233")
-// p2 = account.updateAccountBalance("1222")
-// Promise.all([p1, p2]).then(values => {
-//     return values
-// }).catch(error => {
-//     throw new error.toString()
-// })
+
+function checkLimitBalance(account_id, amount) {
+    const limit = 5000
+    return model.account.findAll({
+        where:{
+            account_id: account_id
+        },
+        attributes: ['balance']
+    }).then((balance)=>{
+        console.log(balance[0].dataValues.balance,amount,limit)
+        return balance[0].dataValues.balance + amount <= limit
+        
+    })
+}
+
+function insertTransaction(transactionObj, res) {
+    transactionService.insertTransactionInstance(transactionObj)
+        .then((success) => {
+            const transaction = success.dataValues
+            Promise.all([
+                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance)
+            ])
+                .then((result) => {
+                    console.log("-------SUCCESS-----------")
+                    console.log(result)
+                    transactionService.updateTransactionsInstance(transaction.id, "SUCCESS")
+                        .then((result) => {
+                            res.send(transaction)
+                            return transaction
+                        })
+                })
+                .catch((error) => {
+                    console.log("-------ERROR-----------")
+                    console.log(error)
+                    transactionService.updateTransactionsInstance(transaction.id, "ERROR")
+                        .then((result) => {
+                            res.send("error")
+                            return "error"
+                        })
+                })
+        })
+        .catch((error) => {
+            console.log("-------ERROR TRANS-----------")
+            console.log(error)
+            res.send("error")
+            return "insert transaction faild"
+        })
+}
 module.exports = {
     getAccountInfo,
     insertAccount,
