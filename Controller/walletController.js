@@ -75,7 +75,8 @@ function insertTransaction(transactionObj, res) {
         .then((success) => {
             const transaction = success.dataValues
             Promise.all([
-                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance)
+                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance),
+                transactionService.updateAccount(transaction.des_account_id, transaction.des_remain_balance)
             ])
                 .then((result) => {
                     console.log("-------SUCCESS-----------")
