@@ -2,7 +2,13 @@ const config = require('dotenv').config()
 const express = require('express')
 const app = express()
 const model = require('./Model')
+const bodyParser = require('body-parser');
 const controller = require('./Controller/walletController')
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.get("/", (req, res) => {
     res.send("server start")
@@ -27,7 +33,7 @@ app.get("/insert", (req, res) => {
             tel: "0860755482",
             username: "Oh.tnp",
             password: "12345A",
-            balance: 200.0,
+            balance: 2000.0,
             register_timestamp: '2017-07-25 09:29:00'
         },
         {
@@ -76,58 +82,103 @@ app.get("/balances/:id", (req, res) => {
         res.send(accounts)
     })
 })
-app.get("/transfer", (req, res) => {
-    // const trans = {
-    //     type: req.body.type,
-    //     src_acc_id: req.body.src_acc_id,
-    //     src_initial_balance: req.body.src_initial_balance,
-    //     des_acc_id:req.body.des_acc_id,
-    //     des_initial_balance: req.body.des_initial_balance,
-    //     amount: req.body.amount,
-    //     fee: req.body.fee,
-    //     src_remain_balance: req.body.src_remain_balance,
-    //     des_remain_balance: req.body.des_remain_balance
-    // }
-    src_acc_id = "1234567890" 
-    des_acc_id = "9876543210"
-    amount = 200
+app.post("/transactions", (req, res) => {
+     var type = req.body.type
+     var src_acc_id = req.body.src_acc_id
+     var src_initial_balance = Number(req.body.src_initial_balance)
+     var des_acc_id = req.body.des_acc_id
+     var des_initial_balance = Number(req.body.des_initial_balance)
+     var amount = Number(req.body.amount)
+     var fee = Number(req.body.fee)
+     var src_remain_balance = Number(req.body.src_remain_balance)
+     var des_remain_balance = Number(req.body.des_remain_balance)
 
+    var local_src_remain_balance = src_initial_balance - amount
+    var local_des_remain_balance = des_initial_balance + amount
+    
+ 
 
-    // checkaccount exist
-        controller.checkAccountExist(src_acc_id).then((isSrcExist)=>{
-            if(isSrcExist){
-                controller.checkAccountExist(des_acc_id).then((isDesExist)=>{
-                    if(isDesExist){
-                        // check Sender enough Balance
-                        controller.checkEnoughBalance(src_acc_id,amount).then((isEnoungh)=>{
-                            if(isEnoungh){
-                                // check Limit Reciever Balance exceed
-                                // TODO
-                                 const trans = {
-
-                                    type: "transfer",
-                                    src_account_id: src_acc_id,
-                                    src_initial_balance: 200,
-                                    des_account_id: des_acc_id,
-                                    des_acc_id: des_acc_id,
-                                    des_initial_balance: 4700,
-                                    amount: amount,
-                                    fee: 0,
-                                    src_remain_balance: 0,
-                                    des_remain_balance: 4900
-
+    if(type == "transfer"){
+         // calculate transfer
+        if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
+            return res.status(400).send({
+                error: {
+                    message : "invalid remaining balance"
+                }
+            })
+        }
+        console.log("going to check account exist")
+        // checkaccount exist
+            controller.checkAccountExist(src_acc_id).then((isSrcExist)=>{
+                if(isSrcExist){
+                    controller.checkAccountExist(des_acc_id).then((isDesExist)=>{
+                        if(isDesExist){
+                            // check Sender enough Balance
+                            controller.checkEnoughBalance(src_acc_id,amount).then((isEnoungh)=>{
+                                if(isEnoungh){
+                                    // check Limit Reciever Balance exceed
+                                    controller.checkLimitBalance(des_acc_id,amount).then((canTransfer)=>{
+                                        if(canTransfer){
+                                            const trans = {
+                                                type: type,
+                                                src_account_id: src_acc_id,
+                                                src_initial_balance: src_initial_balance,
+                                                des_account_id: des_acc_id,
+                                                des_acc_id: des_acc_id,
+                                                des_initial_balance: des_initial_balance,
+                                                amount: amount,
+                                                fee: fee,
+                                                src_remain_balance: src_remain_balance,
+                                                des_remain_balance: des_remain_balance
+                                            }
+                                            controller.insertTransaction(trans).then((response) => {
+                                                return res.send(response)
+                                            })
+                                        }else{
+                                            return res.status(400).send({
+                                                error: {
+                                                    message : "destination account balance exceed limit"
+                                                }
+                                            }) 
+                                        }
+                                    })
+                                   
+                                }else{
+                                    return res.status(400).send({
+                                                error: {
+                                                    message : "source account doesn't have enough balance"
+                                                }
+                                            }) 
                                 }
-                                controller.insertTransaction(trans).then((response) => {
-                                    res.send(response)
-                                })
-                            }
-                        })
-                        
-                    }
-                })
-            }
-        })
+                            })
+                            
+                        }else{
+                            return res.status(400).send({
+                                error: {
+                                    message : "destination account doesn't exist"
+                                }
+                            }) 
+                        }
+                    })
+                }else{
+                    return res.status(400).send({
+                                error: {
+                                    message : "source account doesn't exist"
+                                }
+                            }) 
+                }
+            })
 
+    }else{
+        return res.status(400).send({
+                error: {
+                    message : "transaction type error"
+                }
+            }) 
+    }
+    
+
+   
     
     
     
@@ -154,6 +205,22 @@ app.get("/transfer", (req, res) => {
     //     res.send(response)
     // })
 
+})
+
+app.post("/test",(req,res)=>{
+     var type = req.body.type
+     var src_acc_id = req.body.src_acc_id
+     var src_initial_balance = req.body.src_initial_balance
+     var des_acc_id = req.body.des_acc_id
+     var des_initial_balance = req.body.des_initial_balance
+     var amount = Number(req.body.amount)
+     var fee = req.body.fee
+     var src_remain_balance = req.body.src_remain_balance
+     var des_remain_balance = req.body.des_remain_balance
+   
+
+     //TODO handle undefine
+     
 })
 
 app.listen(3000, () => {
