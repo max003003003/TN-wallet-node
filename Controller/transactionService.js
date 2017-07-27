@@ -1,6 +1,6 @@
 const model = require('../Model')
 const transactionService = {
-    insertTransactionInstance: (transactionObj) => {        
+    insertTransactionInstance: (transactionObj) => {
         return model.sequelize.transaction((t1) => {
             return model.transaction.create(transactionObj, { transaction: t1 })
         })

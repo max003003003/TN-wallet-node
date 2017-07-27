@@ -17,7 +17,7 @@ function insertAccount(account) {
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
         where: {
-            id: 1
+            id: transaction_id
         }
     })
 }
