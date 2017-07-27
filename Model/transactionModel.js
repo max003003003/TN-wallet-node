@@ -5,15 +5,15 @@ module.exports = function (sequelize, DataTypes) {
             require: true
         },
         src_account_id: {
-            type: DataTypes.INTEGER(10),
+            type: DataTypes.STRING(10),
             require: true
         },
-        src_initial_balance: {
+          src_initial_balance: {
             type: DataTypes.DOUBLE,
             require: true
         },
         des_account_id: {
-            type: DataTypes.INTEGER(10),
+            type: DataTypes.STRING(10),
             require: true
         },
         des_initial_balance: {
@@ -37,8 +37,8 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.DOUBLE,
             require: true
         },
-        transaction_timestamp: {
-            type: DataTypes.DATE,
+        transaction_status: {
+            type: DataTypes.STRING(20),
             require: true
         }
     })

@@ -27,11 +27,11 @@ app.get("/insert", (req, res) => {
             tel: "0860755482",
             username: "Oh.tnp",
             password: "12345A",
-            balance: 0.0,
+            balance: 200.0,
             register_timestamp: '2017-07-25 09:29:00'
         },
         {
-            account_id: 0000010001,
+            account_id: 9876543210,
             name: "Thanaporn",
             surname: "Suwathanawongchai",
             citizen_id: "1111111111111",
@@ -57,7 +57,7 @@ app.get("/insert", (req, res) => {
     ]
    
      
-        controller.insertAccount(account[1]).then((account) => {
+        controller.insertAccount(account).then((account) => {
             res.send(account)
         })
 
@@ -69,6 +69,7 @@ app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname']).then((accounts) => {
         res.send(accounts)
     })
+
 })
 app.get("/balances/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'balance']).then((accounts) => {
@@ -87,25 +88,74 @@ app.get("/transfer", (req, res) => {
     //     src_remain_balance: req.body.src_remain_balance,
     //     des_remain_balance: req.body.des_remain_balance
     // }
+    src_acc_id = "1234567890" 
+    des_acc_id = "9876543210"
+    amount = 200
 
-    const trans = {
 
-        type: "transfer",
-        src_account_id: 4097,
-        src_acc_id: 6302335476,
-        src_initial_balance: 4700,
-        des_account_id: 1234567890,
-        des_acc_id: 7582983660,
-        des_initial_balance: 4200,
-        amount: 500,
-        fee: 0,
-        src_remain_balance: 4500,
-        des_remain_balance: 4300
+    // checkaccount exist
+        // controller.checkAccountExist(src_acc_id).then((isSrcExist)=>{
+        //     if(isSrcExist){
+        //         controller.checkAccountExist(des_acc_id).then((isDesExist)=>{
+        //             if(isDesExist){
+        //                 // check Sender enough Balance
+        //                 controller.checkEnoughBalance(src_acc_id,amount).then((isEnoungh)=>{
+        //                     if(isEnoungh){
+        //                         // check Limit Reciever Balance exceed
+        //                         // TODO
+                                 const trans = {
 
-    }
-    controller.insertTransaction(trans).then((response) => {
-        res.send(response)
-    })
+                                    type: "transfer",
+                                    src_account_id: src_acc_id,
+                                    src_initial_balance: 200,
+                                    des_account_id: des_acc_id,
+                                    des_acc_id: des_acc_id,
+                                    des_initial_balance: 99989,
+                                    amount: amount,
+                                    fee: 0,
+                                    src_remain_balance: 0,
+                                    des_remain_balance: 453454325
+
+                                 }
+        //                         controller.insertTransaction(trans).then((response) => {
+        //                             res.send(response)
+        //                         })
+        //                     }
+        //                 })
+                        
+        //             }
+        //         })
+        //     }
+        // })
+     
+        controller.insertTransaction(trans).then((response) => {
+                                    res.send(response)
+                                })
+    
+    
+    
+
+    
+
+    // check 
+
+    // const trans = {
+
+    //     type: "transfer",
+    //     src_account_id: 4097,
+    //     src_initial_balance: 4700,
+    //     des_account_id: 1234567890,
+    //     des_acc_id: 7582983660,
+    //     des_initial_balance: 4200,
+    //     amount: 500,
+    //     fee: 0,
+    //     src_remain_balance: 4500,
+    //     des_remain_balance: 4300
+
+    // }
+    // controller.insertTransaction(trans).then((response) => {
+    //     res.send(response)
+    // })
 
 })
 

@@ -23,65 +23,115 @@ function getTransactionInfo(transaction_id) {
 }
 
 
- function checkAccountExist(account_id) {
-    
+function checkAccountExist(account_id) {
+
     return model.account.findAll({
         where: {
             account_id: account_id
         }
-        }).then((account)=>{
-            if( !(account.length === 0) ){
-                return true
-            }else{
-                return false
-            }
-        })
-    
+    }).then((account) => {
+        if ((account.length === 0)) {
+            return false
+        } else {
+            return true
+        }
+    })
+
 }
+function checkEnoughBalance(account_id, amount) {
 
-function insertTransaction(transactionObj) {
-    let resultTran
-    return model.sequelize.transaction((t) => {
-        return model.transaction.create(transactionObj, { transaction: t })
-            .then(result => {
-                resultTran = result.dataValues
-                return model.account.update({  //source accout
-                    balance: resultTran.src_remain_balance
-                },
-                    {
-                        where: { account_id: resultTran.src_account_id }
-                    }, { transaction: t })
-                    .then(result => {
-                        return model.account.update({ //dest account
-                            balance: resultTran.des_remain_balance
-                        },
-                            {
-                                where: { account_id: resultTran.des_account_id }
-                            })
-                    }, { transaction: t })
-                    .then((result) => {
-                        console.log("--------------------------")
-                        console.log(resultTran)
-                        return resultTran
-                    })
-                    .catch((error) => {
-                        throw error
-                    })
-
-            })
+    return model.account.findAll({
+        where: {
+            account_id: account_id
+        },
+        attributes: ['balance']
+    }).then((balance) => {
+        if (balance[0].dataValues.balance >= amount) return true
+        else return false
     })
 }
-// p1 = account.updateAccountBalance("1233")
-// p2 = account.updateAccountBalance("1222")
-// Promise.all([p1, p2]).then(values => {
-//     return values
-// }).catch(error => {
-//     throw new error.toString()
-// })
+
+function checkLimitBalance(account_id, amount) {
+    const limit = 5000
+    // var acc = model.transaction.findAll({
+    //     where: {
+    //         destinationAccountID: account_id
+    //     }
+
+    // })
+    // var sum = acc.destinationInitialBalance + acc.amount
+    // return (limit - sum) < 0 ? false : true
+
+    return model.account.findAll({
+        where: {
+            account_id: account_id
+        }
+    }).then((account) => {
+        let sum = account.balance + amount
+        if (limit - sum < 0) {
+            return false
+        } else {
+            return true
+        }
+    })
+}
+
+function insertTransaction(transactionObj){
+    account.insertTransactionInstance(transactionObj)
+    .then((success)=>{
+        console.log("------------------")
+        console.log(success)
+    })
+    .catch((error)=>{
+             console.log("------------------")
+        console.log(error)
+    })
+
+}
+
+ 
+  
+
+
+
+
+
+// function insertTransaction(transactionObj) {
+//     let resultTran
+//     return model.sequelize.transaction ( t => {
+//         return model.transaction.create(transactionObj, { transaction: t })
+//             .then( result => {
+//                 resultTran = result.dataValues
+//                 return model.account.update({ //source accout
+//                     balance: resultTran.src_remain_balance
+//                 },
+//                     {
+//                         where: { account_id: resultTran.src_account_id }
+//                     }, { transaction: t })
+//                     .then(result => {
+//                         return model.account.update({ //dest account
+//                             balance: resultTran.des_remain_balance
+//                         },
+//                             {
+//                                 where: { i: resultTran.des_account_id }
+//                             })
+//                     }, { transaction: t })
+//                     .then((result) => {  //transaction 
+//                         return resultTran
+//                     })
+//                     .catch((error) => {
+
+//                     })
+
+//             })
+//     })
+// }
 module.exports = {
     getAccountInfo,
     insertAccount,
     getTransactionInfo,
     checkAccountExist,
-    insertTransaction
+    insertTransaction,
+    checkEnoughBalance,
+    checkLimitBalance
 }
