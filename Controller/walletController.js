@@ -109,7 +109,6 @@ module.exports = {
     insertTransactionDefault,
     getTransactionInfo,
     checkAccountExist,
-    checkEnoughBalance,
     insertTransaction,
     checkLimitBalance,
     checkEnoughBalance
