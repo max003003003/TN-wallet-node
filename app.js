@@ -66,16 +66,12 @@ app.get("/insert", (req, res) => {
 
 
 app.get("/accounts/:id", (req, res) => {
-    controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname']).then((accounts) => {
+    controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname','balance']).then((accounts) => {
         res.send(accounts)
     })
 
 })
-app.get("/balances/:id", (req, res) => {
-    controller.getAccountInfo(req.params.id, ['account_id', 'balance']).then((accounts) => {
-        res.send(accounts)
-    })
-})
+
 app.get("/transfer", (req, res) => {
     // const trans = {
     //     type: req.body.type,
