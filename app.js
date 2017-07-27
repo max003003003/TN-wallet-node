@@ -90,15 +90,15 @@ app.get("/transfer", (req, res) => {
 
 
     // checkaccount exist
-        controller.checkAccountExist(src_acc_id).then((isSrcExist)=>{
-            if(isSrcExist){
-                controller.checkAccountExist(des_acc_id).then((isDesExist)=>{
-                    if(isDesExist){
-                        // check Sender enough Balance
-                        controller.checkEnoughBalance(src_acc_id,amount).then((isEnoungh)=>{
-                            if(isEnoungh){
-                                // check Limit Reciever Balance exceed
-                                // TODO
+        // controller.checkAccountExist(src_acc_id).then((isSrcExist)=>{
+        //     if(isSrcExist){
+        //         controller.checkAccountExist(des_acc_id).then((isDesExist)=>{
+        //             if(isDesExist){
+        //                 // check Sender enough Balance
+        //                 controller.checkEnoughBalance(src_acc_id,amount).then((isEnoungh)=>{
+        //                     if(isEnoungh){
+        //                         // check Limit Reciever Balance exceed
+        //                         // TODO
                                  const trans = {
 
                                     type: "transfer",
@@ -106,25 +106,26 @@ app.get("/transfer", (req, res) => {
                                     src_initial_balance: 200,
                                     des_account_id: des_acc_id,
                                     des_acc_id: des_acc_id,
-                                    des_initial_balance: 4700,
+                                    des_initial_balance: 99989,
                                     amount: amount,
                                     fee: 0,
                                     src_remain_balance: 0,
-                                    des_remain_balance: 4900
+                                    des_remain_balance: 453454325
 
-                                }
-                                controller.insertTransaction(trans).then((response) => {
-                                    res.send(response)
-                                })
-                            }
-                        })
+                                 }
+        //                         controller.insertTransaction(trans).then((response) => {
+        //                             res.send(response)
+        //                         })
+        //                     }
+        //                 })
                         
-                    }
-                })
-            }
-        })
-
-    
+        //             }
+        //         })
+        //     }
+        // })
+     
+        controller.insertTransaction(trans,res) 
+           
     
     
 

@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(10),
             require: true
         },
-        src_initial_balance: {
+          src_initial_balance: {
             type: DataTypes.DOUBLE,
             require: true
         },
@@ -37,8 +37,8 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.DOUBLE,
             require: true
         },
-        transaction_timestamp: {
-            type: DataTypes.DATE,
+        transaction_status: {
+            type: DataTypes.STRING(20),
             require: true
         }
     })
