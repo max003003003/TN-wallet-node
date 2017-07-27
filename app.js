@@ -151,7 +151,7 @@ app.get("/transfer", (req, res) => {
     // })
 
 })
-app.get("/transaction/:id", (req, res) => {
+app.get("/transactions/:id", (req, res) => {
     controller.getTransactionInfo(req.params.id).then((transaction_id) => {
             res.send(transaction_id)
         })
