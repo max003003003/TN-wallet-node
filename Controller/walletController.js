@@ -64,7 +64,7 @@ function checkLimitBalance(account_id, amount) {
         },
         attributes: ['balance']
     }).then((balance)=>{
-        console.log(balance[0].dataValues.balance,amount,limit)
+        // console.log(balance[0].dataValues.balance,amount,limit)
         return balance[0].dataValues.balance + amount <= limit
         
     })
