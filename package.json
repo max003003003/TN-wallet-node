@@ -12,7 +12,9 @@
     "nodemon": "^1.11.0",
     "sequelize": "^4.4.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest-junit-reporter": "^1.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:test": "jest --watch",
@@ -28,5 +30,8 @@
     "url": "https://github.com/max003003003/TN-wallet-node/issues"
   },
   "homepage": "https://github.com/max003003003/TN-wallet-node#readme",
-  "testEnvironment" : "node"
+  "testEnvironment": "node",
+  "jest": {
+    "testResultsProcessor": "./node_modules/jest-junit-reporter"
+  }
 }
