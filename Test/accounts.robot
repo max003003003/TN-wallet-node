@@ -7,7 +7,6 @@ Suite Setup    Create Session    TN-wallet-node    ${URL}
 ${URL}    http://127.0.0.1:3000
 *** Test cases ***
 Get account success
-    Get Request    TN-wallet-node    /insert
     ${resp}=    Get Request    TN-wallet-node    /accounts/1234567899
     Account Should Contain    ${resp}    1234567899    Thanaporn    Sumpaotong    1000
     
