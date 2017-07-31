@@ -207,7 +207,7 @@ app.post("/transactions", (req, res) => {
             controller.checkAccountExist(des_acc_id),
             controller.checkLimitBalance(des_acc_id, amount),
             controller.checkAccountExist(src_acc_id),
-            controller.checkLimitBalance(src_acc_id, amount)
+            controller.checkEnoughBalance(src_acc_id, amount)
         ]
     } else {
         return res.status(400).send({
