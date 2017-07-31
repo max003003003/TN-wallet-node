@@ -137,34 +137,34 @@ app.post("/transactions", (req, res) => {
     
  
 
-    // if(type == "transfer"){
-    //      // calculate transfer
-    //     if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
-    //         return res.status(400).send({
-    //             error: {
-    //                 message : "invalid remaining balance"
-    //             }
-    //         })
-    //     }
+    if(type == "transfer"){
+         // calculate transfer
+        if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
+            return res.status(400).send({
+                error: {
+                    message : "invalid remaining balance"
+                }
+            })
+        }
         
-    //     Promise.all([
-    //         controller.checkAccountExist(src_acc_id),
-    //         controller.checkAccountExist(des_acc_id),
-    //         controller.checkEnoughBalance(src_acc_id,amount),
-    //         controller.checkLimitBalance(des_acc_id,amount)
-    //     ])
-    //     .then((result)=>{
-    //         retError = []
-    //         console.log(result)
-    //         result.map((isPass, index)=>{
-    //             console.log(isPass,index)
-    //             if(!isPass) retError.push(errorMsg[index])
-    //         })
-    //         if(retError.length != 0){
-    //             return res.status(400).json({error :{ 
-    //                 messege :retError}
-    //             })
-    //         }
+        Promise.all([
+            controller.checkAccountExist(src_acc_id),
+            controller.checkAccountExist(des_acc_id),
+            controller.checkEnoughBalance(src_acc_id,amount),
+            controller.checkLimitBalance(des_acc_id,amount)
+        ])
+        .then((result)=>{
+            retError = []
+            console.log(result)
+            result.map((isPass, index)=>{
+                console.log(isPass,index)
+                if(!isPass) retError.push(errorMsg[index])
+            })
+            if(retError.length != 0){
+                return res.status(400).json({error :{ 
+                    messege :retError}
+                })
+            }
             // can transfer
             const trans = {
                     type: type,
@@ -189,17 +189,17 @@ app.post("/transactions", (req, res) => {
                 })
             })
 
-    //     })
-    //     .catch((reason)=>{
-    //         res.status(400).send(reason)
-    //     })
-    // }else{
-    //     return res.status(400).send({
-    //             error: {
-    //                 message : "transaction type error"
-    //             }
-    //         }) 
-    // }
+        })
+        .catch((reason)=>{
+            res.status(400).send(reason)
+        })
+    }else{
+        return res.status(400).send({
+                error: {
+                    message : "transaction type error"
+                }
+            }) 
+    }
 })
 
 app.get("/transactions/:id", (req, res) => {
