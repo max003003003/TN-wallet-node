@@ -5,7 +5,6 @@ Library    Collections
 Suite Setup    Create Session    TN-wallet-node    ${URL}
 *** Variables ***
 ${URL}    http://127.0.0.1:3000
-${TRANSACTION_ID}
 *** Test cases ***
 Post transactions success
     &{data}=   Create Dictionary   type=transfer     src_acc_id=7897897899    src_initial_balance=2000    des_acc_id=1231231233    des_initial_balance=4700    amount=200    fee=0    src_remain_balance=1800    des_remain_balance=4900
