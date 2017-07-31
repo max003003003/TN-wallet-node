@@ -49,23 +49,3 @@ describe('testAccountHasLimitBalance',function(){
         })
     })
 })
-describe('testInsertTransaction', async function(){
-    it('should succesfully insert transfer transaction', ()=>{
-        const trans = {
-                    type: 'transfer',
-                    src_account_id: '1234567890',
-                    src_initial_balance: 2000,
-                    //des_account_id: '9876543210',
-                    des_acc_id: '9876543210',
-                    des_initial_balance: 4700,
-                    amount: 100,
-                    fee: '0',
-                    src_remain_balance: 1900,
-                    des_remain_balance: 4800
-        }
-        expect.assertions(1);        
-        await walletController.insertTransaction(trans,{}).then((result)=>{
-                expect(result).toBe()
-        })
-    })
-})
