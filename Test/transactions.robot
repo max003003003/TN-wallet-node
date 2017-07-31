@@ -19,15 +19,15 @@ Get transactions success
 Transactions Should Contain
     [Arguments]    ${resp}     ${id}    ${type}    ${src_account_id}    ${src_initial_balance}     ${des_account_id}    ${des_initial_balance}    ${amount}    ${fee}    ${src_remain_balance}    ${des_remain_balance}    ${transaction_status}
     Should Be Equal As Strings    ${resp.status_code}    200
-    Dictionary Should Contain Item    ${resp.json()[0]}    id    ${id}
-    Dictionary Should Contain Item    ${resp.json()[0]}    type    ${type}
-    Dictionary Should Contain Item    ${resp.json()[0]}    src_account_id    ${src_account_id}
-    Dictionary Should Contain Item    ${resp.json()[0]}    src_initial_balance    ${src_initial_balance}
-    Dictionary Should Contain Item    ${resp.json()[0]}    des_account_id    ${des_account_id}
-    Dictionary Should Contain Item    ${resp.json()[0]}    des_initial_balance    ${des_initial_balance}
-    Dictionary Should Contain Item    ${resp.json()[0]}    amount    ${amount}
-    Dictionary Should Contain Item    ${resp.json()[0]}    fee    ${fee}
-    Dictionary Should Contain Item    ${resp.json()[0]}    src_remain_balance    ${src_remain_balance}
-    Dictionary Should Contain Item    ${resp.json()[0]}    des_remain_balance    ${des_remain_balance}
-    Dictionary Should Contain Item    ${resp.json()[0]}    transaction_status    ${transaction_status}
+    Dictionary Should Contain Item    ${resp.json()}    id    ${id}
+    Dictionary Should Contain Item    ${resp.json()}    type    ${type}
+    Dictionary Should Contain Item    ${resp.json()}    src_account_id    ${src_account_id}
+    Dictionary Should Contain Item    ${resp.json()}    src_initial_balance    ${src_initial_balance}
+    Dictionary Should Contain Item    ${resp.json()}    des_account_id    ${des_account_id}
+    Dictionary Should Contain Item    ${resp.json()}    des_initial_balance    ${des_initial_balance}
+    Dictionary Should Contain Item    ${resp.json()}    amount    ${amount}
+    Dictionary Should Contain Item    ${resp.json()}    fee    ${fee}
+    Dictionary Should Contain Item    ${resp.json()}    src_remain_balance    ${src_remain_balance}
+    Dictionary Should Contain Item    ${resp.json()}    des_remain_balance    ${des_remain_balance}
+    Dictionary Should Contain Item    ${resp.json()}    transaction_status    ${transaction_status}
 
