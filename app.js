@@ -116,7 +116,7 @@ app.get("/balances/:id", (req, res) => {
         res.send(accounts)
     })
 })
-app.push("/topups",(req,res)=>{
+app.post("/topups",(req,res)=>{
     console.log("/topups")
      var type = req.body.type
      var src_acc_id = "0000000000"
