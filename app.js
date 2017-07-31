@@ -66,6 +66,18 @@ app.get("/insert", (req, res) => {
             password: "12345A",
             balance: 0.0,
             register_timestamp: '2017-07-25 09:29:00'
+        },
+        {
+            account_id: 1111111111,
+            name: "Top",
+            surname: "Up",
+            citizen_id: "1111111111",
+            email: "1111111111@gmail.com",
+            tel: "1111111111",
+            username: "Top.Up",
+            password: "12345A",
+            balance: 0.0,
+            register_timestamp: '2017-07-25 09:29:00'
         }
     ]
 
@@ -99,17 +111,30 @@ app.post("/transactions", (req, res) => {
      var des_initial_balance = Number(req.body.des_initial_balance)
      var amount = Number(req.body.amount)
      var fee = 0
-     var src_remain_balance = Number(req.body.src_remain_balance)
+     var src_remain_balance
      var des_remain_balance = Number(req.body.des_remain_balance)
      var src_initial_balance
      var src_acc_id
+     var checkArray = []
     if(type == "topup"){
         src_initial_balance = amount
         src_acc_id = 1111111111
+        src_remain_balance =0
+        checkArray =[
+            controller.checkAccountExist(des_acc_id),
+            controller.checkLimitBalance(des_acc_id,amount)
+        ]
     }
     else if(type == "transfer"){
         src_initial_balance = Number(req.body.src_initial_balance)
+        src_remain_balance = Number(req.body.src_remain_balance)
         src_acc_id = req.body.src_acc_id
+        checkArray = [
+            controller.checkAccountExist(des_acc_id),
+            controller.checkLimitBalance(des_acc_id,amount),
+            controller.checkAccountExist(src_acc_id),
+            controller.checkLimitBalance(src_acc_id,amount)
+        ]
     }else{
         return res.status(400).send({
             error : {
@@ -122,7 +147,7 @@ app.post("/transactions", (req, res) => {
     var local_des_remain_balance = des_initial_balance + amount
 
          // calculate transfer
-        if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
+        if(( type!="topup" && local_src_remain_balance != src_remain_balance) || local_des_remain_balance != des_remain_balance){
             return res.status(400).send({
                 error: {
                     message : "invalid remaining balance"
@@ -130,12 +155,7 @@ app.post("/transactions", (req, res) => {
             })
         }
         
-        Promise.all([
-            controller.checkAccountExist(src_acc_id),
-            controller.checkAccountExist(des_acc_id),
-            controller.checkEnoughBalance(src_acc_id,amount),
-            controller.checkLimitBalance(des_acc_id,amount)
-        ])
+        Promise.all(checkArray)
         .then((result)=>{
             retError = []
             console.log(result)
