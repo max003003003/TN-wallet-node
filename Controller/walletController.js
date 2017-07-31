@@ -70,41 +70,9 @@ function checkLimitBalance(account_id, amount) {
     })
 }
 
-function insertTransaction(transactionObj, res) {
-    transactionService.insertTransactionInstance(transactionObj)
-        .then((success) => {
-            const transaction = success.dataValues
-            Promise.all([
-                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance)
-            ])
-                .then((result) => {
-                    console.log("-------SUCCESS-----------")
-                    console.log(result)
-                    transactionService.updateTransactionsInstance(transaction.id, "SUCCESS")
-                        .then((result) => {
-                            res.send(transaction)
-                            return transaction
-                        })
-                })
-                .catch((error) => {
-                    console.log("-------ERROR-----------")
-                    console.log(error)
-                    transactionService.updateTransactionsInstance(transaction.id, "ERROR")
-                        .then((result) => {
-                            res.send("error")
-                            return "error"
-                        })
-                })
-        })
-        .catch((error) => {
-            console.log("-------ERROR TRANS-----------")
-            console.log(error)
-            res.send("error")
-            return "insert transaction faild"
-        })
-}
 
-async function insertTransaction2(transactionObj) {
+
+async function insertTransaction(transactionObj) {
     currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
     let transferResult = await transferFund(currentTransaction.dataValues)
     if(transferResult[0][0] && transferResult[1][0]){
@@ -136,6 +104,5 @@ module.exports = {
     checkEnoughBalance,
     insertTransaction,
     checkLimitBalance,
-    checkEnoughBalance,
-    insertTransaction2
+    checkEnoughBalance
 }

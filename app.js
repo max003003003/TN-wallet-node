@@ -178,7 +178,7 @@ app.post("/transactions", (req, res) => {
                     src_remain_balance: src_remain_balance,
                     des_remain_balance: des_remain_balance
                 }
-            controller.insertTransaction2(trans).then((result)=>{
+            controller.insertTransaction(trans).then((result)=>{
                 res.json({transaction_id : result})
             })
             .catch((err)=>{              
