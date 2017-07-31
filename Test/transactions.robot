@@ -6,10 +6,14 @@ Suite Setup    Create Session    TN-wallet-node    ${URL}
 *** Variables ***
 ${URL}    http://127.0.0.1:3000
 *** Test cases ***
+Post transactions success
+    &{data}=   Create Dictionary   type=transfer     src_acc_id=1234567890    src_initial_balance=2000    des_acc_id=9876543210    des_initial_balance=4700    amount=200    fee=0    src_remain_balance=1800    des_remain_balance=4900
+    &{headers}=  Create Dictionary  Content-Type=application/x-www-form-urlencoded
+    ${resp}=  Post Request  TN-wallet-node    /transactions		data=${data}    headers=${headers}
+    Should Be Equal As Strings  ${resp.status_code}  200
 Get transactions success
-    Create Session    TN-wallet-node    ${URL}
     ${resp}=    Get Request    TN-wallet-node    /transactions/1
-    Transactions Should Contain    ${resp}    1    transfer    1234567890    200    9876543210    4700    200    0    0    4900    success
+    Transactions Should Contain    ${resp}    1    transfer    1234567890    2000    9876543210    4700    200    0    1800    4900    SUCCESS
 
 *** Keywords ***
 Transactions Should Contain
