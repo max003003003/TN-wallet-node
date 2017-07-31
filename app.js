@@ -179,9 +179,15 @@ app.post("/transactions", (req, res) => {
                     des_remain_balance: des_remain_balance
                 }
             controller.insertTransaction2(trans).then((result)=>{
-                res.send(result)
-            }
-            )
+                res.json({transaction_id : result})
+            })
+            .catch((err)=>{              
+                res.status(500).json({
+                    error : {
+                        message : err.message
+                    }
+                })
+            })
 
     //     })
     //     .catch((reason)=>{
