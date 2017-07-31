@@ -95,21 +95,32 @@ app.get("/balances/:id", (req, res) => {
 app.post("/transactions", (req, res) => {
     console.log("/transactions")
      var type = req.body.type
-     var src_acc_id = req.body.src_acc_id
-     var src_initial_balance = Number(req.body.src_initial_balance)
      var des_acc_id = req.body.des_acc_id
      var des_initial_balance = Number(req.body.des_initial_balance)
      var amount = Number(req.body.amount)
      var fee = 0
      var src_remain_balance = Number(req.body.src_remain_balance)
      var des_remain_balance = Number(req.body.des_remain_balance)
+     var src_initial_balance
+     var src_acc_id
+    if(type == "topup"){
+        src_initial_balance = amount
+        src_acc_id = 1111111111
+    }
+    else if(type == "transfer"){
+        src_initial_balance = Number(req.body.src_initial_balance)
+        src_acc_id = req.body.src_acc_id
+    }else{
+        return res.status(400).send({
+            error : {
+                message: "transaction type error"
+            }
+        })
+    }
 
     var local_src_remain_balance = src_initial_balance - amount
     var local_des_remain_balance = des_initial_balance + amount
-    
- 
 
-    if(type == "transfer"){
          // calculate transfer
         if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
             return res.status(400).send({
@@ -165,13 +176,7 @@ app.post("/transactions", (req, res) => {
         .catch((reason)=>{
             res.status(400).send(reason)
         })
-    }else{
-        return res.status(400).send({
-                error: {
-                    message : "transaction type error"
-                }
-            }) 
-    }
+    
 })
 
 app.get("/transactions/:id", (req, res) => {
