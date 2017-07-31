@@ -31,19 +31,7 @@ app.get('/create', (req, res) => {
 
 app.get("/insert", (req, res) => {
 
-    const account = [
-        {
-            account_id: 1234567899,
-            name: "Thanaporn",
-            surname: "Sumpaotong",
-            citizen_id: "1100501204188",
-            email: "thanaporn@gmail.com",
-            tel: "0860755482",
-            username: "Oh.tnp",
-            password: "12345A",
-            balance: 1000.0,
-            register_timestamp: '2017-07-25 09:29:00'
-        },{
+    const account = [{
             account_id: 1234567890,
             name: "Thanaporn",
             surname: "Sumpaotong",
@@ -81,24 +69,8 @@ app.get("/insert", (req, res) => {
         }
     ]
 
-    const transaction = [
-        {
-            type: "transfer",
-            src_account_id: "1234567890",
-            src_initial_balance: "200",
-            des_account_id: "9876543210",
-            des_initial_balance: "4700",
-            amount: "200",
-            fee: "0",
-            src_remain_balance: "0",
-            des_remain_balance: "4900",
-            transaction_status: 'success'
-        }
-    ]
-    controller.insertTransactionDefault(transaction).then((transaction) => {
-        controller.insertAccount(account).then((account) => {
+    controller.insertAccount(account).then((account) => {
             res.send(account)
-        })
     })
 })
 
@@ -178,7 +150,16 @@ app.post("/transactions", (req, res) => {
                     src_remain_balance: src_remain_balance,
                     des_remain_balance: des_remain_balance
                 }
-            controller.insertTransaction(trans,res)
+            controller.insertTransaction(trans).then((result)=>{
+                res.json({transaction_id : result})
+            })
+            .catch((err)=>{              
+                res.status(500).json({
+                    error : {
+                        message : err.message
+                    }
+                })
+            })
 
         })
         .catch((reason)=>{
@@ -195,83 +176,12 @@ app.post("/transactions", (req, res) => {
 
 app.get("/transactions/:id", (req, res) => {
     controller.getTransactionInfo(req.params.id).then((transaction_id) => {
-            res.send(transaction_id)
+            res.send(transaction_id[0])
         })
 })
 
 
-app.get("/transactions/:type/:src_acc_id/:src_initial_balance/:des_acc_id/:des_initial_balance/:amount/:src_remain_balance/:des_remain_balance", (req, res) => {
-    console.log("/transactions")
-     var type = req.params.type
-     var src_acc_id = req.params.src_acc_id
-     var src_initial_balance = Number(req.params.src_initial_balance)
-     var des_acc_id = req.params.des_acc_id
-     var des_initial_balance = Number(req.params.des_initial_balance)
-     var amount = Number(req.params.amount)
-     var fee = 0
-     var src_remain_balance = Number(req.params.src_remain_balance)
-     var des_remain_balance = Number(req.params.des_remain_balance)
 
-    var local_src_remain_balance = src_initial_balance - amount
-    var local_des_remain_balance = des_initial_balance + amount
-    
- 
-
-    if(type == "transfer"){
-         // calculate transfer
-        // if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
-        //     return res.status(400).send({
-        //         error: {
-        //             message : "invalid remaining balance"
-        //         }
-        //     })
-        // }
-        
-        Promise.all([
-            controller.checkAccountExist(src_acc_id),
-            controller.checkAccountExist(des_acc_id),
-            controller.checkEnoughBalance(src_acc_id,amount),
-            controller.checkLimitBalance(des_acc_id,amount)
-        ])
-        .then((result)=>{
-            retError = []
-            console.log(result)
-            result.map((isPass, index)=>{
-                console.log(isPass,index)
-                if(!isPass) retError.push(errorMsg[index])
-            })
-            if(retError.length != 0){
-                return res.status(400).json({error :{ 
-                    messege :retError}
-                })
-            }
-            // can transfer
-            const trans = {
-                    type: type,
-                    src_account_id: src_acc_id,
-                    src_initial_balance: src_initial_balance,
-                    des_account_id: des_acc_id,
-                    des_acc_id: des_acc_id,
-                    des_initial_balance: des_initial_balance,
-                    amount: amount,
-                    fee: fee,
-                    src_remain_balance: local_src_remain_balance,
-                    des_remain_balance: local_des_remain_balance
-                }
-            controller.insertTransaction(trans,res)
-
-        })
-        .catch((reason)=>{
-            res.status(400).send(reason)
-        })
-    }else{
-        return res.status(400).send({
-                error: {
-                    message : "transaction type error"
-                }
-            }) 
-    }
-})
 
 
 
