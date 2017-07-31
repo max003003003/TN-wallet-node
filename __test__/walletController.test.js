@@ -49,8 +49,6 @@ describe('testLimitBalance', function () {
         })
     })
 })
-<<<<<<< HEAD
-=======
 
 describe('testInsertTransaction', function () {
     it('transfer success', async () => {
@@ -88,4 +86,3 @@ describe('testInsertTransaction', function () {
     //     })
     // })
 })
->>>>>>> 8cb1d9538a0e92c838ccd8b5b50cb9891a0e19d4
