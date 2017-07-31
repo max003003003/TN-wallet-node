@@ -4,6 +4,7 @@ const app = express()
 const model = require('./Model')
 const bodyParser = require('body-parser');
 const controller = require('./Controller/walletController')
+var morgan = require('morgan')
 
 const errorMsg = [
          "source account doesn't exist",
@@ -11,7 +12,7 @@ const errorMsg = [
          "source account doesn't have enough balance",
          "destination account balance exceed limit"
      ]
-
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
