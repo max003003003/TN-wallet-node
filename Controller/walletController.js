@@ -81,14 +81,9 @@ async function insertTransaction(transactionObj) {
        throw new Error("transfer log error")    
     }
     throw new Error("transfer failed")
-
-    
-                        
-    
-   
 }
 function transferFund(transaction){
-    return  transactionService.updateAccount(transaction.src_account_id,transaction.src_remain_balance,transaction.des_account_id,transaction.des_account_remain_balance)
+    return  transactionService.updateAccount(transaction.src_account_id,transaction.src_remain_balance,transaction.des_account_id,transaction.des_remain_balance)
 }
 
 module.exports = {
@@ -99,7 +94,6 @@ module.exports = {
     checkAccountExist,
     checkEnoughBalance,
     insertTransaction,
-    checkLimitBalance,
     checkEnoughBalance,
-    transferFund
+    checkLimitBalance
 }
