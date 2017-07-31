@@ -33,7 +33,7 @@ app.get("/insert", (req, res) => {
 
     const account = [{
         account_id: 8888888881,
-        name: "Test1",
+        name: "unitTest",
         surname: "Test",
         citizen_id: "1010101010101",
         email: "thanaporn@gmail.com",
