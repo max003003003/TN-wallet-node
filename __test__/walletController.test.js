@@ -35,7 +35,7 @@ describe('testAccountHasEnoughBalance',function(){
     })
 })
 
-describe('testAccountHasLimitBalance',function(){
+describe('testLimitBalance',function(){
     it('account can transfer', async ()=>{
         expect.assertions(1);
         await walletController.checkLimitBalance('1234567890',10).then((result)=>{
