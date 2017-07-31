@@ -2,7 +2,7 @@
 Library    RequestsLibrary
 Library    Collections
 
-Suite Setup    Create Session    TN-wallet-node    ${URL}
+Suite Setup    Setup Database
 *** Variables ***
 ${URL}    http://127.0.0.1:3000
 *** Test cases ***
@@ -30,4 +30,8 @@ Transactions Should Contain
     Dictionary Should Contain Item    ${resp.json()}    src_remain_balance    ${src_remain_balance}
     Dictionary Should Contain Item    ${resp.json()}    des_remain_balance    ${des_remain_balance}
     Dictionary Should Contain Item    ${resp.json()}    transaction_status    ${transaction_status}
+Setup Database
+    Create Session    TN-wallet-node    ${URL}
+    Get Request    TN-wallet-node    /create
+    Get Request    TN-wallet-node    /insert
 
