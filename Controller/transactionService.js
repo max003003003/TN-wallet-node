@@ -14,14 +14,7 @@ const transactionService = {
         })
     },
 
-    updateAccount: (accountId, balance, t1) => {
-        return model.sequelize.transaction((t1) => {
-            return model.account.update({ balance: balance },
-                { where: { account_id: accountId } }, { transaction: t1 })
-        })
-    },
-
-    updateAccount2: (srcAccountId, srcBalance, destAccountId, destBalance) => {
+    updateAccount: (srcAccountId, srcBalance, destAccountId, destBalance) => {
         return model.sequelize.transaction((t1) => {
             return model.sequelize.Promise.all([
                 model.account.update({ balance: srcBalance },
