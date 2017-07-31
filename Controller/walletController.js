@@ -88,7 +88,7 @@ async function insertTransaction(transactionObj) {
    
 }
 function transferFund(transaction){
-    return  transactionService.updateAccount2(transaction.src_account_id,transaction.src_remain_balance,transaction.desc_account_id,transaction.desc_account_remain_balance)
+    return  transactionService.updateAccount2(transaction.src_account_id,transaction.src_remain_balance,transaction.des_account_id,transaction.des_account_remain_balance)
 }
 
 module.exports = {
