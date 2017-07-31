@@ -4,8 +4,7 @@ const app = express()
 const model = require('./Model')
 const bodyParser = require('body-parser');
 const controller = require('./Controller/walletController')
-var morgan = require('morgan')
-
+const morgan = require('morgan')
 const errorMsg = [
     "source account doesn't exist",
     "destination account doesn't exist",
@@ -26,8 +25,6 @@ app.get('/create', (req, res) => {
     model.createTable()
     res.send('Hello ')
 })
-
-
 
 app.get("/insert", (req, res) => {
 
@@ -106,7 +103,6 @@ app.get("/insert", (req, res) => {
         res.send(account)
     })
 })
-
 
 app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname', 'balance']).then((accounts) => {
@@ -220,7 +216,6 @@ app.post("/transactions", (req, res) => {
         .catch((reason) => {
             res.status(400).send(reason)
         })
-
 })
 
 app.get("/transactions/:id", (req, res) => {
@@ -228,16 +223,6 @@ app.get("/transactions/:id", (req, res) => {
         res.send(transaction_id[0])
     })
 })
-
-
-
-
-
-
-
-
-
-
 
 app.listen(3000, () => {
     console.log("app listen port 3000")
