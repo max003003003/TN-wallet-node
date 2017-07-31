@@ -125,6 +125,80 @@ app.get("/balances/:id", (req, res) => {
         res.send(accounts)
     })
 })
+app.post("/topups",(req,res)=>{
+    console.log("/topups")
+     var type = req.body.type
+     var src_acc_id = "0000000000"
+     var src_initial_balance = Number(req.body.src_initial_balance)
+     var des_acc_id = req.body.des_acc_id
+     var des_initial_balance = Number(req.body.des_initial_balance)
+     var amount = Number(req.body.amount)
+     var fee = 0
+     var src_remain_balance = Number(req.body.src_remain_balance)
+     var des_remain_balance = Number(req.body.des_remain_balance)
+
+     var local_src_remain_balance = src_initial_balance - amount
+     var local_des_remain_balance = des_initial_balance + amount  
+    
+    if(type == "topup"){
+         // calculate transfer
+        if(local_src_remain_balance != src_remain_balance || local_des_remain_balance != des_remain_balance){
+            return res.status(400).send({
+                error: {
+                    message : "invalid remaining balance"
+                }
+            })
+        }
+        
+        Promise.all([
+            controller.checkAccountExist(src_acc_id),
+            controller.checkAccountExist(des_acc_id),
+            controller.checkEnoughBalance(src_acc_id,amount),
+            controller.checkLimitBalance(des_acc_id,amount)
+        ])
+        .then((result)=>{
+            retError = []
+            console.log(result)
+            result.map((isPass, index)=>{
+                console.log(isPass,index)
+                if(!isPass) retError.push(errorMsg[index])
+            })
+            if(retError.length != 0){
+                return res.status(400).json({error :{ 
+                    messege :retError}
+                })
+            }
+            // can transfer
+            const trans = {
+                    type: type,
+                    src_account_id: src_acc_id,
+                    src_initial_balance: src_initial_balance,
+                    des_account_id: des_acc_id,
+                    des_acc_id: des_acc_id,
+                    des_initial_balance: des_initial_balance,
+                    amount: amount,
+                    fee: fee,
+                    src_remain_balance: src_remain_balance,
+                    des_remain_balance: des_remain_balance
+                }
+            controller.insertTransaction(trans,res)
+
+        })
+        .catch((reason)=>{
+            res.status(400).send(reason)
+        })
+    }else{
+        return res.status(400).send({
+                error: {
+                    message : "transaction type error"
+                }
+            }) 
+    }
+
+
+  
+})
+
 app.post("/transactions", (req, res) => {
     console.log("/transactions")
     var type = req.body.type
@@ -154,7 +228,7 @@ app.post("/transactions", (req, res) => {
             controller.checkAccountExist(des_acc_id),
             controller.checkLimitBalance(des_acc_id, amount),
             controller.checkAccountExist(src_acc_id),
-            controller.checkLimitBalance(src_acc_id, amount)
+            controller.checkEnoughBalance(src_acc_id, amount)
         ]
     } else {
         return res.status(400).send({
