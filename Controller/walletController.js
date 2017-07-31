@@ -4,8 +4,8 @@ const transactionService = require('./transactionService')
 function getAccountInfo(account_id, attributes) {
     var query = {
     }
-    if(account_id !=null){
-        query.where = { account_id : account_id}
+    if (account_id != null) {
+        query.where = { account_id: account_id }
     }
     query.attributes = attributes
     return model.account.findAll(query)
@@ -59,14 +59,14 @@ function checkEnoughBalance(account_id, amount) {
 function checkLimitBalance(account_id, amount) {
     const limit = 5000
     return model.account.findAll({
-        where:{
+        where: {
             account_id: account_id
         },
         attributes: ['balance']
-    }).then((balance)=>{
+    }).then((balance) => {
         // console.log(balance[0].dataValues.balance,amount,limit)
         return balance[0].dataValues.balance + amount <= limit
-        
+
     })
 }
 
@@ -75,8 +75,7 @@ function insertTransaction(transactionObj, res) {
         .then((success) => {
             const transaction = success.dataValues
             Promise.all([
-                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance),
-                transactionService.updateAccount(transaction.des_account_id, transaction.des_remain_balance)
+                transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance)
             ])
                 .then((result) => {
                     console.log("-------SUCCESS-----------")
@@ -104,13 +103,28 @@ function insertTransaction(transactionObj, res) {
             return "insert transaction faild"
         })
 }
+
+async function insertTransaction2(transactionObj) {
+    currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
+    return currentTransaction
+    // Promise.all([
+    //     transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance),
+    //     transactionService.updateAccount(transaction.des_account_id, transaction.des_remain_balance)
+    // ])
+    // .then((result)=>{
+    //     console.log("herer +++ ")
+    //     console.log(result)
+    // })
+}
 module.exports = {
     getAccountInfo,
     insertAccount,
     insertTransactionDefault,
     getTransactionInfo,
     checkAccountExist,
+    checkEnoughBalance,
     insertTransaction,
     checkLimitBalance,
-    checkEnoughBalance
+    checkEnoughBalance,
+    insertTransaction2
 }
