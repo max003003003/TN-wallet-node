@@ -68,21 +68,4 @@ describe('testInsertTransaction', function () {
             expect(Number.isInteger(result)).toBe(true);
         })
     })
-    // it('transfer failed', async () => {
-    //     const trans = {
-    //         type: "transfer",
-    //         src_account_id: 1234567890,
-    //         src_initial_balance: 2001,
-    //         des_account_id: 9876543210,
-    //         des_initial_balance: 4500,
-    //         amount: 300,
-    //         fee: 0.0,
-    //         src_remain_balance: 1700,
-    //         des_remain_balance: 4800
-    //     }
-    //     expect.assertions(1);
-    //     await walletController.insertTransaction(trans).then((result) => {
-    //         expect(result).toBe('transfer failed');
-    //     })
-    // })
 })
