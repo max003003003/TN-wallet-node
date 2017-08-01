@@ -47,6 +47,11 @@ function checkAccountExist(account_id) {
     })
 
 }
+
+function checkDifferentAccount(src_acc_id,des_acc_id){
+    return src_acc_id != des_acc_id
+}
+
 function checkEnoughBalance(account_id, amount) {
 
     return model.account.findAll({
@@ -106,6 +111,7 @@ module.exports = {
     // insertTransactionDefault,
     getTransactionInfo,
     checkAccountExist,
+    checkDifferentAccount,
     checkEnoughBalance,
     insertTransaction,
     checkEnoughBalance,
