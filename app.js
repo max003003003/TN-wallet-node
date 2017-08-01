@@ -138,11 +138,11 @@ app.get("/insert", (req, res) => {
         name : "Thanaporn",
         surname : "Suwathawongchai",
         citizen_id : "1739988787654",
-        email : "1thanaporn.S@gmail.com",
+        email : "1thanapornS@gmail.com",
         tel : "0860755482",
         username : "Oh.tnp",
-        balance: 0.0,
         password : "12345A",
+        balance: 0.0,
         register_timestamp: '2017-07-25 09:29:00'
     }
     ]
