@@ -62,22 +62,21 @@ describe('testLimitBalance', function () {
 })
 //not done yet, internal functions are all passed Q:need to test this aggregate?
 
-// describe('testInsertTransaction', function () {
-//     it('transfer success', async () => {
-//         const trans = {
-//             type: "transfer",
-//             src_account_id: 8888888881,
-//             src_initial_balance: 5000,
-//             des_account_id: 8888888882,
-//             des_initial_balance: 4500,
-//             amount: 500,
-//             fee: 0.0,
-//             src_remain_balance: 4500,
-//             des_remain_balance: 5000
-//         }
-//         var result = await walletController.insertTransaction(trans)
-//         expect(Number.isInteger(result)).toBe(true)
-//         console.log(result)
-//         console.log(transactionService.deleteTransactionsInstance(result))
-//     })
-// })
+describe('testInsertTransaction', function () {
+    it('transfer success', async () => {
+        const trans = {
+            type: "transfer",
+            src_account_id: 8888888881,
+            src_initial_balance: 1500,
+            des_account_id: 8888888882,
+            des_initial_balance: 500,
+            amount: 500,
+            fee: 0.0,
+            src_remain_balance: 1000,
+            des_remain_balance: 1000
+        }
+        var result = await walletController.insertTransaction(trans)
+        expect(Number.isInteger(result)).toBe(true)
+        transactionService.deleteTransactionsInstance(result)
+    })
+})
