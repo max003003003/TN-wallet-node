@@ -4,8 +4,7 @@ const app = express()
 const model = require('./Model')
 const bodyParser = require('body-parser');
 const controller = require('./Controller/walletController')
-var morgan = require('morgan')
-
+const morgan = require('morgan')
 const errorMsg = [
     "source account doesn't exist",
     "destination account doesn't exist",
@@ -28,8 +27,15 @@ app.get('/create', (req, res) => {
 })
 
 
-
 app.get("/insert", (req, res) => {
+    const banks=[{
+            bank_id: "001",
+            name: "KBANK"
+        },
+        {
+            bank_id: "002",
+            name: "SCB"
+        }]
 
     const account = [{
         account_id: 8888888881,
@@ -54,6 +60,28 @@ app.get("/insert", (req, res) => {
         balance: 1000.0,
         register_timestamp: '2017-07-25 09:29:00'
     },{
+        account_id: 8888888883,
+        name: "unitTestForSuccesInsertTransfer",
+        surname: "Test",
+        citizen_id: "1010101010101",
+        email: "thanaporn@gmail.com",
+        tel: "0860755482",
+        username: "Oh.tnp",
+        password: "12345A",
+        balance: 1000.0,
+        register_timestamp: '2017-07-25 09:29:00'
+    },{
+        account_id: 8888888884,
+        name: "unitTestForSuccesInsertTransfer",
+        surname: "Test",
+        citizen_id: "1010101010101",
+        email: "thanaporn@gmail.com",
+        tel: "0860755482",
+        username: "Oh.tnp",
+        password: "12345A",
+        balance: 1000.0,
+        register_timestamp: '2017-07-25 09:29:00'
+    },{
         account_id: 4564564566,
         name: "Test1",
         surname: "Test",
@@ -65,26 +93,26 @@ app.get("/insert", (req, res) => {
         balance: 2000.0,
         register_timestamp: '2017-07-25 09:29:00'
     },{
-        account_id: 7897897899,
-        name: "Test2",
-        surname: "Test",
+        account_id: 6302335476,
+        name: "Thabaporn",
+        surname: "Suwathanawongchai",
+        citizen_id: "1010101010101",
+        email: "thanaporn@gmail.com",
+        tel: "0860755482",
+        username: "Oh.tnp",
+        password: "12345A",
+        balance: 4700.0,
+        register_timestamp: '2017-07-25 09:29:00'
+    },{
+        account_id: 7582983660,
+        name: "Phansawuth",
+        surname: "Jenthaworn",
         citizen_id: "0101010101010",
         email: "thanaporn@gmail.com",
         tel: "0860755482",
         username: "Oh.tnp",
         password: "12345A",
-        balance: 2000.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 1231231233,
-        name: "Test3",
-        surname: "Test",
-        citizen_id: "0909090909090",
-        email: "kunthanaporn@gmail.com",
-        tel: "0984593556",
-        username: "Not.Oh",
-        password: "12345A",
-        balance: 4700.0,
+        balance: 4500.0,
         register_timestamp: '2017-07-25 09:29:00'
     },{
         account_id: 1234567890,
@@ -110,18 +138,6 @@ app.get("/insert", (req, res) => {
         register_timestamp: '2017-07-25 09:29:00'
     },
     {
-        account_id: 7582983660,
-        name: "Phansawuth",
-        surname: "Jenthaworn",
-        citizen_id: "1111122222345",
-        email: "phanasawuth@gmail.com",
-        tel: "0860755483",
-        username: "Phan.tnp",
-        password: "12345A",
-        balance: 0.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },
-    {
         account_id: 1111111111,
         name: "Top",
         surname: "Up",
@@ -134,17 +150,37 @@ app.get("/insert", (req, res) => {
         register_timestamp: '2017-07-25 09:29:00'
     }
     ]
-
+    controller.insertBank(banks).then((banks)=>{
+        
+    })
     controller.insertAccount(account).then((account) => {
         res.send(account)
     })
 })
 
-
 app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname', 'balance']).then((accounts) => {
         res.send(accounts)
     })
+})
+
+app.post("/accounts", (req,res)=>{
+    var account = [{
+        account_id: req.body.account_id,
+        name: req.body.name,
+        surname: req.body.surname,
+        citizen_id: req.body.citizen_id,
+        email: req.body.email,
+        tel: req.body.tel,
+        username: req.body.username,
+        password: req.body.password,
+        balance: 0.0,
+        register_timestamp: new Date()
+    }]
+    controller.insertAccount(account).then((account) => {
+        res.send(account)
+    })
+
 })
 
 app.get("/accounts", (req, res) => {
@@ -253,7 +289,6 @@ app.post("/transactions", (req, res) => {
         .catch((reason) => {
             res.status(400).send(reason)
         })
-
 })
 
 app.get("/transactions/:id", (req, res) => {
@@ -261,16 +296,6 @@ app.get("/transactions/:id", (req, res) => {
         res.send(transaction_id[0])
     })
 })
-
-
-
-
-
-
-
-
-
-
 
 app.listen(3000, () => {
     console.log("app listen port 3000")

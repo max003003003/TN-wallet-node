@@ -14,6 +14,9 @@ function getAccountInfo(account_id, attributes) {
 function insertAccount(account) {
     return model.account.bulkCreate(account)
 }
+function insertBank(bank) {
+    return model.bank.bulkCreate(bank)
+}
 
 function insertTransactionDefault(transaction) {
     return model.transaction.bulkCreate(transaction)
@@ -80,8 +83,12 @@ async function insertTransaction(transactionObj) {
        if(transactionResult[0]) return currentTransaction.dataValues.id
     //    throw new Error("transfer log error")    
     }
+<<<<<<< HEAD
     // throw new Error("transfer failed") 
     return "transfer failed"
+=======
+    throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
+>>>>>>> 78fc15d381fcf6c6498a7f785af2bc6e9cf13857
 }
 function transferFund(transaction){
     return  transactionService.updateAccount(transaction.src_account_id,transaction.src_remain_balance,transaction.des_account_id,transaction.des_remain_balance)
@@ -96,5 +103,7 @@ module.exports = {
     checkEnoughBalance,
     insertTransaction,
     checkEnoughBalance,
-    checkLimitBalance
+    checkLimitBalance,
+    insertBank,
+    model
 }
