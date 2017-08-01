@@ -94,6 +94,6 @@ module.exports = {
     checkAccountExist,
     checkEnoughBalance,
     insertTransaction,
-    checkLimitBalance,
-    checkEnoughBalance
+    checkEnoughBalance,
+    checkLimitBalance
 }
