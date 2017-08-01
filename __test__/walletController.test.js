@@ -6,9 +6,9 @@ var walletController = require('../Controller/walletController');
 var transactionService = require('../Controller/transactionService')
 const model = require('../Model')
 
-describe('testGetAccountInfo', function(){
-    it('should succesfully get account name, surname and balance', async ()=> {
-        var result = await walletController.getAccountInfo(8888888881,['name','surname','balance'])
+describe('testGetAccountInfo', function () {
+    it('should succesfully get account name, surname and balance', async () => {
+        var result = await walletController.getAccountInfo(8888888881, ['name', 'surname', 'balance'])
         expect(result[0].dataValues.name).toBe('unitTest')
         expect(result[0].dataValues.surname).toBe('Test')
         expect(result[0].dataValues.balance).toBe(1000)
@@ -82,10 +82,10 @@ describe('testLimitBalance', function () {
         })
     })
 })
-//not done yet, internal functions are all passed Q:need to test this aggregate?
+//Maybe change
 
 describe('testInsertTransaction', function () {
-    it('transfer success', async () => {
+    xit('transfer success', async () => {
         const trans = {
             type: "transfer",
             src_account_id: 8888888883,
@@ -99,6 +99,22 @@ describe('testInsertTransaction', function () {
         }
         var result = await walletController.insertTransaction(trans)
         expect(Number.isInteger(result)).toBe(true)
+        transactionService.deleteTransactionsInstance(result)
+    })
+    it('transfer failed', async () => {
+        const trans = {
+            type: "transfer",
+            src_account_id: 1888888881,
+            src_initial_balance: 1500,
+            des_account_id: 2888888882,
+            des_initial_balance: 500,
+            amount: 500,
+            fee: 0.0,
+            src_remain_balance: 1000,
+            des_remain_balance: 1000
+        }
+        var result = await walletController.insertTransaction(trans)
+        expect(result).toBe("transfer failed")
         transactionService.deleteTransactionsInstance(result)
     })
 })
