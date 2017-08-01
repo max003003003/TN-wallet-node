@@ -93,8 +93,8 @@ function transferFund(transaction) {
 async function insertGL(src_account_id, des_account_id, amount, transaction_id) {
     const GLObject1 = GLService.createForTransactionTransferTo(amount, src_account_id, transaction_id)
     const GLObject2 = GLService.createForTransactionRecieveFrom(amount, des_account_id, transaction_id)
-    const GLObject3
-    const GLObject4 
+    const GLObject3 = GLService.createFeeForTransactionTransferTo(0,src_account_id,transaction_id)
+    const GLObject4 = GLService.createFeeForTransactionRecieveFrom(0,des_account_id,transaction_id)
     let GLResult = await GLService.insertGL(GLObject1, GLObject2, GLObject3, GLObject4)
     return GLResult
 }

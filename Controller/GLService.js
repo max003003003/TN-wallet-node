@@ -26,6 +26,32 @@ const GLService = {
             bank_ID: bankId
         }
     },
+     createFeeForTransactionTransferTo: (fee, sourceId, transactionId, bankId) => {
+        return {
+            dr_action: 'Saving',
+            dr_amount: fee,
+            dr_type: 'L',
+            cr_action: 'Cash',
+            cr_amount: fee,
+            cr_type: 'A',
+            account_ID: sourceId,
+            transaction_ID: transactionId,
+            bank_ID: bankId
+        }
+    },
+    createFeeForTransactionRecieveFrom: (fee, destinationId, transactionId, bankId) => {
+        return {
+            dr_action: 'Cash',
+            dr_amount: fee,
+            dr_type: 'A',
+            cr_action: 'Fee',
+            cr_amount: fee,
+            cr_type: 'R',
+            account_ID: bankId,
+            transaction_ID: transactionId,
+            bank_ID: bankId
+        }
+    },
     checkBalanceforGL: (GLObjectTransactionTransferTo, GLObjectTransactionRecieveFrom) => {
         let debitAmount = GLObjectTransactionTransferTo.dr_amount + GLObjectTransactionRecieveFrom.dr_amount;
         let creditAmount = GLObjectTransactionTransferTo.cr_amount + GLObjectTransactionRecieveFrom.cr_amount;
