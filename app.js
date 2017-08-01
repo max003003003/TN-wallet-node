@@ -154,6 +154,18 @@ app.get("/insert", (req, res) => {
         password: "12345A",
         balance: 0.0,
         register_timestamp: '2017-07-25 09:29:00'
+    },
+    {
+        account_id: 6302335476,
+        name: "Thanaporn",
+        surname: "Suwathawongchai",
+        citizen_id : "1739988787654",
+        email: "1thanapornS@gmail.com",
+        tel: "0860755482",
+        username: "Oh.tnp",
+        password: "12345A",
+        balance: 4700.0,
+        register_timestamp: '2017-07-25 09:29:00'
     }
     ]
 
@@ -167,6 +179,25 @@ app.get("/accounts/:id", (req, res) => {
     controller.getAccountInfo(req.params.id, ['account_id', 'name', 'surname', 'balance']).then((accounts) => {
         res.send(accounts)
     })
+})
+
+app.post("/accounts", (req,res)=>{
+    var account = [{
+        account_id: req.body.account_id,
+        name: req.body.name,
+        surname: req.body.surname,
+        citizen_id: req.body.citizen_id,
+        email: req.body.email,
+        tel: req.body.tel,
+        username: req.body.username,
+        password: req.body.password,
+        balance: 0.0,
+        register_timestamp: new Date()
+    }]
+    controller.insertAccount(account).then((account) => {
+        res.send(account)
+    })
+
 })
 
 app.get("/accounts", (req, res) => {
