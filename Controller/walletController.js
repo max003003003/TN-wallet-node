@@ -8,7 +8,7 @@ function getAccountInfo(account_id, attributes) {
     if (account_id != null) {
         query.where = { account_id: account_id }
     }
-    query.attributes = attributesg
+    query.attributes = attributes
     return model.account.findAll(query)
 }
 
@@ -85,7 +85,8 @@ async function insertTransaction(transactionObj) {
         if (transactionResult[0]) return currentTransaction.dataValues.id
         //    throw new Error("transfer log error")    
     }
-    throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
+    // throw new Error("transfer failed") 
+    return "transfer failed"
 }
 function transferFund(transaction) {
     return transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance, transaction.des_account_id, transaction.des_remain_balance)
