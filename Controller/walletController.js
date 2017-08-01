@@ -1,5 +1,6 @@
 const model = require('../Model')
 const transactionService = require('./transactionService')
+const GLService = require('./GLService')
 
 function getAccountInfo(account_id, attributes) {
     var query = {
@@ -7,7 +8,7 @@ function getAccountInfo(account_id, attributes) {
     if (account_id != null) {
         query.where = { account_id: account_id }
     }
-    query.attributes = attributes
+    query.attributes = attributesg
     return model.account.findAll(query)
 }
 
@@ -73,20 +74,29 @@ function checkLimitBalance(account_id, amount) {
     })
 }
 
-
-
 async function insertTransaction(transactionObj) {
     currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
     let transferResult = await transferFund(currentTransaction.dataValues)
     if(transferResult[0][0] && transferResult[1][0]){
        let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "SUCCESS")
        if(transactionResult[0]) return currentTransaction.dataValues.id
-       throw new Error("transfer log error")    
+    //    throw new Error("transfer log error")    
     }
+<<<<<<< HEAD
+    // throw new Error("transfer failed") 
+    return "transfer failed"
+=======
     throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
+>>>>>>> 78fc15d381fcf6c6498a7f785af2bc6e9cf13857
 }
 function transferFund(transaction){
     return  transactionService.updateAccount(transaction.src_account_id,transaction.src_remain_balance,transaction.des_account_id,transaction.des_remain_balance)
+}
+async function insertGL(src_account_id,des_account_id,amount,transaction_id){
+    const GLObject1 = GLService.createForTransactionTransferTo(amount,src_account_id,transaction_id)
+    const GLObject2 = GLService.createForTransactionRecieveFrom(amount,des_account_id,transaction_id)
+    let GLResult = await GLService.insertGL(GLObject1,GLObject2)
+    return GLResult
 }
 
 module.exports = {
@@ -100,5 +110,6 @@ module.exports = {
     checkEnoughBalance,
     checkLimitBalance,
     insertBank,
+    insertGL,
     model
 }
