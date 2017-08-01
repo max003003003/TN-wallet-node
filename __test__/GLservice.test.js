@@ -12,8 +12,7 @@ describe('testcreateForTransactionTransferTo', function(){
           dr_type: 'L',
           cr_action: 'Cash',
           cr_amount: 500,
-          cr_type: 'A',
-          
+          cr_type: 'A',          
           account_ID: 1111111111,
           transaction_ID: '001',
           bank_ID: '001'
