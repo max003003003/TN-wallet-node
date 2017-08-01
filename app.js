@@ -222,6 +222,7 @@ app.post("/transactions", (req, res) => {
         src_acc_id = req.body.src_acc_id
         checkArray = [
             controller.checkAccountExist(des_acc_id),
+            controller.checkDifferentAccount(src_acc_id,des_acc_id),
             controller.checkLimitBalance(des_acc_id, amount),
             controller.checkAccountExist(src_acc_id),
             controller.checkEnoughBalance(src_acc_id, amount)

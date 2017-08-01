@@ -19,9 +19,9 @@ function insertBank(bank) {
     return model.bank.bulkCreate(bank)
 }
 
-function insertTransactionDefault(transaction) {
-    return model.transaction.bulkCreate(transaction)
-}
+// function insertTransactionDefault(transaction) {
+//     return model.transaction.bulkCreate(transaction)
+// }
 
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
@@ -47,6 +47,11 @@ function checkAccountExist(account_id) {
     })
 
 }
+
+function checkDifferentAccount(src_acc_id,des_acc_id){
+    return src_acc_id != des_acc_id
+}
+
 function checkEnoughBalance(account_id, amount) {
 
     return model.account.findAll({
@@ -106,9 +111,10 @@ async function insertGL(src_account_id, des_account_id, amount, transaction_id) 
 module.exports = {
     getAccountInfo,
     insertAccount,
-    insertTransactionDefault,
+    // insertTransactionDefault,
     getTransactionInfo,
     checkAccountExist,
+    checkDifferentAccount,
     checkEnoughBalance,
     insertTransaction,
     checkEnoughBalance,
