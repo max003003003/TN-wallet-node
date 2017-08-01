@@ -5,21 +5,20 @@ describe('testcreateForTransactionTransferTo', function(){
         inputAmount = 500;
         inputSourceId = 1111111111;
         inputTransactionId = '001';
+        inputBankId = '001'
         var expectedResult = {
-          debit:{
-            action: 'Saving',
-            amount: 500,
-            type: 'L'
-          },
-          credit:{
-            action: 'Cash',
-            amount: 500,
-            type: 'A'
-          },
-          sourceId: 1111111111,
-          transactionId: '001'
+          dr_action: 'Saving',
+          dr_amount: 500,
+          dr_type: 'L',
+          cr_action: 'Cash',
+          cr_amount: 500,
+          cr_type: 'A',
+          
+          account_ID: 1111111111,
+          transaction_ID: '001',
+          bank_ID: '001'
         };
-        var result = GLService.createForTransactionTransferTo(inputAmount, inputSourceId, inputTransactionId)
+        var result = GLService.createForTransactionTransferTo(inputAmount, inputSourceId, inputTransactionId,inputBankId)
         expect(result).toEqual(expectedResult)
     })
 })
@@ -29,21 +28,19 @@ describe('testcreateForTransactionRecieveFrom', function(){
         inputAmount = 500;
         inputDestinationId = 1234567890;
         inputTransactionId = '001';
+        inputBankId = '001'
         var expectedResult = {
-          debit:{
-            action: 'Cash',
-            amount: 500,
-            type: 'A'
-          },
-          credit:{
-            action: 'Saving',
-            amount: 500,
-            type: 'L'
-          },
-          destinationId: 1234567890,
-          transactionId: '001'
+          dr_action: 'Cash',
+          dr_amount: 500,
+          dr_type: 'A',
+          cr_action: 'Saving',
+          cr_amount: 500,
+          cr_type: 'L',
+          account_ID: 1234567890,
+          transaction_ID: '001',
+          bank_ID: '001'
         };
-        var result = GLService.createForTransactionRecieveFrom(inputAmount, inputDestinationId, inputTransactionId)
+        var result = GLService.createForTransactionRecieveFrom(inputAmount, inputDestinationId, inputTransactionId,inputBankId)
         expect(result).toEqual(expectedResult)
     })
 })
@@ -51,32 +48,29 @@ describe('testcreateForTransactionRecieveFrom', function(){
 describe('testcheckBalanceforGL', function(){
     it("should succesfully checkBalanceforGL", ()=>{
         var inputGLobjectTransactionTransferTo = {
-          debit:{
-            action: 'Saving',
-            amount: 500,
-            type: 'L'
-          },
-          credit:{
-            action: 'Cash',
-            amount: 500,
-            type: 'A'
-          },
-          sourceId: 1111111111,
-          transactionId: '001'
+          dr_action: 'Saving',
+          dr_amount: 500,
+          dr_type: 'L'
+          ,
+          cr_action: 'Cash',
+            cr_amount: 500,
+            cr_type: 'A'
+          ,account_ID: 1111111111,
+          transaction_ID: '001',
+          bank_ID:'001'
         };
         var GLobjectTransactionRecieveFrom = {
-          debit:{
-            action: 'Cash',
-            amount: 500,
-            type: 'A'
-          },
-          credit:{
-            action: 'Saving',
-            amount: 500,
-            type: 'L'
-          },
-          destinationId: 1234567890,
-          transactionId: '001'
+          dr_action: 'Cash',
+            dr_amount: 500,
+            dr_type: 'A',
+          
+            cr_action: 'Saving',
+            cr_amount: 500,
+            cr_type: 'L'
+          ,
+          account_ID: 1234567890,
+          transaction_ID: '001',
+          bank_ID: '001'
         };
         var result = GLService.checkBalanceforGL(inputGLobjectTransactionTransferTo, GLobjectTransactionRecieveFrom)
         expect(result).toBe(true)
