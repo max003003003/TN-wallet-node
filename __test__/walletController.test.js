@@ -15,6 +15,28 @@ describe('testGetAccountInfo', function(){
     })
 })
 
+describe('testInsertAccount',function(){
+    it('should succesfully insert accounts', async ()=>{
+        const dummy = [{
+        account_id: 7777777771,
+        name: "unitTestForInsertAccount",
+        surname: "Test",
+        citizen_id: "1010101010101",
+        email: "thanaporn@gmail.com",
+        tel: "0860755482",
+        username: "Oh.tnp",
+        password: "12345A",
+        balance: 5000.0,
+        register_timestamp: '2017-07-25 09:29:00'
+    }]
+        var result = await walletController.insertAccount(dummy)
+        expect(result[0].dataValues.account_id).toBe(7777777771)
+        expect(result[0].dataValues.name).toBe("unitTestForInsertAccount")
+        walletController.model.account.destroy(
+        { where: { account_id: result[0].dataValues.account_id } }
+     )
+    })
+})
 
 describe('testAccountExists', function () {
     it('account exist', async () => {
@@ -66,14 +88,14 @@ describe('testInsertTransaction', function () {
     it('transfer success', async () => {
         const trans = {
             type: "transfer",
-            src_account_id: 8888888881,
-            src_initial_balance: 1500,
-            des_account_id: 8888888882,
-            des_initial_balance: 500,
+            src_account_id: 8888888883,
+            src_initial_balance: 1000,
+            des_account_id: 8888888884,
+            des_initial_balance: 1000,
             amount: 500,
             fee: 0.0,
-            src_remain_balance: 1000,
-            des_remain_balance: 1000
+            src_remain_balance: 500,
+            des_remain_balance: 1500
         }
         var result = await walletController.insertTransaction(trans)
         expect(Number.isInteger(result)).toBe(true)
