@@ -7,6 +7,10 @@ var transactionService = require('../Controller/transactionService')
 const model = require('../Model')
 
 describe('testGetAccountInfo', function () {
+    it('should return all accounts list when account_id is null', async ()=>{
+        var result = await walletController.getAccountInfo( null,['name','surname','balance'])
+        expect(result.length>0).toBe(true)
+    })
     it('should succesfully get account name, surname and balance', async () => {
         var result = await walletController.getAccountInfo(8888888881, ['name', 'surname', 'balance'])
         expect(result[0].dataValues.name).toBe('unitTest')
