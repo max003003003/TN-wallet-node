@@ -15,26 +15,26 @@ describe('testGetAccountInfo', function () {
     })
 })
 
-describe('testInsertAccount',function(){
-    it('should succesfully insert accounts', async ()=>{
+describe('testInsertAccount', function () {
+    it('should succesfully insert accounts', async () => {
         const dummy = [{
-        account_id: 7777777771,
-        name: "unitTestForInsertAccount",
-        surname: "Test",
-        citizen_id: "1010101010101",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 5000.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    }]
+            account_id: 7777777771,
+            name: "unitTestForInsertAccount",
+            surname: "Test",
+            citizen_id: "1010101010101",
+            email: "thanaporn@gmail.com",
+            tel: "0860755482",
+            username: "Oh.tnp",
+            password: "12345A",
+            balance: 5000.0,
+            register_timestamp: '2017-07-25 09:29:00'
+        }]
         var result = await walletController.insertAccount(dummy)
         expect(result[0].dataValues.account_id).toBe(7777777771)
         expect(result[0].dataValues.name).toBe("unitTestForInsertAccount")
         walletController.model.account.destroy(
-        { where: { account_id: result[0].dataValues.account_id } }
-     )
+            { where: { account_id: result[0].dataValues.account_id } }
+        )
     })
 })
 
@@ -52,6 +52,20 @@ describe('testAccountExists', function () {
         })
     })
 })
+
+describe('testCheckDifferentAccount', function () {
+    it('two account are different', async () => {
+        var result = await walletController.checkDifferentAccount('1234567890', '1234567891')
+        expect(result).toBe(true);
+
+    })
+    it('two account are same', async () => {
+        var result = await walletController.checkDifferentAccount('1234567890', '1234567890')
+        expect(result).toBe(false);
+
+    })
+})
+
 
 describe('testAccountHasEnoughBalance', function () {
     it('account has enough balance', async () => {
