@@ -125,6 +125,25 @@ app.get("/accounts/:id", (req, res) => {
     })
 })
 
+app.post("/accounts", (req,res)=>{
+    var account = [{
+        account_id: req.body.account_id,
+        name: req.body.name,
+        surname: req.body.surname,
+        citizen_id: req.body.citizen_id,
+        email: req.body.email,
+        tel: req.body.tel,
+        username: req.body.username,
+        password: req.body.password,
+        balance: 0.0,
+        register_timestamp: new Date()
+    }]
+    controller.insertAccount(account).then((account) => {
+        res.send(account)
+    })
+
+})
+
 app.get("/accounts", (req, res) => {
     controller.getAccountInfo(null, ['account_id', 'name', 'surname', 'balance']).then((accounts) => {
         res.send(accounts)
