@@ -14,6 +14,9 @@ function getAccountInfo(account_id, attributes) {
 function insertAccount(account) {
     return model.account.bulkCreate(account)
 }
+function insertBank(bank) {
+    return model.bank.bulkCreate(bank)
+}
 
 function insertTransactionDefault(transaction) {
     return model.transaction.bulkCreate(transaction)
@@ -96,5 +99,6 @@ module.exports = {
     insertTransaction,
     checkEnoughBalance,
     checkLimitBalance,
+    insertBank,
     model
 }

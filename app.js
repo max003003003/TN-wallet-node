@@ -26,7 +26,16 @@ app.get('/create', (req, res) => {
     res.send('Hello ')
 })
 
+
 app.get("/insert", (req, res) => {
+    const banks=[{
+            bank_id: "001",
+            name: "KBANK"
+        },
+        {
+            bank_id: "002",
+            name: "SCB"
+        }]
 
     const account = [{
         account_id: 8888888881,
@@ -122,7 +131,7 @@ app.get("/insert", (req, res) => {
         surname: "Suwathanawongchai",
         citizen_id: "1111111111111",
         email: "kunthanaporn@gmail.com",
-        tel: "0984593556",s
+        tel: "0984593556",
         username: "Not.Oh",
         password: "12345A",
         balance: 4700.0,
@@ -165,7 +174,9 @@ app.get("/insert", (req, res) => {
         register_timestamp: '2017-07-25 09:29:00'
     }
     ]
-
+    controller.insertBank(banks).then((banks)=>{
+        
+    })
     controller.insertAccount(account).then((account) => {
         res.send(account)
     })
