@@ -42,6 +42,20 @@ describe('testInsertAccount', function () {
     })
 })
 
+describe('testTnsertBank',function(){
+    it('should sucesfully insert bank(s)', async ()=>{
+        const dummy=[{
+            bank_id: "003",
+            name: "MyDummyBank"
+        }]
+        var result = await walletController.insertBank(dummy)
+        expect(result[0].dataValues.bank_id).toBe('003')
+        walletController.model.bank.destroy(
+            {where:{bank_id:'003'}}
+        )
+    })
+})
+
 describe('testAccountExists', function () {
     it('account exist', async () => {
         expect.assertions(1);

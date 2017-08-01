@@ -104,3 +104,47 @@ describe('testcheckBalanceforGL', function () {
     expect(result).toBe(false)
   })
 })
+
+describe('testCreateFeeForTransactionTransferTo', function(){
+    it("should succesfully CreateFeeForTransactionTransferTo object", ()=>{
+        inputFee = 20;
+        inputSourceId = 1111111111;
+        inputTransactionId = '001';
+        inputBankId = '001'
+        var expectedResult = {
+          dr_action: 'Saving',
+          dr_amount: 20,
+          dr_type: 'L',
+          cr_action: 'Cash',
+          cr_amount: 20,
+          cr_type: 'A',
+          account_ID: 1111111111,
+          transaction_ID: '001',
+          bank_ID: '001'
+        };
+        var result = GLService.createFeeForTransactionTransferTo(inputFee, inputSourceId, inputTransactionId,inputBankId)
+        expect(result).toEqual(expectedResult)
+    })
+})
+
+describe('testCreateFeeForTransactionRecieveFrom', function(){
+    it("should succesfully CreateFeeForTransactionRecieveFrom object", ()=>{
+        inputFee = 20;;
+        inputDestinationId = '001';
+        inputTransactionId = '001';
+        inputBankId = '001'
+        var expectedResult = {
+          dr_action: 'Cash',
+          dr_amount: 20;,
+          dr_type: 'A',
+          cr_action: 'Fee',
+          cr_amount: 20;,
+          cr_type: 'R',
+          account_ID: '001',
+          transaction_ID: '001',
+          bank_ID: '001'
+        };
+        var result = GLService.createFeeForTransactionRecieveFrom(inputFee, inputDestinationId, inputTransactionId,inputBankId)
+        expect(result).toEqual(expectedResult)
+    })
+})
