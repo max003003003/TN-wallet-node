@@ -26,7 +26,16 @@ app.get('/create', (req, res) => {
     res.send('Hello ')
 })
 
+
 app.get("/insert", (req, res) => {
+    const banks=[{
+            bank_id: "001",
+            name: "KBANK"
+        },
+        {
+            bank_id: "002",
+            name: "SCB"
+        }]
 
     const account = [{
         account_id: 8888888881,
@@ -141,7 +150,9 @@ app.get("/insert", (req, res) => {
         register_timestamp: '2017-07-25 09:29:00'
     }
     ]
-
+    controller.insertBank(banks).then((banks)=>{
+        
+    })
     controller.insertAccount(account).then((account) => {
         res.send(account)
     })

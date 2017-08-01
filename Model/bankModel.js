@@ -4,7 +4,7 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(3),
             primaryKey: true
         },
-        bank_model: {
+        name:{
             type: DataTypes.STRING,
             require: true
         },
