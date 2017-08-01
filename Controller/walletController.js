@@ -84,10 +84,16 @@ async function insertTransaction(transactionObj) {
     }
     // throw new Error("transfer failed") 
     return "transfer failed"
-    throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
+    // throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
 }
 function transferFund(transaction){
     return  transactionService.updateAccount(transaction.src_account_id,transaction.src_remain_balance,transaction.des_account_id,transaction.des_remain_balance)
+}
+async function insertGL(src_account_id,des_account_id,amount,transaction_id){
+    const GLObject1 = GLService.createForTransactionTransferTo(amount,src_account_id,transaction_id)
+    const GLObject2 = GLService.createForTransactionRecieveFrom(amount,des_account_id,transaction_id)
+    let GLResult = await GLService.insertGL(GLObject1,GLObject2)
+    return GLResult
 }
 
 module.exports = {
@@ -101,5 +107,6 @@ module.exports = {
     checkEnoughBalance,
     checkLimitBalance,
     insertBank,
+    insertGL,
     model
 }

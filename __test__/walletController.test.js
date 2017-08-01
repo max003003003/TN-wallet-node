@@ -85,7 +85,7 @@ describe('testLimitBalance', function () {
 //Maybe change
 
 describe('testInsertTransaction', function () {
-    xit('transfer success', async () => {
+    it('transfer success', async () => {
         const trans = {
             type: "transfer",
             src_account_id: 8888888883,
