@@ -69,5 +69,9 @@ describe('testInsertTransaction', function () {
         })
         
     })
+<<<<<<< HEAD
    
 })
+=======
+})
+>>>>>>> bf755c8c18ba92596a9791024beba2add5899397
