@@ -40,8 +40,6 @@ const GLService = {
         }
         return false;
     },
-
-
     insertGL: (GLObject1, GLObject2) => {
         return model.sequelize.transaction((t1) => {
             return model.sequelize.Promise.all([

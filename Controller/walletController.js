@@ -1,5 +1,6 @@
 const model = require('../Model')
 const transactionService = require('./transactionService')
+const GLService = require('./GLService')
 
 function getAccountInfo(account_id, attributes) {
     var query = {
@@ -72,8 +73,6 @@ function checkLimitBalance(account_id, amount) {
 
     })
 }
-
-
 
 async function insertTransaction(transactionObj) {
     currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
