@@ -3,8 +3,8 @@ Library    RequestsLibrary
 Library    Collections
 
 Suite Setup    Create Session    TN-wallet-node    ${URL}
-Test Setup    Transfer Money Success     7897897899    2000    1231231233    4700    200    0    1800    4900
-Test Teardown    Transfer Money Success     1231231233    4900    7897897899    1800    200    0    4700    2000
+Test Setup    Transfer Money Success     6302335476    4700    7582983660    4500    500    0    4200    5000
+Test Teardown    Transfer Money Success     7582983660    5000    6302335476    4200    500    0    4500    4700
 
 *** Variables ***
 ${URL}    http://127.0.0.1:3000
@@ -12,7 +12,7 @@ ${URL}    http://127.0.0.1:3000
 *** Test cases ***
 Get transactions success
     ${resp}=    Get Request    TN-wallet-node    /transactions/${TRANSACTION_ID}
-    Transactions Should Contain    ${resp}    ${TRANSACTION_ID}    transfer    7897897899    2000    1231231233    4700    200    0    1800    4900    SUCCESS
+    Transactions Should Contain    ${resp}    ${TRANSACTION_ID}    transfer    6302335476    4700    7582983660    4500    500    0    4200    5000    SUCCESS
 
 *** Keywords ***
 Transactions Should Contain

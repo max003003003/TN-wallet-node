@@ -93,26 +93,26 @@ app.get("/insert", (req, res) => {
         balance: 2000.0,
         register_timestamp: '2017-07-25 09:29:00'
     },{
-        account_id: 7897897899,
-        name: "Test2",
-        surname: "Test",
+        account_id: 6302335476,
+        name: "Thabaporn",
+        surname: "Suwathanawongchai",
+        citizen_id: "1010101010101",
+        email: "thanaporn@gmail.com",
+        tel: "0860755482",
+        username: "Oh.tnp",
+        password: "12345A",
+        balance: 4700.0,
+        register_timestamp: '2017-07-25 09:29:00'
+    },{
+        account_id: 7582983660,
+        name: "Phansawuth",
+        surname: "Jenthaworn",
         citizen_id: "0101010101010",
         email: "thanaporn@gmail.com",
         tel: "0860755482",
         username: "Oh.tnp",
         password: "12345A",
-        balance: 2000.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 1231231233,
-        name: "Test3",
-        surname: "Test",
-        citizen_id: "0909090909090",
-        email: "kunthanaporn@gmail.com",
-        tel: "0984593556",
-        username: "Not.Oh",
-        password: "12345A",
-        balance: 4700.0,
+        balance: 4500.0,
         register_timestamp: '2017-07-25 09:29:00'
     },{
         account_id: 1234567890,
@@ -138,18 +138,6 @@ app.get("/insert", (req, res) => {
         register_timestamp: '2017-07-25 09:29:00'
     },
     {
-        account_id: 7582983660,
-        name: "Phansawuth",
-        surname: "Jenthaworn",
-        citizen_id: "1111122222345",
-        email: "phanasawuth@gmail.com",
-        tel: "0860755483",
-        username: "Phan.tnp",
-        password: "12345A",
-        balance: 0.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },
-    {
         account_id: 1111111111,
         name: "Top",
         surname: "Up",
@@ -159,18 +147,6 @@ app.get("/insert", (req, res) => {
         username: "Top.Up",
         password: "12345A",
         balance: 0.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },
-    {
-        account_id: 6302335476,
-        name: "Thanaporn",
-        surname: "Suwathawongchai",
-        citizen_id : "1739988787654",
-        email: "1thanapornS@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 4700.0,
         register_timestamp: '2017-07-25 09:29:00'
     }
     ]
