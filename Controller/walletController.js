@@ -19,9 +19,9 @@ function insertBank(bank) {
     return model.bank.bulkCreate(bank)
 }
 
-function insertTransactionDefault(transaction) {
-    return model.transaction.bulkCreate(transaction)
-}
+// function insertTransactionDefault(transaction) {
+//     return model.transaction.bulkCreate(transaction)
+// }
 
 function getTransactionInfo(transaction_id) {
     return model.transaction.findAll({
@@ -98,7 +98,7 @@ async function insertGL(src_account_id,des_account_id,amount,transaction_id){
 module.exports = {
     getAccountInfo,
     insertAccount,
-    insertTransactionDefault,
+    // insertTransactionDefault,
     getTransactionInfo,
     checkAccountExist,
     checkEnoughBalance,
