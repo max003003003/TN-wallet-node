@@ -4,8 +4,8 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(3),
             primaryKey: true
         },
-        dr_amount: {
-            type: DataTypes.DOUBLE,
+        bank_model: {
+            type: DataTypes.STRING,
             require: true
         },
         
