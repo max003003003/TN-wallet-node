@@ -33,6 +33,9 @@
   "homepage": "https://github.com/max003003003/TN-wallet-node#readme",
   "testEnvironment": "node",
   "jest": {
-    "testResultsProcessor": "./node_modules/jest-junit-reporter"
+    "testResultsProcessor": "./node_modules/jest-junit-reporter",
+    "collectCoverageFrom": [
+      "Controller/**/*.js"
+    ]
   }
 }
