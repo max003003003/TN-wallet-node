@@ -23,8 +23,23 @@ module.exports = function (sequelize, DataTypes) {
         cr_type: {
             type: DataTypes.STRING(10),
             require: true
+        },
+        account_ID:{
+            type: DataTypes.STRING(10),
+            require: true
+        },
+        transaction_ID:{
+            type: DataTypes.UUID,
+            require: true
+
+        },
+        bank_ID:{
+            type: DataTypes.STRING(3),
+            require:true
+
         }
         
     })
+    
     return GL
 }
