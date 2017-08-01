@@ -3,7 +3,18 @@ require('mysql2/node_modules/iconv-lite').encodingExists('utf-8');
 const config = require('dotenv').config()
 
 var walletController = require('../Controller/walletController');
+var transactionService = require('../Controller/transactionService')
 const model = require('../Model')
+
+describe('testGetAccountInfo', function(){
+    it('should succesfully get account name, surname and balance', async ()=> {
+        var result = await walletController.getAccountInfo(8888888881,['name','surname','balance'])
+        expect(result[0].dataValues.name).toBe('unitTest')
+        expect(result[0].dataValues.surname).toBe('Test')
+        expect(result[0].dataValues.balance).toBe(1000)
+    })
+})
+
 
 describe('testAccountExists', function () {
     it('account exist', async () => {
@@ -49,29 +60,24 @@ describe('testLimitBalance', function () {
         })
     })
 })
+//not done yet, internal functions are all passed Q:need to test this aggregate?
 
 describe('testInsertTransaction', function () {
     it('transfer success', async () => {
         const trans = {
             type: "transfer",
-            src_account_id: 4564564566,
-            src_initial_balance: 2000,
-            des_account_id: 7897897899,
-            des_initial_balance: 2000,
-            amount: 300,
+            src_account_id: 8888888881,
+            src_initial_balance: 1500,
+            des_account_id: 8888888882,
+            des_initial_balance: 500,
+            amount: 500,
             fee: 0.0,
-            src_remain_balance: 1700,
-            des_remain_balance: 2300
+            src_remain_balance: 1000,
+            des_remain_balance: 1000
         }
-        expect.assertions(1);
-        await walletController.insertTransaction(trans).then((result) => {
-            expect(Number.isInteger(result)).toBe(true);
-        })
-        
+        var result = await walletController.insertTransaction(trans)
+        expect(Number.isInteger(result)).toBe(true)
+        transactionService.deleteTransactionsInstance(result)
     })
-<<<<<<< HEAD
-   
 })
-=======
-})
->>>>>>> bf755c8c18ba92596a9791024beba2add5899397
+
