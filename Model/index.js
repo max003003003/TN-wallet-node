@@ -12,10 +12,12 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
 
 var account_model = sequelize.import('./accountModel')
 var transaction_model = sequelize.import('./transactionModel')
+var GL_model = sequelize.import('./GLModel')
  
 var db = {
     account: account_model,
     transaction: transaction_model,
+    GL: GL_model,
     sequelize: sequelize,
     Sequelize: Sequelize,
     createTable: () => {
@@ -23,6 +25,9 @@ var db = {
         account_model.sync({ force: true })
         transaction_model.drop({ force: true })
         transaction_model.sync({ force: true })
+        GL_model.drop({force:true})
+        GL_model.sync({ force:true})
+        
     }
 
 }
