@@ -1,41 +1,41 @@
 const model = require('../Model')
 const GLService = {
-    createForTransactionTransferTo: (amount, SourceId, transactionId) => {
+    createForTransactionTransferTo: (amount, sourceId, transactionId) => {
         return {
-            Debit: {
-                Action: 'Saving',
-                Amount: amount,
-                Type: 'L'
+            debit: {
+                action: 'Saving',
+                amount: amount,
+                type: 'L'
             },
-            Credit: {
-                Action: 'Cash',
-                Amount: amount,
-                Type: 'A'
+            credit: {
+                action: 'Cash',
+                amount: amount,
+                type: 'A'
             },
-            SourceId: SourceId,
-            TransactionId: transactionId
+            sourceId: sourceId,
+            transactionId: transactionId
         }
     },
-    createForTransactionRecieveFrom: (amount, DestinationId, transactionId) => {
+    createForTransactionRecieveFrom: (amount, destinationId, transactionId) => {
         return {
-            Debit: {
-                Action: 'Cash',
-                Amount: amount,
-                Type: 'A'
+            debit: {
+                action: 'Cash',
+                amount: amount,
+                type: 'A'
             },
-            Credit: {
-                Action: 'Saving',
-                Amount: amount,
-                Type: 'L'
+            credit: {
+                action: 'Saving',
+                amount: amount,
+                type: 'L'
             },
-            DestinationId: DestinationId,
-            TransactionId: transactionId
+            destinationId: destinationId,
+            transactionId: transactionId
         }
     },
-    checkBalanceforGL: (GLobjectTransactionTransferTo, GLobjectTransactionRecieveFrom) => {
-        let DebitAmount = GLobjectTransactionTransferTo.Debit.Amount + GLobjectTransactionRecieveFrom.Debit.Amount;
-        let CreditAmount = GLobjectTransactionTransferTo.Credit.Amount + GLobjectTransactionRecieveFrom.Credit.Amount;
-        if (DebitAmount == CreditAmount) {
+    checkBalanceforGL: (GLObjectTransactionTransferTo, GLObjectTransactionRecieveFrom) => {
+        let debitAmount = GLObjectTransactionTransferTo.debit.amount + GLObjectTransactionRecieveFrom.debit.amount;
+        let creditAmount = GLObjectTransactionTransferTo.credit.amount + GLObjectTransactionRecieveFrom.credit.amount;
+        if (debitAmount == creditAmount) {
             return true;
         }
         return false;
