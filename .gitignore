@@ -6,3 +6,4 @@ Test/log.html
 Test/output.xml
 Test/report.html
 test-report.xml
+coverage/

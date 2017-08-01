@@ -78,9 +78,10 @@ async function insertTransaction(transactionObj) {
     if(transferResult[0][0] && transferResult[1][0]){
        let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "SUCCESS")
        if(transactionResult[0]) return currentTransaction.dataValues.id
-       throw new Error("transfer log error")    
+    //    throw new Error("transfer log error")    
     }
-    throw new Error("transfer failed")
+    // throw new Error("transfer failed") 
+    return "transfer failed"
 }
 function transferFund(transaction){
     return  transactionService.updateAccount(transaction.src_account_id,transaction.src_remain_balance,transaction.des_account_id,transaction.des_remain_balance)
