@@ -78,7 +78,7 @@ app.get("/insert", (req, res) => {
         surname: "Suwathanawongchai",
         citizen_id: "1111111111111",
         email: "kunthanaporn@gmail.com",
-        tel: "0984593556",
+        tel: "0984593556",s
         username: "Not.Oh",
         password: "12345A",
         balance: 4700.0,
