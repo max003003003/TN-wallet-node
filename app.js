@@ -142,7 +142,7 @@ app.get("/insert", (req, res) => {
         tel : "0860755482",
         username : "Oh.tnp",
         password : "12345A",
-        balance: 0.0,
+        balance: 4700.0,
         register_timestamp: '2017-07-25 09:29:00'
     }
     ]
