@@ -1,5 +1,8 @@
 const model = require('../Model')
 const GLService = {
+    getGL: ()=> {
+        return model.GL.findAll({})
+},
     createForTransactionTransferTo: (amount, sourceId, transactionId, bankId) => {
         return {
             dr_action: 'Saving',

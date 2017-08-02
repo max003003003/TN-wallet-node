@@ -12,6 +12,13 @@ let deleteGL = (transacID) => {
   })
 }
 
+describe('testGetGL',function(){
+  it('should list of all GLs', async()=>{
+    // var result = await GLService.getGL()
+    // console.log(result)
+  })
+})
+
 describe('testcreateForTransactionTransferTo', function () {
   it("should succesfully createForTransactionTransferTo object", () => {
     inputAmount = 500;

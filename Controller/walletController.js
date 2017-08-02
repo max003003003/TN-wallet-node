@@ -132,11 +132,15 @@ async function insertGL(src_account_id, des_account_id, amount, transaction_id, 
 
 }
 
+<<<<<<< HEAD
 function getGL() {
     var query = {
     }
     return model.GL.findAll(query)
 }
+=======
+
+>>>>>>> dc58107603b877a86ba8727ad40dd49e23b98cb0
 
 module.exports = {
     getAccountInfo,
@@ -150,6 +154,4 @@ module.exports = {
     insertBank,
     insertGL,
     model,
-    // transferFund,
-    getGL
 }
