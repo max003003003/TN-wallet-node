@@ -107,17 +107,17 @@ async function insertGL(src_account_id, des_account_id, amount, transaction_id, 
 
     if (fee === 0) {
         if (type === "topup") {
-           await GLService.insertGL(GLObject2)
+           await GLService.insertGL1(GLObject2)
 
         } else if (type === "transfer") {
-           await GLService.insertGL(GLObject1, GLObject2)
+           await GLService.insertGL2(GLObject1, GLObject2)
 
         }
     }
     else if (fee > 0) {
         const GLObject3 = GLService.createFeeForTransactionTransferTo(fee, src_account_id, transaction_id, bankID)
         const GLObject4 = GLService.createFeeForTransactionRecieveFrom(fee, des_account_id, transaction_id, bankID)
-        await GLService.insertGL(GLObject1, GLObject2, GLObject3, GLObject4)
+        await GLService.insertGL4(GLObject1, GLObject2, GLObject3, GLObject4)
     }
 
 }
