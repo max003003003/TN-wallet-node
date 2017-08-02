@@ -34,12 +34,12 @@ describe('testUpdateTransactionsInstance',function(){
 })
 
 describe('testDeleteTransactionInstance', function(){
-    it('should successfully delete a transaction', async ()=>{
+    it('should successfully delete a success transaction and the related GL ', async ()=>{
         const dummy = {
-            type: "transfer",
-            src_account_id: 8888888881,
+            type: "topup",
+            src_account_id: 9999999991,
             src_initial_balance: 1000,
-            des_account_id: 8888888882,
+            des_account_id: 9999999992,
             des_initial_balance: 1000,
             amount: 500,
             fee: 0.0,
@@ -48,6 +48,7 @@ describe('testDeleteTransactionInstance', function(){
         }
         var newTransaction = await transactionService.insertTransactionInstance(dummy)
         var result = await transactionService.deleteTransactionsInstance(newTransaction.dataValues.id)
+        console.log(result)
         expect(result).toBe(1)
     })
 })
