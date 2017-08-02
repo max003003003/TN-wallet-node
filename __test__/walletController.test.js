@@ -7,9 +7,9 @@ var transactionService = require('../Controller/transactionService')
 const model = require('../Model')
 
 describe('testGetAccountInfo', function () {
-    it('should return all accounts list when account_id is null', async ()=>{
-        var result = await walletController.getAccountInfo( null,['name','surname','balance'])
-        expect(result.length>0).toBe(true)
+    it('should return all accounts list when account_id is null', async () => {
+        var result = await walletController.getAccountInfo(null, ['name', 'surname', 'balance'])
+        expect(result.length > 0).toBe(true)
     })
     it('should succesfully get account name, surname and balance', async () => {
         var result = await walletController.getAccountInfo(8888888881, ['name', 'surname', 'balance'])
@@ -42,16 +42,16 @@ describe('testInsertAccount', function () {
     })
 })
 
-describe('testTnsertBank',function(){
-    it('should sucesfully insert bank(s)', async ()=>{
-        const dummy=[{
+describe('testTnsertBank', function () {
+    it('should sucesfully insert bank(s)', async () => {
+        const dummy = [{
             bank_id: "003",
             name: "MyDummyBank"
         }]
         var result = await walletController.insertBank(dummy)
         expect(result[0].dataValues.bank_id).toBe('003')
         walletController.model.bank.destroy(
-            {where:{bank_id:'003'}}
+            { where: { bank_id: '003' } }
         )
     })
 })
@@ -114,8 +114,8 @@ describe('testLimitBalance', function () {
         })
     })
 })
-//Maybe change
 
+//Maybe change
 describe('testInsertTransaction', function () {
     it('transfer success', async () => {
         const trans = {

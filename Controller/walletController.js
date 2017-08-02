@@ -80,6 +80,7 @@ function checkLimitBalance(account_id, amount) {
 async function insertTransaction(transactionObj) {
     let currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
     let transferResult = await transferFund(currentTransaction.dataValues)
+     
     if (transferResult[0][0] && transferResult[1][0]) {
         let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "SUCCESS")
 
@@ -90,6 +91,9 @@ async function insertTransaction(transactionObj) {
         if (transactionResult[0]) return currentTransaction.dataValues.id
         //    throw new Error("transfer log error")    
     }
+        let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
+
+    
     // throw new Error("transfer failed") 
     return "transfer failed"
     // throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])

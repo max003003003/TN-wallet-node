@@ -13,7 +13,7 @@ const GLService = {
             bank_ID: bankId
         }
     },
-    createForTransactionRecieveFrom: (amount, destinationId, transactionId,bankId) => {
+    createForTransactionRecieveFrom: (amount, destinationId, transactionId, bankId) => {
         return {
             dr_action: 'Cash',
             dr_amount: amount,
@@ -26,7 +26,7 @@ const GLService = {
             bank_ID: bankId
         }
     },
-     createFeeForTransactionTransferTo: (fee, sourceId, transactionId, bankId) => {
+    createFeeForTransactionTransferTo: (fee, sourceId, transactionId, bankId) => {
         return {
             dr_action: 'Saving',
             dr_amount: fee,
@@ -89,9 +89,7 @@ const GLService = {
                 model.GL.create(GLObject2, { transaction: t1 }),
             ])
         })
-
     }
 
 }
-
 module.exports = GLService
