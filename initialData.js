@@ -1,4 +1,4 @@
-const  account = [{
+const account = [{
     account_id: 8888888881,
     name: "unitTest",
     surname: "Test",
@@ -196,9 +196,29 @@ const  account = [{
     password: "12345A",
     balance: 1000.0,
     register_timestamp: '2017-07-25 09:29:00'
+}, {
+    account_id: 7999999997,
+    name: "Garena",
+    surname: "ROV",
+    citizen_id: "7999999997",
+    email: "7999999997@gmail.com",
+    tel: "7999999997",
+    username: "Garena.ROV",
+    password: "12345A",
+    balance: 5000.0,
+    register_timestamp: '2017-07-25 09:29:00'
+},
+{
+    account_id: 8999889998,
+    name: "Toyata",
+    surname: "Vigo",
+    citizen_id: "8999889998",
+    email: "8999889998@gmail.com",
+    tel: "8999889998",
+    username: "Toyata.Vigo",
+    password: "12345A",
+    balance: 3000.0,
+    register_timestamp: '2017-07-25 09:29:00'
 }]
-
-
-
-module.exports = account 
+module.exports = account
 
