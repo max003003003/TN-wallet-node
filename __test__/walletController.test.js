@@ -226,7 +226,7 @@ describe('testInsertTransaction', function () {
 
     })
 
-    it('topup fee 0 success', async () => {
+    xit('topup fee 0 success', async () => {
         const trans = {
             type: "topup",
             src_account_id: 1111111111,
