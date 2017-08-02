@@ -152,25 +152,47 @@ const  account = [{
     password: "12345A",
     balance: 0.0,
     register_timestamp: '2017-07-25 09:29:00'
-},{
-    account_id: 9999999993,
+}, {
+    account_id: 6999999993,
     name: "Jane",
     surname: "Do",
-    citizen_id: "9999999993",
-    email: "9999999993@gmail.com",
-    tel: "9999999993",
+    citizen_id: "6999999993",
+    email: "6999999993@gmail.com",
+    tel: "6999999993",
     username: "Jane.Do",
     password: "12345A",
     balance: 1000.0,
     register_timestamp: '2017-07-25 09:29:00'
 }, {
-    account_id: 9999999994,
+    account_id: 6999999994,
     name: "Max",
     surname: "Well",
-    citizen_id: "9999999994",
-    email: "9999999994@gmail.com",
-    tel: "9999999994",
+    citizen_id: "6999999994",
+    email: "6999999994@gmail.com",
+    tel: "6999999994",
     username: "Max.Well",
+    password: "12345A",
+    balance: 1000.0,
+    register_timestamp: '2017-07-25 09:29:00'
+}, {
+    account_id: 6999999995,
+    name: "John",
+    surname: "Do",
+    citizen_id: "6999999995",
+    email: "6999999995@gmail.com",
+    tel: "6999999995",
+    username: "John.Do",
+    password: "12345A",
+    balance: 1000.0,
+    register_timestamp: '2017-07-25 09:29:00'
+}, {
+    account_id: 6999999996,
+    name: "Gemn",
+    surname: "Deus",
+    citizen_id: "6999999996",
+    email: "6999999996@gmail.com",
+    tel: "6999999996",
+    username: "Gemn.Deus",
     password: "12345A",
     balance: 1000.0,
     register_timestamp: '2017-07-25 09:29:00'

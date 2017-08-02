@@ -89,17 +89,6 @@ const GLService = {
             ])
         })
 
-    },
-    deleteGL: (transacID) =>{
-        return model.sequelize.transaction((t1) =>{
-            return model.sequelize.Promise.all([
-                model.GL.describe({
-                    where: {
-                        transaction_ID: transacID
-                    }
-                },{transaction: t1})
-            ])
-        }) 
     }
 
 }

@@ -6,6 +6,19 @@ var walletController = require('../Controller/walletController');
 var transactionService = require('../Controller/transactionService')
 const model = require('../Model')
 
+
+let deleteGL = (transacID) => {
+    return model.sequelize.transaction((t1) => {
+        return model.sequelize.Promise.all([
+            model.GL.destroy({
+                where: {
+                    transaction_ID: transacID
+                }
+            }, { transaction: t1 })
+        ])
+    })
+}
+
 describe('testGetAccountInfo', function () {
     it('should return all accounts list when account_id is null', async () => {
         var result = await walletController.getAccountInfo(null, ['name', 'surname', 'balance'])
@@ -57,7 +70,7 @@ describe('testTnsertBank', function () {
 })
 
 describe('testGetTransactionInfo', function () {
-    it('should succesfully get the required transaction', async()=>{
+    it('should succesfully get the required transaction', async () => {
         const trans = {
             type: "transfer",
             src_account_id: 8888888885,
@@ -157,8 +170,8 @@ describe('testInsertTransaction', function () {
         model.sequelize.transaction((t1) => {
             return model.sequelize.Promise.all([
                 model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
-                model.GL.destroy({where:{transaction_ID: result}}, { transaction: t1 })
-            ]) 
+                model.GL.destroy({ where: { transaction_ID: result } }, { transaction: t1 })
+            ])
         })
     })
     it('transfer failed', async () => {
@@ -175,33 +188,67 @@ describe('testInsertTransaction', function () {
         }
         var result = await walletController.insertTransaction(trans)
         expect(result).toBe("transfer failed")
-        model.transaction.destroy({ where: { src_account_id: 1888888881,
-            src_initial_balance: 1500,
-            des_account_id: 2888888882,
-            des_initial_balance: 500,
-            amount: 500, } })
+        model.transaction.destroy({
+            where: {
+                src_account_id: 1888888881,
+                src_initial_balance: 1500,
+                des_account_id: 2888888882,
+                des_initial_balance: 500,
+                amount: 500,
+            }
+        })
     })
     it('transfer fee 20 success', async () => {
         const trans = {
             type: "transfer",
-            src_account_id: 9999999993,
+            src_account_id: 6999999993,
             src_initial_balance: 1000,
-            des_account_id: 9999999994,
+            des_account_id: 6999999994,
             des_initial_balance: 1000,
             amount: 500,
             fee: 20.0,
             src_remain_balance: 480,
             des_remain_balance: 1500
         }
-          var result = await walletController.insertTransaction(trans)
-          console.log('---------------------------------',result)
-          expect(Number.isInteger(result)).toBe(true)
-          model.sequelize.transaction((t1) => {
-              return model.sequelize.Promise.all([
-                  model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
-                  model.GL.destroy({ where: { transaction_ID: result } }, { transaction: t1 })
-              ])
-          })
+        var result = await walletController.insertTransaction(trans)
+        console.log('---------------------------------', result)
+        expect(Number.isInteger(result)).toBe(true)
+        model.sequelize.transaction((t1) => {
+            return model.sequelize.Promise.all([
+                model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
+                
+
+            ])
+        })
+        deleteGL(result)
+
+
+
+    })
+
+    it('topup fee 0 success', async () => {
+        const trans = {
+            type: "topup",
+            src_account_id: 1111111111,
+            src_initial_balance: 50,
+            des_account_id: 6999999995,
+            des_initial_balance: 1000,
+            amount: 50,
+            fee: 0.0,
+            src_remain_balance: 0,
+            des_remain_balance: 1050
+        }
+        var result = await walletController.insertTransaction(trans)
+        id = result
+        console.log('---------------------------------', result)
+        expect(Number.isInteger(result)).toBe(true)
+        model.sequelize.transaction((t1) => {
+            return model.sequelize.Promise.all([
+                model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
+
+            ])
+        })
+        deleteGL(result)
 
 
 
