@@ -132,12 +132,6 @@ async function insertGL(src_account_id, des_account_id, amount, transaction_id, 
 
 }
 
-function getGL() {
-    var query = {
-    }
-    return model.GL.findAll(query)
-}
-
 module.exports = {
     getAccountInfo,
     insertAccount,
@@ -149,6 +143,5 @@ module.exports = {
     checkLimitBalance,
     insertBank,
     insertGL,
-    model,
-    getGL
+    model
 }
