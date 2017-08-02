@@ -227,56 +227,53 @@ describe('testInsertGL', function () {
 
 
   })
-  xit('insertGL case fee == 0', async () => {
-    const trans = {
-      type: "transfer",
-      src_account_id: 6999999993,
-      src_initial_balance: 1000,
-      des_account_id: 6999999994,
-      des_initial_balance: 1000,
-      amount: 500,
-      fee: 0.0,
-      src_remain_balance: 480,
-      des_remain_balance: 1500
-    }
-    var result = await walletController.insertTransaction(trans)
-    console.log('---------------------------------', result)
-    expect(Number.isInteger(result)).toBe(true)
-    // model.sequelize.transaction((t1) => {
-    //   return model.sequelize.Promise.all([
-    //     model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
-
-
-    //   ])
-    // })
-    deleteGL(result)
+  it('insertGL case fee = 0', async () => {
+    const GLObject1 = {
+      dr_action: 'Saving',
+      dr_amount: 500,
+      dr_type: 'L',
+      cr_action: 'Cash',
+      cr_amount: 500,
+      cr_type: 'A',
+      account_ID: 6999999993,
+      transaction_ID: '99999',
+      bank_ID: '001'
+    };
+    const GLObject2 = {
+      dr_action: 'Cash',
+      dr_amount: 500,
+      dr_type: 'A',
+      cr_action: 'Saving',
+      cr_amount: 500,
+      cr_type: 'L',
+      account_ID: 6999999994,
+      transaction_ID: '99999',
+      bank_ID: '001'
+    };
+    let res = await GLService.insertGL2(GLObject1, GLObject2)
+    console.log('---------------------------------', res)
+    expect(res.length).toBe(4)
+    deleteGL('99999')
 
 
 
   })
-  xit('insertGL case topup', async () => {
-    const trans = {
-      type: "transfer",
-      src_account_id: 6999999993,
-      src_initial_balance: 1000,
-      des_account_id: 6999999994,
-      des_initial_balance: 1000,
-      amount: 500,
-      fee: 0.0,
-      src_remain_balance: 480,
-      des_remain_balance: 1500
-    }
-    var result = await walletController.insertTransaction(trans)
-    console.log('---------------------------------', result)
-    expect(Number.isInteger(result)).toBe(true)
-    // model.sequelize.transaction((t1) => {
-    //   return model.sequelize.Promise.all([
-    //     model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
-
-
-    //   ])
-    // })
-    deleteGL(result)
+  it('insertGL case topup', async () => {
+    const GLObject2 = {
+      dr_action: 'Cash',
+      dr_amount: 500,
+      dr_type: 'A',
+      cr_action: 'Saving',
+      cr_amount: 500,
+      cr_type: 'L',
+      account_ID: 6999999994,
+      transaction_ID: '99999',
+      bank_ID: '001'
+    };
+    let res = await GLService.insertGL1(GLObject2)
+    console.log('---------------------------------', res)
+    expect(res.length).toBe(4)
+    deleteGL('99999')
 
 
 
