@@ -8,15 +8,15 @@ Suite Setup    Create Session    TN-wallet-node    ${URL}
 ${URL}    http://127.0.0.1:3000
 
 *** Test cases ***
-Check if Thanaporn can transfer to Phansawuth 
-    Transfer Money Success     6302335476    4700    7582983660    4500    500    0    4200    5000
+Check if Phansawuth can topup sccessfully
+    Topup Money Success     7582983660    4500    100    4600
 
-Check if the tranfer transaction exists in database
+Check if the topup transaction exists in database
     ${resp}=    Get Request    TN-wallet-node    /transactions/${TRANSACTION_ID}
-    Transactions Should Contain    ${resp}    ${TRANSACTION_ID}    transfer    6302335476    4700    7582983660    4500    500    0    4200    5000    SUCCESS
+    Transactions Should Contain    ${resp}    ${TRANSACTION_ID}    topup    1111111111    100    7582983660    4500    100    0    0    4600    SUCCESS
 
-Check if Phansawuth can tranfer back to Thanaporn
-    Transfer Money Success     7582983660    5000    6302335476    4200    500    0    4500    4700
+Check if Phansawuth can tranfer to a dummy account
+    Transfer Money Success     7582983660    4600    1111111111    0    100    0    4500    100
 
 *** Keywords ***
 Transactions Should Contain
@@ -33,6 +33,15 @@ Transactions Should Contain
     Dictionary Should Contain Item    ${resp.json()}    src_remain_balance    ${src_remain_balance}
     Dictionary Should Contain Item    ${resp.json()}    des_remain_balance    ${des_remain_balance}
     Dictionary Should Contain Item    ${resp.json()}    transaction_status    ${transaction_status}
+
+Topup Money Success
+    [Arguments]    ${des_acc_id}    ${des_initial_balance}    ${amount}    ${des_remain_balance}
+    &{data}=   Create Dictionary   type=topup     des_acc_id=${des_acc_id}    des_initial_balance=${des_initial_balance}    amount=${amount}    des_remain_balance=${des_remain_balance}
+    &{headers}=  Create Dictionary  Content-Type=application/x-www-form-urlencoded
+    ${resp}=  Post Request  TN-wallet-node    /transactions		data=${data}    headers=${headers}
+    ${ID}=    Get From Dictionary    ${resp.json()}    transaction_id
+    Should Be Equal As Strings  ${resp.status_code}  200
+    Set Global Variable    ${TRANSACTION_ID}    ${ID}
 
 Transfer Money Success
     [Arguments]    ${src_acc_id}    ${src_initial_balance}    ${des_acc_id}    ${des_initial_balance}    ${amount}    ${fee}    ${src_remain_balance}    ${des_remain_balance}
