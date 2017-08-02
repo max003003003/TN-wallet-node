@@ -1,5 +1,9 @@
+require('mysql2/node_modules/iconv-lite').encodingExists('utf-8');
+//see https://github.com/sidorares/node-mysql2/issues/489
+const config = require('dotenv').config()
 var GLService = require('../Controller/GLService')
 const model = require('../Model')
+
 let deleteGL = (transacID) => {
   return model.sequelize.transaction((t1) => {
     return model.sequelize.Promise.all([

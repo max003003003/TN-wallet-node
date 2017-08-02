@@ -1,3 +1,6 @@
+require('mysql2/node_modules/iconv-lite').encodingExists('utf-8');
+//see https://github.com/sidorares/node-mysql2/issues/489
+const config = require('dotenv').config()
 const model = require('../Model')
 const GLService = {
     getGL: ()=> {
