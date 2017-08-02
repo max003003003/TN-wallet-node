@@ -7,6 +7,7 @@ const controller = require('./Controller/walletController')
 const morgan = require('morgan')
 const errorMsg = [
     "source account doesn't exist",
+    "cannot transfer to your own account",
     "destination account doesn't exist",
     "source account doesn't have enough balance",
     "destination account balance exceed limit"
