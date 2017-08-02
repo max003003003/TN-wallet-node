@@ -1,4 +1,16 @@
 var GLService = require('../Controller/GLService')
+const model = require('../Model')
+let deleteGL = (transacID) => {
+  return model.sequelize.transaction((t1) => {
+    return model.sequelize.Promise.all([
+      model.GL.destroy({
+        where: {
+          transaction_ID: transacID
+        }
+      }, { transaction: t1 })
+    ])
+  })
+}
 
 describe('testcreateForTransactionTransferTo', function () {
   it("should succesfully createForTransactionTransferTo object", () => {
@@ -149,9 +161,73 @@ describe('testCreateFeeForTransactionRecieveFrom', function(){
     })
 })
 
-describe.skip('testInsertTransaction', function () {
+describe('testInsertGL', function () {
   
-  it('transfer fee 20 success', async () => {
+  it('insertGL case fee = 20', async () => {
+    const GLObject1 = {
+      dr_action: 'Saving',
+      dr_amount: 500,
+      dr_type: 'L',
+      cr_action: 'Cash',
+      cr_amount: 500,
+      cr_type: 'A',
+      account_ID: 6999999993,
+      transaction_ID: '99999',
+      bank_ID: '001'
+    };
+    const GLObject2 = {
+      dr_action: 'Cash',
+      dr_amount: 500,
+      dr_type: 'A',
+      cr_action: 'Saving',
+      cr_amount: 500,
+      cr_type: 'L',
+      account_ID: 6999999994,
+      transaction_ID: '99999',
+      bank_ID: '001'
+    };
+    const GLObject3 = {
+      dr_action: 'Saving',
+        dr_amount: 20,
+          dr_type: 'L',
+            cr_action: 'Cash',
+              cr_amount: 20,
+                cr_type: 'A',
+                account_ID: 6999999993,
+                transaction_ID: '99999',
+                      bank_ID: '001'
+    };
+    const GLObject4 = {
+      dr_action: 'Cash',
+      dr_amount: 20,
+      dr_type: 'A',
+      cr_action: 'Fee',
+      cr_amount: 20,
+      cr_type: 'R',
+      account_ID: '001',
+      transaction_ID: '99999',
+      bank_ID: '001'
+    };
+    // const trans = {
+    //   type: "transfer",
+    //   src_account_id: 6999999993,
+    //   src_initial_balance: 1000,
+    //   des_account_id: 6999999994,
+    //   des_initial_balance: 1000,
+    //   amount: 500,
+    //   fee: 20.0,
+    //   src_remain_balance: 480,
+    //   des_remain_balance: 1500
+    // }
+    let res = await GLService.insertGL4(GLObject1, GLObject2, GLObject3, GLObject4)
+    console.log('---------------------------------', res)
+    expect(res.length).toBe(4)
+    deleteGL('99999')
+
+
+
+  })
+  xit('insertGL case fee == 0', async () => {
     const trans = {
       type: "transfer",
       src_account_id: 6999999993,
@@ -159,20 +235,47 @@ describe.skip('testInsertTransaction', function () {
       des_account_id: 6999999994,
       des_initial_balance: 1000,
       amount: 500,
-      fee: 20.0,
+      fee: 0.0,
       src_remain_balance: 480,
       des_remain_balance: 1500
     }
     var result = await walletController.insertTransaction(trans)
     console.log('---------------------------------', result)
     expect(Number.isInteger(result)).toBe(true)
-    model.sequelize.transaction((t1) => {
-      return model.sequelize.Promise.all([
-        model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
+    // model.sequelize.transaction((t1) => {
+    //   return model.sequelize.Promise.all([
+    //     model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
 
 
-      ])
-    })
+    //   ])
+    // })
+    deleteGL(result)
+
+
+
+  })
+  xit('insertGL case topup', async () => {
+    const trans = {
+      type: "transfer",
+      src_account_id: 6999999993,
+      src_initial_balance: 1000,
+      des_account_id: 6999999994,
+      des_initial_balance: 1000,
+      amount: 500,
+      fee: 0.0,
+      src_remain_balance: 480,
+      des_remain_balance: 1500
+    }
+    var result = await walletController.insertTransaction(trans)
+    console.log('---------------------------------', result)
+    expect(Number.isInteger(result)).toBe(true)
+    // model.sequelize.transaction((t1) => {
+    //   return model.sequelize.Promise.all([
+    //     model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
+
+
+    //   ])
+    // })
     deleteGL(result)
 
 
