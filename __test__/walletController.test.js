@@ -184,9 +184,9 @@ describe('testInsertTransaction', function () {
     it('transfer fee 20 success', async () => {
         const trans = {
             type: "transfer",
-            src_account_id: 8888888883,
+            src_account_id: 9999999993,
             src_initial_balance: 1000,
-            des_account_id: 8888888884,
+            des_account_id: 9999999994,
             des_initial_balance: 1000,
             amount: 500,
             fee: 20.0,
