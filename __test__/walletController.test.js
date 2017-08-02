@@ -56,6 +56,29 @@ describe('testTnsertBank', function () {
     })
 })
 
+describe('testGetTransactionInfo', function () {
+    it('should succesfully get the required transaction', async()=>{
+        const trans = {
+            type: "transfer",
+            src_account_id: 8888888885,
+            src_initial_balance: 1000,
+            des_account_id: 8888888886,
+            des_initial_balance: 1000,
+            amount: 500,
+            fee: 0.0,
+            src_remain_balance: 500,
+            des_remain_balance: 1500
+        }
+        var dummyTarnsaction = await transactionService.insertTransactionInstance(trans)
+        var result = await walletController.getTransactionInfo(dummyTarnsaction.dataValues.id)
+        expect(result[0].dataValues.id).toBe(dummyTarnsaction.dataValues.id)
+        expect(result[0].dataValues.src_account_id).toBe('8888888885')
+        expect(result[0].dataValues.des_account_id).toBe('8888888886')
+        expect(result[0].dataValues.amount).toBe(500)
+        transactionService.deleteTransactionsInstance(dummyTarnsaction.dataValues.id)
+    })
+})
+
 describe('testAccountExists', function () {
     it('account exist', async () => {
         expect.assertions(1);
@@ -131,8 +154,12 @@ describe('testInsertTransaction', function () {
         }
         var result = await walletController.insertTransaction(trans)
         expect(Number.isInteger(result)).toBe(true)
-        
-        transactionService.deleteTransactionsInstance(result)
+        model.sequelize.transaction((t1) => {
+            return model.sequelize.Promise.all([
+                model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
+                model.GL.destroy({where:{transaction_ID: result}}, { transaction: t1 })
+            ]) 
+        })
     })
     it('transfer failed', async () => {
         const trans = {
@@ -148,7 +175,11 @@ describe('testInsertTransaction', function () {
         }
         var result = await walletController.insertTransaction(trans)
         expect(result).toBe("transfer failed")
-        transactionService.deleteTransactionsInstance(result)
+        model.transaction.destroy({ where: { src_account_id: 1888888881,
+            src_initial_balance: 1500,
+            des_account_id: 2888888882,
+            des_initial_balance: 500,
+            amount: 500, } })
     })
     it('transfer fee 20 success', async () => {
         const trans = {
@@ -162,8 +193,17 @@ describe('testInsertTransaction', function () {
             src_remain_balance: 480,
             des_remain_balance: 1500
         }
-        var result = await 
-        expect(Number.isInteger(result)).toBe(true)
-        transactionService.deleteTransactionsInstance(result)
+          var result = await walletController.insertTransaction(trans)
+          console.log('---------------------------------',result)
+          expect(Number.isInteger(result)).toBe(true)
+          model.sequelize.transaction((t1) => {
+              return model.sequelize.Promise.all([
+                  model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
+                  model.GL.destroy({ where: { transaction_ID: result } }, { transaction: t1 })
+              ])
+          })
+
+
+
     })
 })

@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <title>
+    </title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-md-12">
+                <h4>GL summary</h4>
+                <div class="table-responsive">
+
+
+                    <table id="mytable" class="table table-bordred table-striped">
+
+                        <thead>
+
+                            <th>id</th>
+                             <th>debit action</th>
+                            <th>debit amount</th>
+                            <th>debit type</th>
+                            <th>credit action</th>
+                            <th>credit amount</th>
+                            <th>credit type</th>
+                            <th>account id</th>
+                            <th>transaction id</th>
+                            <th>bank id</th>
+                            <th> timestamp</th> 
+                        </thead>
+                        <tbody id="tdata">
+                            
+                        </tbody>
+
+                    </table>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "/gl",
+                "method": "GET",
+                "headers": {
+                    "cache-control": "no-cache",
+                    "postman-token": "5767afd9-c80b-264d-d424-d35d31035dca"
+                }
+            }
+
+            $.ajax(settings).done(function (data) {
+                for(var i=0 ; i< data.length; i++){
+                   $("#tdata").append(`
+                   <tr>
+                    <td>${data[i].id}</td>
+                    <td>${data[i].dr_action}</td>
+                    <td>${data[i].dr_amount}</td>
+                    <td>${data[i].dr_type}</td>
+                    <td>${data[i].cr_action}</td>
+                    <td>${data[i].cr_amount}</td>
+                    <td>${data[i].cr_type}</td>
+                    <td>${data[i].account_ID}</td>
+                    <td>${data[i].transaction_ID}</td>
+                    <td>${data[i].bank_ID}</td>
+                    <td>${data[i].createdAt}</td>
+                   </tr>
+                   `)
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

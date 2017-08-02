@@ -6,7 +6,7 @@ var walletController = require('../Controller/walletController');
 var transactionService = require('../Controller/transactionService')
 const model = require('../Model')
 
-describe('testInsertTransaction', function () {
+describe.skip('testInsertTransaction', function () {
     it('transfer at the same time', async () => {
         const trans = {
             type: "transfer",

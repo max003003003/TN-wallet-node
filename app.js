@@ -5,6 +5,8 @@ const model = require('./Model')
 const bodyParser = require('body-parser');
 const controller = require('./Controller/walletController')
 const morgan = require('morgan')
+const path = require("path")
+
 const errorMsg = [
     "source account doesn't exist",
     "cannot transfer to your own account",
@@ -283,6 +285,16 @@ app.post("/transactions", (req, res) => {
 app.get("/transactions/:id", (req, res) => {
     controller.getTransactionInfo(req.params.id).then((transaction_id) => {
         res.send(transaction_id[0])
+    })
+})
+
+app.get("/glview",(req,res)=>{
+        res.sendFile(path.join(__dirname,"table.html"))
+})
+
+app.get("/gl",(req,res)=>{
+    controller.getGL().then((data)=>{
+       res.send(data)
     })
 })
 
