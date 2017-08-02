@@ -181,4 +181,20 @@ describe('testInsertTransaction', function () {
             des_initial_balance: 500,
             amount: 500, } })
     })
+    it('transfer fee 20 success', async () => {
+        const trans = {
+            type: "transfer",
+            src_account_id: 8888888883,
+            src_initial_balance: 1000,
+            des_account_id: 8888888884,
+            des_initial_balance: 1000,
+            amount: 500,
+            fee: 20.0,
+            src_remain_balance: 500,
+            des_remain_balance: 1500
+        }
+        var result = await walletController.insertTransaction(trans)
+        expect(Number.isInteger(result)).toBe(true)
+        transactionService.deleteTransactionsInstance(result)
+    })
 })
