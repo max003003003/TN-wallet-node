@@ -14,7 +14,7 @@ const transactionService = {
         })
     },
 
-    deleteTransactionsInstance: (id) =>{
+    deleteTransactionsInstance: (id) => {
         return model.sequelize.transaction((t1) => {
             return model.transaction.destroy(
                 { where: { id: id } }, { transaction: t1 }
@@ -23,7 +23,6 @@ const transactionService = {
     },
 
     updateAccount: (srcAccountId, srcBalance, destAccountId, destBalance) => {
-        console.log("destAccountId", destBalance)
         return model.sequelize.transaction((t1) => {
             return model.sequelize.Promise.all([
                 model.account.update({ balance: srcBalance },
