@@ -91,7 +91,7 @@ async function insertTransaction(transactionObj) {
         if (transactionResult[0]) return currentTransaction.dataValues.id
         //    throw new Error("transfer log error")    
     }
-    let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
+        let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
 
     
     // throw new Error("transfer failed") 
@@ -117,6 +117,7 @@ module.exports = {
     getTransactionInfo,
     checkAccountExist,
     checkDifferentAccount,
+    checkEnoughBalance,
     insertTransaction,
     checkEnoughBalance,
     checkLimitBalance,
