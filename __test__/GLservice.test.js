@@ -36,7 +36,7 @@ describe('testGetGL', function () {
       // var res = await GLService.createForTransactionTransferTo(inputAmount, inputSourceId, inputTransactionId, inputBankId)
       var result = await GLService.getGL()
       // console.log("++++++++++++++++++++", result)
-      expect(result.length > 0).toBe(true)
+      expect(result.length >= 0).toBe(true)
       // deleteGL(res.transaction_ID)
     })
   })

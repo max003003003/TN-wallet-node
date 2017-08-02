@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    const GL = sequelize.define('tb_gl', {
+    const GL = sequelize.define('tb_GL', {
         dr_action: {
             type: DataTypes.STRING,
             require: true
