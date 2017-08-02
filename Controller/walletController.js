@@ -98,7 +98,7 @@ async function insertTransaction(transactionObj) {
     return "transfer failed"
     // throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
 }
-function transferFund(transaction) {
+function   transferFund(transaction) {
     return transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance, transaction.des_account_id, transaction.des_remain_balance)
 }
 async function insertGL(src_account_id, des_account_id, amount, transaction_id, bankID, fee, type) {
