@@ -198,7 +198,7 @@ describe('testInsertTransaction', function () {
             }
         })
     })
-    xit('transfer fee 20 success', async () => {
+    it('transfer fee 20 success', async () => {
         const trans = {
             type: "transfer",
             src_account_id: 6999999993,
@@ -226,7 +226,7 @@ describe('testInsertTransaction', function () {
 
     })
 
-    xit('topup fee 0 success', async () => {
+    it('topup fee 0 success', async () => {
         const trans = {
             type: "topup",
             src_account_id: 1111111111,
