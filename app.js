@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const controller = require('./Controller/walletController')
 const morgan = require('morgan')
 const path = require("path")
+const account = require('./initialData')
 
 const errorMsg = [
     "source account doesn't exist",
@@ -40,106 +41,7 @@ app.get("/insert", (req, res) => {
             name: "SCB"
         }]
 
-    const account = [{
-        account_id: 8888888881,
-        name: "unitTest",
-        surname: "Test",
-        citizen_id: "1010101010101",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 1000.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 8888888882,
-        name: "unitTest",
-        surname: "Test",
-        citizen_id: "1010101010101",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 1000.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 8888888883,
-        name: "unitTestForSuccesInsertTransfer",
-        surname: "Test",
-        citizen_id: "1010101010101",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 1000.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 8888888884,
-        name: "unitTestForSuccesInsertTransfer",
-        surname: "Test",
-        citizen_id: "1010101010101",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 1000.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 6302335476,
-        name: "Thanaporn",
-        surname: "Suwathanawongchai",
-        citizen_id: "1010101010101",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 4700.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 7582983660,
-        name: "Phansawuth",
-        surname: "Jenthaworn",
-        citizen_id: "0101010101010",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 4500.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 1234567890,
-        name: "Thanaporn",
-        surname: "Sampaotong",
-        citizen_id: "1010101010101",
-        email: "thanaporn@gmail.com",
-        tel: "0860755482",
-        username: "Oh.tnp",
-        password: "12345A",
-        balance: 2000.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 9876543210,
-        name: "Thanaporn",
-        surname: "Suwathanawongchai",
-        citizen_id: "1111111111111",
-        email: "kunthanaporn@gmail.com",
-        tel: "0984593556",
-        username: "Not.Oh",
-        password: "12345A",
-        balance: 4700.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    },{
-        account_id: 1111111111,
-        name: "Top",
-        surname: "Up",
-        citizen_id: "1111111111",
-        email: "1111111111@gmail.com",
-        tel: "1111111111",
-        username: "Top.Up",
-        password: "12345A",
-        balance: 0.0,
-        register_timestamp: '2017-07-25 09:29:00'
-    }]
+    
     controller.insertBank(banks).then((banks)=>{
         
     })

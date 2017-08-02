@@ -184,17 +184,26 @@ describe('testInsertTransaction', function () {
     it('transfer fee 20 success', async () => {
         const trans = {
             type: "transfer",
-            src_account_id: 8888888883,
+            src_account_id: 9999999993,
             src_initial_balance: 1000,
-            des_account_id: 8888888884,
+            des_account_id: 9999999994,
             des_initial_balance: 1000,
             amount: 500,
             fee: 20.0,
-            src_remain_balance: 500,
+            src_remain_balance: 480,
             des_remain_balance: 1500
         }
-        var result = await walletController.insertTransaction(trans)
-        expect(Number.isInteger(result)).toBe(true)
-        transactionService.deleteTransactionsInstance(result)
+          var result = await walletController.insertTransaction(trans)
+          console.log('---------------------------------',result)
+          expect(Number.isInteger(result)).toBe(true)
+          model.sequelize.transaction((t1) => {
+              return model.sequelize.Promise.all([
+                  model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
+                  model.GL.destroy({ where: { transaction_ID: result } }, { transaction: t1 })
+              ])
+          })
+
+
+
     })
 })
