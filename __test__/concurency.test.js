@@ -13,7 +13,7 @@ describe.skip('testInsertTransaction', function () {
             src_account_id: 1888888883,
             src_initial_balance: 1000,
             des_account_id: 2888888884,
-            des_initial_balance: 1000,
+            des_initial_balance: 500,
             amount: 100,
             fee: 0.0,
             src_remain_balance: 900,
@@ -52,13 +52,54 @@ describe.skip('testInsertTransaction', function () {
             src_remain_balance: 900,
             des_remain_balance: 900
         }
-        var result = await walletController.transferFund(trans)
-        var result1 = await walletController.transferFund(trans1)
-        var result2 = await walletController.transferFund(trans2)
-        var result3 = await walletController.transferFund(trans3)
-        console.log("---------------------------------")
-        console.log(result,result1,result2
-        ,result3)
+        const testsSuits = [trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+
+
+        ]
+        let result = []
+        console.log('------------------------')
+
+        testsSuits.map((test) => {
+            walletController.transferFund(test).then((v) => {
+                result.push({ test: test, result: v })
+
+            })
+        })
+
+        await setTimeout(() => { console.log(result) }, 10000)
+
+        // var result = await walletController.transferFund(trans)
+        // var result1 = await walletController.transferFund(trans1)
+        // var result2 = await walletController.transferFund(trans2)
+        // var result3 = await walletController.transferFund(trans3)
+        // console.log("---------------------------------")
+        // console.log(result, result1, result2, result3)
+        //   console.log(result)
+
         // transactionService.deleteTransactionsInstance(result)
         // transactionService.deleteTransactionsInstance(result1)
         // transactionService.deleteTransactionsInstance(result2)

@@ -144,6 +144,6 @@ module.exports = {
     insertBank,
     insertGL,
     model,
-    transferFund,
+    // transferFund,
     getGL
 }
