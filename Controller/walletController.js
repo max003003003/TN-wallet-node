@@ -80,7 +80,7 @@ function checkLimitBalance(account_id, amount) {
 async function insertTransaction(transactionObj) {
     let currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
     let transferResult = await transferFund(currentTransaction.dataValues)
-
+    console.log(transferResult)
     if (transferResult[0][0] && transferResult[1][0]) {
         let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "SUCCESS")
 
@@ -91,14 +91,14 @@ async function insertTransaction(transactionObj) {
         if (transactionResult[0]) return currentTransaction.dataValues.id
         //    throw new Error("transfer log error")
     }
-        let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
+    let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
 
 
     // throw new Error("transfer failed")
     return "transfer failed"
     // throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
 }
-function   transferFund(transaction) {
+function transferFund(transaction) {
     return transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance, transaction.des_account_id, transaction.des_remain_balance)
 }
 async function insertGL(src_account_id, des_account_id, amount, transaction_id, bankID, fee, type) {
@@ -106,18 +106,19 @@ async function insertGL(src_account_id, des_account_id, amount, transaction_id, 
     const GLObject2 = GLService.createForTransactionRecieveFrom(amount, des_account_id, transaction_id, bankID)
 
     if (fee === 0) {
-        if(type === "topup"){
-            let result = await GLService.insertGL(GLObject2)
-        }else if(type === "transfer"){
-            let result = await GLService.insertGL(GLObject1, GLObject2)
-            console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",result)
+        if (type === "topup") {
+           await GLService.insertGL(GLObject2)
+
+        } else if (type === "transfer") {
+           await GLService.insertGL(GLObject1, GLObject2)
+
         }
     }
-    // else if (fee > 0) {
-    //     const GLObject3 = GLService.createFeeForTransactionTransferTo(fee, src_account_id, transaction_id, bankID)
-    //     const GLObject4 = GLService.createFeeForTransactionRecieveFrom(fee, des_account_id, transaction_id, bankID)
-    //     let result = await GLService.insertGL(GLObject1, GLObject2, GLObject3, GLObject4)
-    // }
+    else if (fee > 0) {
+        const GLObject3 = GLService.createFeeForTransactionTransferTo(fee, src_account_id, transaction_id, bankID)
+        const GLObject4 = GLService.createFeeForTransactionRecieveFrom(fee, des_account_id, transaction_id, bankID)
+        await GLService.insertGL(GLObject1, GLObject2, GLObject3, GLObject4)
+    }
 
 }
 
