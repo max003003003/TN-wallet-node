@@ -65,8 +65,8 @@ const GLService = {
             return model.sequelize.Promise.all([
                 model.GL.create(GLObject1, { transaction: t1 }),
                 model.GL.create(GLObject2, { transaction: t1 }),
-                model.GL.create(GLObject3, { transaction: t1 }),
-                model.GL.create(GLObject4, { transaction: t1 })
+                // model.GL.create(GLObject3, { transaction: t1 }),
+                // model.GL.create(GLObject4, { transaction: t1 })
             ])
         })
 
