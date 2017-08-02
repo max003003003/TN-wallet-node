@@ -49,17 +49,16 @@ describe('testInsertTransaction', function () {
             des_initial_balance: 800,
             amount: 100,
             fee: 0.0,
-            src_remain_balance:900,
+            src_remain_balance: 900,
             des_remain_balance: 900
         }
-        var result = walletController.transferFund(trans).then((res)=>{
-                console.log("=====================================")
-            console.log(res)
-        })
-        var result1 = walletController.transferFund(trans1)
-        var result2 = walletController.transferFund(trans2)
-        var result3 = walletController.transferFund(trans3)
-        
+        var result = await walletController.transferFund(trans)
+        var result1 = await walletController.transferFund(trans1)
+        var result2 = await walletController.transferFund(trans2)
+        var result3 = await walletController.transferFund(trans3)
+        console.log("---------------------------------")
+        console.log(result,result1,result2
+        ,result3)
         // transactionService.deleteTransactionsInstance(result)
         // transactionService.deleteTransactionsInstance(result1)
         // transactionService.deleteTransactionsInstance(result2)
