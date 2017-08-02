@@ -44,10 +44,10 @@ function checkAccountExist(account_id) {
 
 }
 
-function checkDifferentAccount(src_acc_id,des_acc_id){
-    return new Promise((resolve,reject)=>{
+function checkDifferentAccount(src_acc_id, des_acc_id) {
+    return new Promise((resolve, reject) => {
         resolve(src_acc_id != des_acc_id)
-    }) 
+    })
 }
 
 function checkEnoughBalance(account_id, amount) {
@@ -78,18 +78,22 @@ function checkLimitBalance(account_id, amount) {
 }
 
 async function insertTransaction(transactionObj) {
-    currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
+    let currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
     let transferResult = await transferFund(currentTransaction.dataValues)
+     
     if (transferResult[0][0] && transferResult[1][0]) {
         let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "SUCCESS")
-        
-        let GLresult = await insertGL(currentTransaction.dataValues.src_account_id,
-            currentTransaction.dataValues.des_account_id,currentTransaction.dataValues.amount, currentTransaction.dataValues.id,
-            '001',0)
+
+        await insertGL(currentTransaction.dataValues.src_account_id,
+            currentTransaction.dataValues.des_account_id, currentTransaction.dataValues.amount, currentTransaction.dataValues.id,
+            '001', transactionObj.fee, transactionObj.type)
 
         if (transactionResult[0]) return currentTransaction.dataValues.id
         //    throw new Error("transfer log error")    
     }
+        let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
+
+    
     // throw new Error("transfer failed") 
     return "transfer failed"
     // throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
@@ -97,13 +101,23 @@ async function insertTransaction(transactionObj) {
 function transferFund(transaction) {
     return transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance, transaction.des_account_id, transaction.des_remain_balance)
 }
-async function insertGL(src_account_id, des_account_id, amount, transaction_id, bankID, fee) {
-    const GLObject1 = GLService.createForTransactionTransferTo(amount, src_account_id, transaction_id,bankID)
-    const GLObject2 = GLService.createForTransactionRecieveFrom(amount, des_account_id, transaction_id,bankID)
-    const GLObject3 = GLService.createFeeForTransactionTransferTo(fee,src_account_id,transaction_id,bankID)
-    const GLObject4 = GLService.createFeeForTransactionRecieveFrom(fee,des_account_id,transaction_id,bankID)
-    let GLResult = await GLService.insertGL(GLObject1, GLObject2, GLObject3, GLObject4)
-    return GLResult
+async function insertGL(src_account_id, des_account_id, amount, transaction_id, bankID, fee, type) {
+    const GLObject1 = GLService.createForTransactionTransferTo(amount, src_account_id, transaction_id, bankID)
+    const GLObject2 = GLService.createForTransactionRecieveFrom(amount, des_account_id, transaction_id, bankID)
+    
+    if (fee === 0) {
+        if(type === "topup"){
+            await GLService.insertGL(GLObject2)
+        }else if(type === "transfer"){
+            await GLService.insertGL(GLObject1, GLObject2)
+        }
+    } 
+    // else if (fee > 0) {
+    //     const GLObject3 = GLService.createFeeForTransactionTransferTo(fee, src_account_id, transaction_id, bankID)
+    //     const GLObject4 = GLService.createFeeForTransactionRecieveFrom(fee, des_account_id, transaction_id, bankID)
+    //     await GLService.insertGL(GLObject1, GLObject2, GLObject3, GLObject4)
+    // }
+
 }
 
 module.exports = {
@@ -112,8 +126,8 @@ module.exports = {
     getTransactionInfo,
     checkAccountExist,
     checkDifferentAccount,
-    insertTransaction,
     checkEnoughBalance,
+    insertTransaction,
     checkLimitBalance,
     insertBank,
     insertGL,
