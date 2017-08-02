@@ -78,8 +78,9 @@ function checkLimitBalance(account_id, amount) {
 }
 
 async function insertTransaction(transactionObj) {
-    currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
+    let currentTransaction = await transactionService.insertTransactionInstance(transactionObj)
     let transferResult = await transferFund(currentTransaction.dataValues)
+     
     if (transferResult[0][0] && transferResult[1][0]) {
         let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "SUCCESS")
         
@@ -90,6 +91,9 @@ async function insertTransaction(transactionObj) {
         if (transactionResult[0]) return currentTransaction.dataValues.id
         //    throw new Error("transfer log error")    
     }
+    let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
+
+    
     // throw new Error("transfer failed") 
     return "transfer failed"
     // throw new Error("transfer failed source result:" + transferResult[0][0] + " destination result:" + transferResult[1][0])
@@ -98,6 +102,7 @@ function transferFund(transaction) {
     return transactionService.updateAccount(transaction.src_account_id, transaction.src_remain_balance, transaction.des_account_id, transaction.des_remain_balance)
 }
 async function insertGL(src_account_id, des_account_id, amount, transaction_id, bankID, fee) {
+    
     const GLObject1 = GLService.createForTransactionTransferTo(amount, src_account_id, transaction_id,bankID)
     const GLObject2 = GLService.createForTransactionRecieveFrom(amount, des_account_id, transaction_id,bankID)
     const GLObject3 = GLService.createFeeForTransactionTransferTo(fee,src_account_id,transaction_id,bankID)
