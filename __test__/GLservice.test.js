@@ -285,6 +285,67 @@ describe('testInsertGL', function () {
 
 
   })
+ 
+
+  it('insertGL case fee = 20 with gl5', async () => {
+    const GLObject1 = {
+      dr_action: 'Saving',
+      dr_amount: 500,
+      dr_type: 'L',
+      cr_action: 'Cash',
+      cr_amount: 500,
+      cr_type: 'A',
+      account_ID: 6999999993,
+      transaction_ID: '99899',
+      bank_ID: '001'
+    };
+    const GLObject2 = {
+      dr_action: 'Cash',
+      dr_amount: 500,
+      dr_type: 'A',
+      cr_action: 'Saving',
+      cr_amount: 500,
+      cr_type: 'L',
+      account_ID: 6999999994,
+      transaction_ID: '99899',
+      bank_ID: '001'
+    };
+    const GLObject3 = {
+      dr_action: 'Saving',
+      dr_amount: 20,
+      dr_type: 'L',
+      cr_action: 'Cash',
+      cr_amount: 20,
+      cr_type: 'A',
+      account_ID: 6999999993,
+      transaction_ID: '99899',
+      bank_ID: '001'
+    };
+    const GLObject4 = {
+      dr_action: 'Cash',
+      dr_amount: 20,
+      dr_type: 'A',
+      cr_action: 'Fee',
+      cr_amount: 20,
+      cr_type: 'R',
+      account_ID: '001',
+      transaction_ID: '99899',
+      bank_ID: '001'
+    };
+    
+    const GLS = [GLObject1,GLObject2,GLObject3,GLObject4]
+     
+    let res = await GLService.insertGL5(GLS)
+    console.log('---------------------------------', res)
+    expect(res.length).toBe(4)
+    
+   
+   
+   //deleteGL('99899')
+
+
+
+  })
 
 
 })

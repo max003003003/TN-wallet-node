@@ -1,8 +1,8 @@
 const model = require('../Model')
 const GLService = {
-    getGL: ()=> {
+    getGL: () => {
         return model.GL.findAll({})
-},
+    },
     createForTransactionTransferTo: (amount, sourceId, transactionId, bankId) => {
         return {
             dr_action: 'Saving',
@@ -74,6 +74,14 @@ const GLService = {
             ])
         })
 
+    },
+    insertGL5: (ArrayOfGLObject) => {
+        return model.sequelize.transaction((t1) => {
+            const operation = ArrayOfGLObject.map((obj) => {
+                return model.GL.create(obj, { transaction: t1 })
+            })
+            return model.sequelize.Promise.all(operation)
+        })
     },
     insertGL2: (GLObject1, GLObject2) => {
         //transfer : case fee == 0
