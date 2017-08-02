@@ -137,8 +137,7 @@ app.get("/insert", (req, res) => {
         password: "12345A",
         balance: 4700.0,
         register_timestamp: '2017-07-25 09:29:00'
-    },
-    {
+    },{
         account_id: 1111111111,
         name: "Top",
         surname: "Up",
@@ -149,8 +148,7 @@ app.get("/insert", (req, res) => {
         password: "12345A",
         balance: 0.0,
         register_timestamp: '2017-07-25 09:29:00'
-    }
-    ]
+    }]
     controller.insertBank(banks).then((banks)=>{
         
     })
