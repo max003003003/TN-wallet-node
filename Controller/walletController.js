@@ -117,5 +117,6 @@ module.exports = {
     checkLimitBalance,
     insertBank,
     insertGL,
-    model
+    model,
+    transferFund
 }
