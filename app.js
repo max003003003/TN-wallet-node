@@ -4,6 +4,7 @@ const app = express()
 const model = require('./Model')
 const bodyParser = require('body-parser');
 const controller = require('./Controller/walletController')
+const glService = require('./Controller/GLService')
 const morgan = require('morgan')
 const path = require("path")
 const account = require('./initialData')
@@ -195,7 +196,7 @@ app.get("/glview",(req,res)=>{
 })
 
 app.get("/gl",(req,res)=>{
-    controller.getGL().then((data)=>{
+    glService.getGL().then((data)=>{
        res.send(data)
     })
 })

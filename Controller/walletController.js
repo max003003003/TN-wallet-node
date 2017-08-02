@@ -104,33 +104,35 @@ function transferFund(transaction) {
 async function insertGL(src_account_id, des_account_id, amount, transaction_id, bankID, fee, type) {
     const GLObject1 = GLService.createForTransactionTransferTo(amount, src_account_id, transaction_id, bankID)
     const GLObject2 = GLService.createForTransactionRecieveFrom(amount, des_account_id, transaction_id, bankID)
-
+    let checkDebitCreditBalanceGLobject12 = GLService.checkBalanceforGL(GLObject1, GLObject2)//problem if topup it only get dummy source account data
     if (fee === 0) {
         if (type === "topup") {
-           await GLService.insertGL1(GLObject2)
+            if(checkDebitCreditBalanceGLobject12){
+                await GLService.insertGL1(GLObject2)
+            }
+            
 
         } else if (type === "transfer") {
-           await GLService.insertGL2(GLObject1, GLObject2)
+            if(checkDebitCreditBalanceGLobject12){
+                await GLService.insertGL2(GLObject1, GLObject2)
+            }
+            
 
         }
     }
     else if (fee > 0) {
         const GLObject3 = GLService.createFeeForTransactionTransferTo(fee, src_account_id, transaction_id, bankID)
         const GLObject4 = GLService.createFeeForTransactionRecieveFrom(fee, des_account_id, transaction_id, bankID)
-        await GLService.insertGL4(GLObject1, GLObject2, GLObject3, GLObject4)
+        let checkDebitCreditBalanceGLobject34 = GLService.checkBalanceforGL(GLObject3, GLObject4)
+        if(checkDebitCreditBalanceGLobject12 && checkDebitCreditBalanceGLobject34){
+             await GLService.insertGL4(GLObject1, GLObject2, GLObject3, GLObject4)
+        }
+       
     }
 
 }
 
-function getGL() {
-    var query = {
-    }
-    // if (account_id != null) {
-    //     query.where = { account_id: account_id }
-    // }
-    // query.attributes = attributes
-    return model.GL.findAll(query)
-}
+
 
 module.exports = {
     getAccountInfo,
@@ -144,6 +146,4 @@ module.exports = {
     insertBank,
     insertGL,
     model,
-    // transferFund,
-    getGL
 }
