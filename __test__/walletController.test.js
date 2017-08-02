@@ -254,3 +254,10 @@ describe('testInsertTransaction', function () {
 
     })
 })
+
+describe('testGetGL', function(){
+    it('should get all GL', async ()=>{
+        var result = await walletController.getGL()
+        expect(result.length > 0).toBe(true)
+    })
+})
