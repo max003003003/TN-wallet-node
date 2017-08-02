@@ -6,7 +6,7 @@ var walletController = require('../Controller/walletController');
 var transactionService = require('../Controller/transactionService')
 const model = require('../Model')
 
-describe('testInsertTransaction', function () {
+describe.skip('testInsertTransaction', function () {
     it('transfer at the same time', async () => {
         const trans = {
             type: "transfer",
@@ -52,45 +52,45 @@ describe('testInsertTransaction', function () {
             src_remain_balance: 900,
             des_remain_balance: 900
         }
-        const testsSuits = [trans,trans1,trans2,trans3,
-        trans,trans1,trans2,trans3,
-         trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-         trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-         trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-         trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-         trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-         trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-         trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-         trans,trans1,trans2,trans3,
-          trans,trans1,trans2,trans3,
-       
-  
-    ]
+        const testsSuits = [trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+            trans, trans1, trans2, trans3,
+
+
+        ]
         let result = []
         console.log('------------------------')
-         
-        testsSuits.map((test)=>{
-            walletController.transferFund(test).then((v)=>{
-                result.push({test:test,result:v})
-                
+
+        testsSuits.map((test) => {
+            walletController.transferFund(test).then((v) => {
+                result.push({ test: test, result: v })
+
             })
         })
-        
-       await setTimeout(()=>{console.log(result)},10000)
+
+        await setTimeout(() => { console.log(result) }, 10000)
 
         // var result = await walletController.transferFund(trans)
         // var result1 = await walletController.transferFund(trans1)

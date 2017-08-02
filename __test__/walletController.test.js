@@ -158,7 +158,7 @@ describe('testInsertTransaction', function () {
             des_initial_balance: 1000,
             amount: 500,
             fee: 20.0,
-            src_remain_balance: 500,
+            src_remain_balance: 480,
             des_remain_balance: 1500
         }
         var result = await walletController.insertTransaction(trans)
