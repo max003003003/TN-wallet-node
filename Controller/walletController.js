@@ -135,10 +135,6 @@ async function insertGL(src_account_id, des_account_id, amount, transaction_id, 
 function getGL() {
     var query = {
     }
-    // if (account_id != null) {
-    //     query.where = { account_id: account_id }
-    // }
-    // query.attributes = attributes
     return model.GL.findAll(query)
 }
 
