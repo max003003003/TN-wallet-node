@@ -7,7 +7,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
         max: 5,
         min: 0,
         idle: 10000
-    }
+    },
+    timezone: 'Asia/Bangkok'
 })
 
 var account_model = sequelize.import('./accountModel')

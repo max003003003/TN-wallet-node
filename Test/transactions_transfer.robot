@@ -18,6 +18,10 @@ Check if the tranfer transaction exists in database
 Check if Phansawuth can tranfer back to Thanaporn
     Transfer Money Success     7582983660    5000    6302335476    4200    500    0    4500    4700
 
+Check if the reverse tranfer transaction exists in database
+    ${resp}=    Get Request    TN-wallet-node    /transactions/${TRANSACTION_ID}
+    Transactions Should Contain    ${resp}    ${TRANSACTION_ID}    transfer    7582983660    5000    6302335476    4200    500    0    4500    4700    SUCCESS
+
 *** Keywords ***
 Transactions Should Contain
     [Arguments]    ${resp}     ${id}    ${type}    ${src_account_id}    ${src_initial_balance}     ${des_account_id}    ${des_initial_balance}    ${amount}    ${fee}    ${src_remain_balance}    ${des_remain_balance}    ${transaction_status}
