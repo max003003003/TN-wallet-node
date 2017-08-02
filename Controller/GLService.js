@@ -61,12 +61,32 @@ const GLService = {
         return false;
     },
     insertGL: (GLObject1, GLObject2, GLObject3, GLObject4) => {
+      //transfer : case fee != 0
         return model.sequelize.transaction((t1) => {
             return model.sequelize.Promise.all([
                 model.GL.create(GLObject1, { transaction: t1 }),
                 model.GL.create(GLObject2, { transaction: t1 }),
-                // model.GL.create(GLObject3, { transaction: t1 }),
-                // model.GL.create(GLObject4, { transaction: t1 })
+                model.GL.create(GLObject3, { transaction: t1 }),
+                model.GL.create(GLObject4, { transaction: t1 })
+            ])
+        })
+
+    },
+    insertGL: (GLObject1, GLObject2) => {
+      //transfer : case fee == 0
+        return model.sequelize.transaction((t1) => {
+            return model.sequelize.Promise.all([
+                model.GL.create(GLObject1, { transaction: t1 }),
+                model.GL.create(GLObject2, { transaction: t1 }),
+            ])
+        })
+
+    },
+    insertGL: (GLObject2) => {
+      //top up 
+        return model.sequelize.transaction((t1) => {
+            return model.sequelize.Promise.all([
+                model.GL.create(GLObject2, { transaction: t1 }),
             ])
         })
 
