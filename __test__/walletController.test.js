@@ -198,7 +198,7 @@ describe('testInsertTransaction', function () {
             }
         })
     })
-    it('transfer fee 20 success', async () => {
+    xit('transfer fee 20 success', async () => {
         const trans = {
             type: "transfer",
             src_account_id: 6999999993,

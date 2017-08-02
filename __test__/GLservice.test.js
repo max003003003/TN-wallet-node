@@ -161,7 +161,7 @@ describe('testCreateFeeForTransactionRecieveFrom', function(){
     })
 })
 
-describe.skip('testInsertGL', function () {
+describe('testInsertGL', function () {
   
   it('insertGL case fee = 20', async () => {
     const GLObject1 = {
