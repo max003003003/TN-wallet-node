@@ -198,7 +198,7 @@ describe('testInsertTransaction', function () {
             }
         })
     })
-    it('transfer fee 20 success', async () => {
+    it('transfer fee 20 success checkbalance success', async () => {
         const trans = {
             type: "transfer",
             src_account_id: 6999999993,
@@ -225,33 +225,113 @@ describe('testInsertTransaction', function () {
 
 
     })
-
-    it('topup fee 0 success', async () => {
-        const trans = {
-            type: "topup",
-            src_account_id: 1111111111,
-            src_initial_balance: 50,
-            des_account_id: 6999999995,
-            des_initial_balance: 1000,
-            amount: 50,
-            fee: 0.0,
-            src_remain_balance: 0,
-            des_remain_balance: 1050
-        }
-        var result = await walletController.insertTransaction(trans)
-        id = result
-        console.log('---------------------------------', result)
-        expect(Number.isInteger(result)).toBe(true)
-        model.sequelize.transaction((t1) => {
-            return model.sequelize.Promise.all([
-                model.transaction.destroy({ where: { id: result } }, { transaction: t1 }),
-
-            ])
-        })
-        deleteGL(result)
+})
 
 
+describe('testInsertGL', function () {
+    
+    it('insertGL : fee is positive & transfer GL record successfully', async () => {
+        let inputSrc_account_id = 6999999993;
+        let inputDes_account_id = 6999999994;
+        let inputAmount = 500;
+        let inputTransaction_id = '99999';
+        let inputbankID = '001';
+        let inputFee = 20;
+        let inputType = 'transfer';
+        var result = await walletController.insertGL(inputSrc_account_id, inputDes_account_id, inputAmount, inputTransaction_id, inputbankID, inputFee, inputType)
+        expect(result).toBe('fee is positive : transfer GL record successfully')
+        deleteGL(inputTransaction_id)
+    })
 
+    it('insertGL : fee is positive & transfer GL record fail', async () => {
+        let inputSrc_account_id = null; //account that doesn't exist
+        let inputDes_account_id = 6999999994;
+        let inputAmount = 500;
+        let inputTransaction_id = '99999';
+        let inputbankID = '001';
+        let inputFee = 20;
+        let inputType = 'transfer';
+        var result = await walletController.insertGL(inputSrc_account_id, inputDes_account_id, inputAmount, inputTransaction_id, inputbankID, inputFee, inputType)
+        expect(result).toBe('fee is positive : transfer GL record fail')
+        deleteGL(inputTransaction_id)
+    })
+
+    it('insertGL : fee is zero & topup GL record successfully', async () => {
+        let inputSrc_account_id = 1111111111;// top up account
+        let inputDes_account_id = 6999999994;
+        let inputAmount = 500;
+        let inputTransaction_id = '99999';
+        let inputbankID = '001';
+        let inputFee = 0;
+        let inputType = 'topup';
+        var result = await walletController.insertGL(inputSrc_account_id, inputDes_account_id, inputAmount, inputTransaction_id, inputbankID, inputFee, inputType)
+        expect(result).toBe('fee is zero : topup GL record successfully')
+        deleteGL(inputTransaction_id)
+    })
+
+    it('insertGL : fee is zero & topup GL record fail', async () => {
+        let inputSrc_account_id = null;
+        let inputDes_account_id = 6999999994;
+        let inputAmount = 500;
+        let inputTransaction_id = '99999';
+        let inputbankID = '001';
+        let inputFee = 0;
+        let inputType = 'topup';
+        var result = await walletController.insertGL(inputSrc_account_id, inputDes_account_id, inputAmount, inputTransaction_id, inputbankID, inputFee, inputType)
+        expect(result).toBe('fee is zero : topup GL record fail')
+        deleteGL(inputTransaction_id)
+    })
+
+    it('insertGL : fee is zero & transfer GL record successfully', async () => {
+        let inputSrc_account_id = 6999999993;
+        let inputDes_account_id = 6999999994;
+        let inputAmount = 500;
+        let inputTransaction_id = '99999';
+        let inputbankID = '001';
+        let inputFee = 0;
+        let inputType = 'transfer';
+        var result = await walletController.insertGL(inputSrc_account_id, inputDes_account_id, inputAmount, inputTransaction_id, inputbankID, inputFee, inputType)
+        expect(result).toBe('fee is zero : transfer GL record successfully')
+        deleteGL(inputTransaction_id)
+    })
+
+    it('insertGL : fee is zero & transfer GL record fail', async () => {
+        let inputSrc_account_id = null;
+        let inputDes_account_id = 6999999994;
+        let inputAmount = 500;
+        let inputTransaction_id = '99999';
+        let inputbankID = '001';
+        let inputFee = 0;
+        let inputType = 'transfer';
+        var result = await walletController.insertGL(inputSrc_account_id, inputDes_account_id, inputAmount, inputTransaction_id, inputbankID, inputFee, inputType)
+        expect(result).toBe('fee is zero : transfer GL record fail')
+        deleteGL(inputTransaction_id)
+    })
+
+    it('insertGL : fee is negative record fail', async () => {
+        let inputSrc_account_id = 6999999993;
+        let inputDes_account_id = 6999999994;
+        let inputAmount = 500;
+        let inputTransaction_id = '99999';
+        let inputbankID = '001';
+        let inputFee = -20;
+        let inputType = 'transfer';
+        var result = await walletController.insertGL(inputSrc_account_id, inputDes_account_id, inputAmount, inputTransaction_id, inputbankID, inputFee, inputType)
+        expect(result).toBe('fee is negative : record fail')
+        deleteGL(inputTransaction_id)
+    })
+
+    it('insertGL : fee is zero & type not recognized GL record fail', async () => {
+        let inputSrc_account_id = 6999999993;
+        let inputDes_account_id = 6999999994;
+        let inputAmount = 500;
+        let inputTransaction_id = '99999';
+        let inputbankID = '001';
+        let inputFee = 0;
+        let inputType = 'transfe';
+        var result = await walletController.insertGL(inputSrc_account_id, inputDes_account_id, inputAmount, inputTransaction_id, inputbankID, inputFee, inputType)
+        expect(result).toBe('fee is zero : type not recognized : GL record fail')
+        deleteGL(inputTransaction_id)
     })
 })
 
