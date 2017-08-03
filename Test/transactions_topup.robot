@@ -3,6 +3,7 @@ Library    RequestsLibrary
 Library    Collections
 
 Suite Setup    Create Session    TN-wallet-node    ${URL}
+Suite Teardown  Transfer Money Success     7582983660    4600    1111111111    0    100    0    4500    100
 
 *** Variables ***
 ${URL}    http://127.0.0.1:3000
@@ -14,9 +15,6 @@ Check if Phansawuth can topup sccessfully
 Check if the topup transaction exists in database
     ${resp}=    Get Request    TN-wallet-node    /transactions/${TRANSACTION_ID}
     Transactions Should Contain    ${resp}    ${TRANSACTION_ID}    topup    1111111111    100    7582983660    4500    100    0    0    4600    SUCCESS
-
-Check if Phansawuth can tranfer to a dummy account
-    Transfer Money Success     7582983660    4600    1111111111    0    100    0    4500    100
 
 *** Keywords ***
 Transactions Should Contain
