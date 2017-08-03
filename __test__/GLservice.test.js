@@ -248,7 +248,8 @@ describe('testGetGL', function () {
       //   src_remain_balance: 480,
       //   des_remain_balance: 1500
       // }
-      let res = await GLService.insertGL4(GLObject1, GLObject2, GLObject3, GLObject4)
+      const GLservices = [GLObject1,GLObject2,GLObject3,GLObject4]
+      let res = await GLService.insertGL(GLservices)
       console.log('---------------------------------', res)
       expect(res.length).toBe(4)
       deleteGL('99999')
@@ -256,7 +257,7 @@ describe('testGetGL', function () {
 
 
     })
-    it('insertGL case fee = 0', async () => {
+    it('insertGL5 case fee = 0', async () => {
       const GLObject1 = {
         dr_action: 'Saving',
         dr_amount: 500,
@@ -279,7 +280,8 @@ describe('testGetGL', function () {
         transaction_ID: '99999',
         bank_ID: '001'
       };
-      let res = await GLService.insertGL2(GLObject1, GLObject2)
+      const GLObjects = [GLObject1,GLObject2]
+      let res = await GLService.insertGL(GLObjects)
       console.log('---------------------------------', res)
       expect(res.length).toBe(2)
       deleteGL('99999')
@@ -287,7 +289,7 @@ describe('testGetGL', function () {
 
 
     })
-    it('insertGL case topup', async () => {
+    it('insertGL5 case topup', async () => {
       const GLObject2 = {
         dr_action: 'Cash',
         dr_amount: 500,
@@ -299,8 +301,9 @@ describe('testGetGL', function () {
         transaction_ID: '99999',
         bank_ID: '001'
       };
-      let res = await GLService.insertGL1(GLObject2)
-      console.log('---------------------------------', res)
+      const GLObjects =[GLObject2]
+      let res = await GLService.insertGL(GLObjects)
+            console.log('---------------------------------', res)
       expect(res.length).toBe(1)
       deleteGL('99999')
 
