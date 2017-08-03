@@ -3,8 +3,10 @@ Library    RequestsLibrary
 Library    Collections
 
 Suite Setup    Create Session    TN-wallet-node    ${URL}
+
 *** Variables ***
 ${URL}    http://127.0.0.1:3000
+
 *** Test cases ***
 Check if Thanaporn's account exits in database
     ${resp}=    Get Request    TN-wallet-node    /accounts/6302335476
