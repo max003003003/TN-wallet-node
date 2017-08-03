@@ -66,44 +66,13 @@ const GLService = {
         }
         return false;
     },
-    insertGL4: (GLObject1, GLObject2, GLObject3, GLObject4) => {
-        //transfer : case fee != 0
+    insertGL: (ArrayOfGLObject) => {
         return model.sequelize.transaction((t1) => {
-            return model.sequelize.Promise.all([
-                model.GL.create(GLObject1, { transaction: t1 }),
-                model.GL.create(GLObject2, { transaction: t1 }),
-                model.GL.create(GLObject3, { transaction: t1 }),
-                model.GL.create(GLObject4, { transaction: t1 })
-            ])
-        })
-
-    },
-    insertGL5: (ArrayOfGLObject) => {
-        return model.sequelize.transaction((t1) => {
-            const operation = ArrayOfGLObject.map((obj) => {
-                return model.GL.create(obj, { transaction: t1 })
-            })
+            const operation = ArrayOfGLObject.map( obj =>  model.GL.create(obj, { transaction: t1 }))
             return model.sequelize.Promise.all(operation)
         })
     },
-    insertGL2: (GLObject1, GLObject2) => {
-        //transfer : case fee == 0
-        return model.sequelize.transaction((t1) => {
-            return model.sequelize.Promise.all([
-                model.GL.create(GLObject1, { transaction: t1 }),
-                model.GL.create(GLObject2, { transaction: t1 })
-            ])
-        })
-    },
-    insertGL1: (GLObject2) => {
-        //top up        
-        return model.sequelize.transaction((t1) => {
-            return model.sequelize.Promise.all([
-                model.GL.create(GLObject2, { transaction: t1 })
-            ])
-        })
 
-    }
 
 }
 module.exports = GLService
