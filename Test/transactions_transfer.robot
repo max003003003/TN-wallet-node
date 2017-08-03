@@ -6,7 +6,7 @@ Resource    ./keywords.robot
 
 Suite Setup    Setup Session and Database
 Test Setup    Set balance
-Test Teardown    Clear Database
+# Test Teardown    Clear Database
 
 *** Variables ***
 ${URL}    http://127.0.0.1:3000

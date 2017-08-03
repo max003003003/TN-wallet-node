@@ -121,7 +121,7 @@ const account = [{
     register_timestamp: '2017-07-25 09:29:00'
 }, {
     account_id: 1234567890,
-    name: "Thanaporn",
+    name: "Kanomtarn",
     surname: "Sampaotong",
     citizen_id: "1010101010101",
     email: "thanaporn@gmail.com",
@@ -339,6 +339,28 @@ const account = [{
     username: "Max.Well",
     password: "12345A",
     balance: 2000.0,
+    register_timestamp: '2017-07-25 09:29:00'
+},{
+    account_id: 0001111111,
+    name: "Lamon",
+    surname: "Rojanakhajonrachati",
+    citizen_id: "6999999994",
+    email: "6999999994@gmail.com",
+    tel: "6999999994",
+    username: "Max.Well",
+    password: "12345A",
+    balance: 4000.0,
+    register_timestamp: '2017-07-25 09:29:00'
+},{
+    account_id: 4444111111,
+    name: "Nook",
+    surname: "Rojanakhajonrachati",
+    citizen_id: "6999999994",
+    email: "6999999994@gmail.com",
+    tel: "6999999994",
+    username: "Max.Well",
+    password: "12345A",
+    balance: 4500.0,
     register_timestamp: '2017-07-25 09:29:00'
 }]
 module.exports = account
