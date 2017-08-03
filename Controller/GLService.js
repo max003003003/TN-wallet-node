@@ -61,7 +61,9 @@ const GLService = {
     checkBalanceforGL: (GLObjectTransactionTransferTo, GLObjectTransactionRecieveFrom) => {
         let debitAmount = GLObjectTransactionTransferTo.dr_amount + GLObjectTransactionRecieveFrom.dr_amount;
         let creditAmount = GLObjectTransactionTransferTo.cr_amount + GLObjectTransactionRecieveFrom.cr_amount;
-        if (debitAmount === creditAmount) {
+        let transferToAccountID = GLObjectTransactionTransferTo.account_ID;
+        let recieveFromAccountID = GLObjectTransactionRecieveFrom.account_ID;
+        if ((debitAmount === creditAmount)&& transferToAccountID!=null && recieveFromAccountID!=null ) {
             return true;
         }
         return false;
