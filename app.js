@@ -9,13 +9,7 @@ const morgan = require('morgan')
 const path = require("path")
 const account = require('./initialData')
 
-const errorMsg = [
-    "source account doesn't exist",
-    "cannot transfer to your own account",
-    "destination account doesn't exist",
-    "source account doesn't have enough balance",
-    "destination account balance exceed limit"
-]
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -100,6 +94,7 @@ app.post("/transactions", (req, res) => {
     var src_initial_balance
     var src_acc_id
     var checkArray = []
+    var errorMsg 
     if (type == "topup") {
         src_initial_balance = amount
         src_acc_id = 1111111111
@@ -107,6 +102,10 @@ app.post("/transactions", (req, res) => {
         checkArray = [
             controller.checkAccountExist(des_acc_id),
             controller.checkLimitBalance(des_acc_id, amount)
+        ]
+        errorMsg = [
+            "destination account doesn't exist",
+            "destination account balance exceed limit"
         ]
     }
     else if (type == "transfer") {
@@ -119,6 +118,13 @@ app.post("/transactions", (req, res) => {
             controller.checkLimitBalance(des_acc_id, amount),
             controller.checkAccountExist(src_acc_id),
             controller.checkEnoughBalance(src_acc_id, amount)
+        ]
+        errorMsg = [
+            "source account doesn't exist",
+            "cannot transfer to your own account",
+            "destination account doesn't exist",
+            "source account doesn't have enough balance",
+            "destination account balance exceed limit"
         ]
     } else {
         return res.status(400).send({
