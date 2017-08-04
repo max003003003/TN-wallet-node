@@ -12,17 +12,17 @@ Set balance of
     Execute Sql String    UPDATE tb_users SET balance = ${balance} WHERE account_id = ${account_id}
 
 Clear Database
-    Delete transaction of    ${SOURCE_ACCOUNT}   
-    Delete GL of    ${SOURCE_ACCOUNT}
-    Delete GL of    ${DESTINATION_ACCOUNT}
+    Delete transaction of    ${TRANSACTION_ID}   
+    Delete GL of    ${TRANSACTION_ID}
+    Delete GL of    ${TRANSACTION_ID}
 
 Delete transaction of
-    [Arguments]    ${account_id}
-    Execute Sql String    DELETE FROM tb_transactions WHERE src_account_id = ${account_id}
+    [Arguments]    ${transaction_id}
+    Execute Sql String    DELETE FROM tb_transactions WHERE id = ${transaction_id}
 
 Delete GL of
-    [Arguments]    ${account_id}
-    Execute Sql String    DELETE FROM tb_GLs WHERE account_ID = ${account_id}
+    [Arguments]    ${transaction_id}
+    Execute Sql String    DELETE FROM tb_GLs WHERE transaction_ID = ${transaction_id}
 
 Transfer Money Success
     [Arguments]    ${src_acc_id}    ${src_initial_balance}    ${des_acc_id}    ${des_initial_balance}    ${amount}    ${fee}    ${src_remain_balance}    ${des_remain_balance}
