@@ -91,7 +91,7 @@ async function insertTransaction(transactionObj) {
         if (transactionResult[0]) return currentTransaction.dataValues.id
         //    throw new Error("transfer log error")
     }
-    let transactionResult = await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
+    await transactionService.updateTransactionsInstance(currentTransaction.dataValues.id, "TRANSFER MONEY FAIL")
 
 
     // throw new Error("transfer failed")
@@ -108,31 +108,43 @@ async function insertGL(src_account_id, des_account_id, amount, transaction_id, 
     if (fee === 0) {
         if (type === "topup") {
             if(checkDebitCreditBalanceGLobject12){
+                //check balance success
                 const GLObjects =[GLObject2]
                 await GLService.insertGL(GLObjects)
+                return "fee is zero : topup GL record successfully"
             }
+            //check balance fail
+            return "fee is zero : topup GL record fail"
             
 
         } else if (type === "transfer") {
             if(checkDebitCreditBalanceGLobject12){
+                //check balance success
                 const GLObjects = [GLObject1,GLObject2]
                 await GLService.insertGL(GLObjects)
+                return "fee is zero : transfer GL record successfully"
             }
-            
+            //check balance fail
+            return "fee is zero : transfer GL record fail"
 
-        }
+        }return "fee is zero : type not recognized : GL record fail"
     }
     else if (fee > 0) {
         const GLObject3 = GLService.createFeeForTransactionTransferTo(fee, src_account_id, transaction_id, bankID)
         const GLObject4 = GLService.createFeeForTransactionRecieveFrom(fee, des_account_id, transaction_id, bankID)
         let checkDebitCreditBalanceGLobject34 = GLService.checkBalanceforGL(GLObject3, GLObject4)
         if(checkDebitCreditBalanceGLobject12 && checkDebitCreditBalanceGLobject34){
+            //check balance success
              const GLObjects = [GLObject1,GLObject2,GLObject3,GLObject4]
              await GLService.insertGL(GLObjects)
+             return "fee is positive : transfer GL record successfully"
         }
+        //check balance fail
+        return "fee is positive : transfer GL record fail"
        
     }
-
+    //fee negative will not try to record GL
+    return "fee is negative : record fail"
 }
 
 module.exports = {

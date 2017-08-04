@@ -14,7 +14,10 @@ ${SOURCE_ACCOUNT}    6302335476
 ${DESTINATION_ACCOUNT}    7582983660
 
 *** Test cases ***
-Check if Phansawuth can topup sccessfully
+Check if the transaction is added in GL table
+    Transfer Money Success     ${SOURCE_ACCOUNT}    500    ${DESTINATION_ACCOUNT}    500    500    0    0    1000
+    GL should exists    ${SOURCE_ACCOUNT}    500    500
+    GL should exists    ${DESTINATION_ACCOUNT}    500    500
+
     Topup Money Success     ${DESTINATION_ACCOUNT}    4500    100    4600
-    ${resp}=    Get Request    TN-wallet-node    /transactions/${TRANSACTION_ID}
-    Transactions Should Contain    ${resp}    ${TRANSACTION_ID}    topup    1111111111    100    ${DESTINATION_ACCOUNT}    4500    100    0    0    4600    SUCCESS
+    GL should exists    ${DESTINATION_ACCOUNT}    100    100
