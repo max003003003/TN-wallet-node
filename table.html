@@ -78,11 +78,18 @@
             }
 
             $.ajax(settings).done(function (data) {
+                var prev_transaction_id = data[0].transaction_ID;
+                var is_color = false;
                 for(var i=0 ; i< data.length; i++){
-                    // console.log(data[i].createdAt)
-                    // console.log(  )
+                    console.log(prev_transaction_id)
+                    if(prev_transaction_id != data[i].transaction_ID){
+                        is_color = !is_color
+                    }
+                    color = is_color?  'background-color:#f9f9f9;' : 'background-color:white;'
+                    prev_transaction_id = data[i].transaction_ID
+                    console.log(color)
                    $("#tdata").append(`
-                   <tr>
+                   <tr style=${color}>
                     <td>${data[i].id}</td>
                     <td>${data[i].dr_action}</td>
                     <td>${data[i].dr_amount}</td>
@@ -119,6 +126,7 @@
      vertical-align: top; 
 
     }
+    
 </style>
 </body>
 
