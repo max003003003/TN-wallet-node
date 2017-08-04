@@ -9,6 +9,11 @@
         crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" crossorigin="anonymous"></script> -->
+    <script src=" http://momentjs.com/downloads/moment-with-locales.min.js" crossorigin="anonymous"></script>
+        
+
+   
 </head>
 
 <body>
@@ -39,7 +44,7 @@
                             <th>bank id</th>
                             <th> timestamp</th> 
                         </thead>
-                        <tbody id="tdata">
+                        <tbody id="tdata" style="text-align: right">
                             
                         </tbody>
 
@@ -58,6 +63,8 @@
 
 
     <script>
+        moment.locale('en');
+        // moment.lang("en");
         $(document).ready(function () {
             var settings = {
                 "async": true,
@@ -72,6 +79,8 @@
 
             $.ajax(settings).done(function (data) {
                 for(var i=0 ; i< data.length; i++){
+                    // console.log(data[i].createdAt)
+                    // console.log(  )
                    $("#tdata").append(`
                    <tr>
                     <td>${data[i].id}</td>
@@ -84,14 +93,33 @@
                     <td>${data[i].account_ID}</td>
                     <td>${data[i].transaction_ID}</td>
                     <td>${data[i].bank_ID}</td>
-                    <td>${data[i].createdAt}</td>
+                    <td>${moment(data[i].createdAt).format('LLL')}</td>
                    </tr>
                    `)
                 }
             });
         });
 
-    </script>
+</script>
+<style>
+    th {
+        text-align: right;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+         border-top: 1px solid #ddd !important;
+
+    }
+    td {
+        text-align: right;
+        border-right: 1px solid #ddd;
+         border-left: 1px solid #ddd;
+          border-bottom: 1px solid #ddd !important;
+    }
+    .table>thead>tr>th {
+     vertical-align: top; 
+
+    }
+</style>
 </body>
 
 </html>
