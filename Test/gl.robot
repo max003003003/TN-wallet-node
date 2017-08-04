@@ -14,10 +14,11 @@ ${SOURCE_ACCOUNT}    6302335476
 ${DESTINATION_ACCOUNT}    7582983660
 
 *** Test cases ***
-Check if the transaction is added in GL table
+Check if the added transaction transfefr is recored in GL table
     Transfer Money Success     ${SOURCE_ACCOUNT}    500    ${DESTINATION_ACCOUNT}    500    500    0    0    1000
-    GL should exists    ${SOURCE_ACCOUNT}    500    500
-    GL should exists    ${DESTINATION_ACCOUNT}    500    500
+    GL should exists    ${SOURCE_ACCOUNT}    ${TRANSACTION_ID}    500    500
+    GL should exists    ${DESTINATION_ACCOUNT}    ${TRANSACTION_ID}    500    500
 
+Check if the added transactio top up is recorded in GL table
     Topup Money Success     ${DESTINATION_ACCOUNT}    4500    100    4600
-    GL should exists    ${DESTINATION_ACCOUNT}    100    100
+    GL should exists    ${DESTINATION_ACCOUNT}    ${TRANSACTION_ID}    100    100

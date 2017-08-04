@@ -58,5 +58,5 @@ Transactions Should Contain
     Dictionary Should Contain Item    ${resp.json()}    transaction_status    ${transaction_status}
     
 GL should exists
-    [Arguments]    ${account_id}    ${dr_amount}    ${cr_amount}
-    Check If Exists In Database    SELECT account_id FROM tb_GLs WHERE account_ID = ${account_id} AND dr_amount = ${dr_amount} AND cr_amount = ${cr_amount}
+    [Arguments]    ${account_id}    ${transaction_ID}    ${dr_amount}    ${cr_amount}
+    Check If Exists In Database    SELECT account_id FROM tb_GLs WHERE account_ID = ${account_id} AND transaction_ID=${transaction_ID} AND dr_amount = ${dr_amount} AND cr_amount = ${cr_amount}
